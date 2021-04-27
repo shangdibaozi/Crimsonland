@@ -1,0 +1,47 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "D:/CocosDashboard/resources/.editors/Creator/3.0.1/resources/resources/3d/engine"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/*.meta" : true,
+			"*.min.js": true,
+			"packages": true,
+			"settings" : true,
+			".vscode" : true,
+			"build" : true,
+			".circleci" : true,
+			"bin" : true,
+			"docs" : true,
+			"editor" : true,
+			"licenses" : true,
+			"polyfill" : false,
+			"test" : true,
+			"**/*.min.js" : true,
+			".editorconfig" : true,
+			".eslintrc.json" : true,
+			"**/*.TXT" : true,
+			"**/*.txt" : true,
+			"remote-assets" : true,
+			"remote-assets-debug" : true,
+			"remote-assets-debug1" : true,
+			"remote-assets-debug2" : true,
+			"*.zip" : true,
+			"**/canvas" : true,
+			"**/*.canvas.js" : true,
+			"**/*.jsb.js" : true,
+			"library" : true,
+			"local" : true,
+			"temp" : true,
+			"app-assets-debug" : true,
+			"packVersion" : true,
+			"BaiTanServer": true,
+			"**/engine/tsconfig.json": true
+		}
+	},
+}
