@@ -1,12 +1,23 @@
 import { ecs } from "../../Libs/ECS";
-import { Node } from "cc";
+import { error, Node } from "cc";
+import { ECSNode } from "./ECSNode";
+import { ObjPool } from "../ObjPool";
 
 @ecs.register('BulletNode')
 export class BulletNode extends ecs.IComponent {
-    root: Node | null = null;
+    set root(node: Node) {
+        if(node) {
+            this.ent.add(ECSNode).val = node;
+        }
+        else { 
+            error('根节点不能为null');
+        }
+    }
 
     reset() {
-        this.root?.destroy();
-        this.root = null;
+        let node = this.ent.get(ECSNode).val;
+        if(node) {
+            ObjPool.putBullet(node);
+        }
     }
 }

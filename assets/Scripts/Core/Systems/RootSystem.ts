@@ -3,6 +3,7 @@ import { BulletSystem } from "./Bullet/BulletSystem";
 import { Monster } from "./Monster/Monster";
 import { PlayerControllerSystem } from "./PlayerController/PlayerControllerSystem";
 import { PlayerMoveSystem } from "./PlayerMoveSystem";
+import { Render } from "./Render/Render";
 
 export class RootSystem extends ecs.RootSystem {
     
@@ -13,5 +14,6 @@ export class RootSystem extends ecs.RootSystem {
         this.add(new PlayerMoveSystem());
         this.add(new BulletSystem());
         this.add(new Monster());
+        this.add(new Render());
     }
 }

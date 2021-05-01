@@ -9,6 +9,7 @@ import { Keyboard } from '../Components/Keyboard';
 import { Mouse } from '../Components/Mouse';
 import { PlayerNode } from '../Components/PlayerNode';
 import { Collision } from '../Components/Collision';
+import { EntityFactory } from './EntityFactory';
 
 
 class PlayerEnt extends ecs.Entity {
@@ -39,14 +40,12 @@ export class PlayerMoveSystem extends ecs.ComblockSystem implements ecs.IEntityE
     update(entities: PlayerEnt[]): void {
         this.player.Transform.position.x += this.movement.heading.x * this.dt * this.movement.speed;
         this.player.Transform.position.y += this.movement.heading.y * this.dt * this.movement.speed;
-
-        this.player.PlayerNode.root!.setPosition(this.player.Transform.position);
     }
 
     
 
     createPlayer(node: Node) {
-        let player = ecs.createEntityWithComps<PlayerEnt>(PlayerNode, Movement, Transform, Collision);
+        let player = EntityFactory.createPlayer() as PlayerEnt;
         player.PlayerNode.root = node;
         player.PlayerNode.bodyNode = node.children[0];
         player.PlayerNode.gunNode = node.children[1];

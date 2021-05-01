@@ -4,3 +4,9 @@ export enum UI_EVENT {
     CREATE_BULLET,
     START_GAME
 }
+
+export enum AI_STATE {
+    IDLE,
+    MOVE_TO,
+    ATTACK
+}

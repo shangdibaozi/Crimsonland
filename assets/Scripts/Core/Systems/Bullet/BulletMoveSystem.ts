@@ -7,6 +7,8 @@ import { Collision } from "../../Components/Collision";
 import { Lifetime } from "../../Components/Lifetime";
 import { Movement } from "../../Components/Movement";
 import { Transform } from "../../Components/Transform";
+import { ObjPool } from "../../ObjPool";
+import { EntityFactory } from "../EntityFactory";
 
 class BulletEnt extends ecs.Entity {
     Movement!: Movement;
@@ -35,18 +37,17 @@ export class BulletMoveSystem extends ecs.ComblockSystem {
             else {
                 bulletEnt.Transform.position.x += bulletEnt.Movement.heading.x * this.dt * bulletEnt.Movement.speed;
                 bulletEnt.Transform.position.y += bulletEnt.Movement.heading.y * this.dt * bulletEnt.Movement.speed;
-                bulletEnt.BulletNode.root?.setPosition(bulletEnt.Transform.position);
             }
         }
     }
 
     onCreateBullet(heading: Vec3, pos: Vec3) {
-        let bulletNode = instantiate(Global.gunCfg.gunInfos[0].bullet);
+        let bulletNode = ObjPool.getBullet();
         bulletNode.parent = Global.gameWorld.bulletLayer;
         bulletNode.setPosition(pos);
         bulletNode.angle = Math.atan2(heading.y, heading.x) * macro.DEG;
         
-        let ent = ecs.createEntityWithComps<BulletEnt>(Movement, Transform, Lifetime, BulletNode, Collision);
+        let ent = EntityFactory.createBullet() as BulletEnt;
         ent.BulletNode.root = bulletNode;
         Vec3.copy(ent.Movement.heading, heading);
         ent.Movement.speed = 300;

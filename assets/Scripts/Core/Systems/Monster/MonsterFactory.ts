@@ -5,8 +5,11 @@ import { ecs } from "../../../Libs/ECS";
 import { Util } from "../../../Util";
 import { Collision } from "../../Components/Collision";
 import { EnemyNode } from "../../Components/EnemyNode";
+import { Movement } from "../../Components/Movement";
 import { TagEnemy } from "../../Components/TagEnemy";
 import { Transform } from "../../Components/Transform";
+import { ObjPool } from "../../ObjPool";
+import { EntityFactory } from "../EntityFactory";
 
 
 @ecs.register('Timer')
@@ -30,20 +33,22 @@ export class MonsterFactory extends ecs.ComblockSystem {
     }
 
     update(entities: ecs.Entity[]): void {
-        let time = entities[0].get(Timer).time -= this.dt;
-        if(time <= 0) {
-            entities[0].get(Timer).time = 5;
-
-            let monsterNode = instantiate(Util.randomChoice(Global.gameWorld.monstersPrefab));
+        // let time = entities[0].get(Timer).time -= this.dt;
+        // if(time <= 0) {
+            // entities[0].get(Timer).time = 5;
+        if(ecs.query(ecs.allOf(Transform, Collision, TagEnemy)).length === 0) {
+             let monsterNode = ObjPool.getMonster();
             monsterNode.parent = Global.gameWorld.avatarLayer;
-            monsterNode.setPosition(v3(Util.randomRange(-50, 50), Util.randomRange(-50, 50), 0));
+            monsterNode.setPosition(v3(Util.randomRange(-500, 500), Util.randomRange(-500, 500), 0));
 
-            let enemyEnt = ecs.createEntityWithComps(TagEnemy, EnemyNode, Transform, Collision);
+            let enemyEnt = EntityFactory.createMonster();
             enemyEnt.get(EnemyNode).root = monsterNode;
 
             Vec3.copy(enemyEnt.get(Transform).position, monsterNode.position);
 
             enemyEnt.get(Collision).radius = 30;
+
+            enemyEnt.get(Movement).speed = 50;
         }
     }
 
