@@ -8,5 +8,6 @@ export enum UI_EVENT {
 export enum AI_STATE {
     IDLE,
     MOVE_TO,
+    FOLLOW,
     ATTACK
 }

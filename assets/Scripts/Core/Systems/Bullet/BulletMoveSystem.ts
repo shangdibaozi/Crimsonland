@@ -4,6 +4,7 @@ import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
 import { BulletNode } from "../../Components/BulletNode";
 import { Collision } from "../../Components/Collision";
+import { Damage } from "../../Components/Damage";
 import { Lifetime } from "../../Components/Lifetime";
 import { Movement } from "../../Components/Movement";
 import { Transform } from "../../Components/Transform";
@@ -16,6 +17,7 @@ class BulletEnt extends ecs.Entity {
     Lifetime!: Lifetime;
     BulletNode!: BulletNode;
     Collision!: Collision;
+    Damage!: Damage;
 }
 
 export class BulletMoveSystem extends ecs.ComblockSystem {
@@ -57,5 +59,7 @@ export class BulletMoveSystem extends ecs.ComblockSystem {
         ent.Lifetime.time = 30;
 
         ent.Collision.radius = 6;
+
+        ent.Damage.val = 5;
     }
 }

@@ -3,7 +3,9 @@ import { UI_EVENT } from "../../../Constants";
 import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
 import { Util } from "../../../Util";
+import { AvatarProperties } from "../../Components/AvatarProperties";
 import { Collision } from "../../Components/Collision";
+import { Damage } from "../../Components/Damage";
 import { EnemyNode } from "../../Components/EnemyNode";
 import { Movement } from "../../Components/Movement";
 import { TagEnemy } from "../../Components/TagEnemy";
@@ -33,10 +35,13 @@ export class MonsterFactory extends ecs.ComblockSystem {
     }
 
     update(entities: ecs.Entity[]): void {
-        // let time = entities[0].get(Timer).time -= this.dt;
-        // if(time <= 0) {
-            // entities[0].get(Timer).time = 5;
-        if(ecs.query(ecs.allOf(Transform, Collision, TagEnemy)).length === 0) {
+        if(ecs.query(ecs.allOf(Transform, Collision, TagEnemy)).length >= 200) {
+            return;
+        }
+        let time = entities[0].get(Timer).time -= this.dt;
+        if(time <= 0) {
+            entities[0].get(Timer).time = 2;
+        
              let monsterNode = ObjPool.getMonster();
             monsterNode.parent = Global.gameWorld.avatarLayer;
             monsterNode.setPosition(v3(Util.randomRange(-500, 500), Util.randomRange(-500, 500), 0));
@@ -48,7 +53,12 @@ export class MonsterFactory extends ecs.ComblockSystem {
 
             enemyEnt.get(Collision).radius = 30;
 
-            enemyEnt.get(Movement).speed = 50;
+            enemyEnt.get(Movement).speed = 30;
+
+            enemyEnt.get(Damage).val = 10;
+
+            let prop = enemyEnt.get(AvatarProperties);
+            prop.maxHealth = prop.health = 100;
         }
     }
 

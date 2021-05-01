@@ -19,7 +19,7 @@ export class ZIndexSystem extends ecs.ComblockSystem {
 
     update(entities: Ent[]): void {
         for(let e of entities) {
-            e.ECSNode.uiTransform.priority = 1600 - e.ECSNode.val.position.y;
+            e.ECSNode.uiTransform.priority = 1600 - (e.ECSNode.val.position.y - e.ECSNode.uiTransform.height * 0.5);
         }
     }
 

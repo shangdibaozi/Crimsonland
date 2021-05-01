@@ -9,6 +9,8 @@ export class AIComponent extends ecs.IComponent {
 
     targetPos: Vec3 = v3();
 
+    offset: Vec3 = v3();
+
     reset() {
         this.aiState = AI_STATE.IDLE;
     }

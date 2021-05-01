@@ -371,6 +371,9 @@ export module ecs {
          */
         add<T extends IComponent>(ctor: ComponentConstructor<T>, isReAdd: boolean = false): T {
             let componentTypeId = ctor.tid;
+            if(ctor.tid === -1) {
+                throw Error('组件未注册！');
+            }
             if (this.compTid2Ctor.has(componentTypeId)) {// 判断是否有该组件，如果有则先移除
                 if(isReAdd) {
                     this.remove(ctor);
