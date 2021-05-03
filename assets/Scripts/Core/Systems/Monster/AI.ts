@@ -1,4 +1,4 @@
-import { v3, Vec3 } from "cc";
+import { log, v3, Vec3 } from "cc";
 import { AI_STATE } from "../../../Constants";
 import { ecs } from "../../../Libs/ECS";
 import { Util } from "../../../Util";
@@ -41,30 +41,34 @@ export class AI extends ecs.ComblockSystem {
             for(let e of entities) {
                 switch(e.AI.aiState) {
                     case AI_STATE.IDLE: {
-                        if(Math.random() < 0.3) {
+                        if(Math.random() < -0.3) {
                             // 防止怪物都聚集到一起
                             e.AI.offset.x = Util.randomRange(-20, 20);
                             e.AI.offset.y = Util.randomRange(-20, 20);
                             e.AI.aiState = AI_STATE.FOLLOW;
                         }
                         else {
-                            pos.x = Util.randomRange(-100, 100);
-                            pos.y = Util.randomRange(-100, 100);
-                            pos.z = 0;
+                            e.AI.offset.x = Util.randomRange(-100, 100);
+                            e.AI.offset.y = Util.randomRange(-100, 100);
+                            e.AI.offset.z = 0;
+                            // pos.x = Util.randomRange(-100, 100);
+                            // pos.y = Util.randomRange(-100, 100);
+                            // pos.z = 0;
                             
-                            Vec3.add(e.AI.targetPos, pos, playerPos);
+                            // Vec3.add(e.AI.targetPos, pos, playerPos);
                             
                             e.AI.aiState = AI_STATE.MOVE_TO;
                         }
                         break;
                     }
                     case AI_STATE.MOVE_TO: {    // 移动到指定坐标点然后进行下一步
+                        Vec3.add(e.AI.targetPos, playerPos, e.AI.offset);
                         Vec3.subtract(pos, e.AI.targetPos, e.Transform.position);
                         Vec3.normalize(e.get(Movement).heading, pos);
                         e.Transform.position.add(Vec3.multiplyScalar(pos, e.Movement.heading, this.dt * e.Movement.speed));
 
-                        if(Vec3.subtract(pos, e.AI.targetPos, e.Transform.position).lengthSqr() <= 100) {
-                            e.AI.aiState = AI_STATE.IDLE;
+                        if(Vec3.subtract(pos, e.AI.targetPos, e.Transform.position).lengthSqr() <= 10000) {
+                            e.AI.aiState = AI_STATE.FOLLOW;
                         }
 
                         break;
@@ -78,6 +82,7 @@ export class AI extends ecs.ComblockSystem {
                         if(Vec3.subtract(pos, e.AI.targetPos, e.Transform.position).lengthSqr() <= 100) {
                             e.AI.aiState = AI_STATE.IDLE;
                         }
+                        break;
                     }
                 }
                 
