@@ -1,5 +1,5 @@
 
-import { Node, UITransform } from 'cc';
+import { macro, misc, Node, UITransform, v3, Vec3 } from 'cc';
 import { ecs } from '../../../Libs/ECS';
 import { Movement } from '../../Components/Movement';
 import { Transform } from '../../Components/Transform';
@@ -11,6 +11,7 @@ import { PlayerNode } from '../../Components/PlayerNode';
 import { Collision } from '../../Components/Collision';
 import { EntityFactory, PlayerEnt } from '../EntityFactory';
 
+let pos = v3();
 
 export class PlayerMoveSystem extends ecs.ComblockSystem implements ecs.IEntityEnterSystem {
     player!: PlayerEnt;
@@ -31,6 +32,10 @@ export class PlayerMoveSystem extends ecs.ComblockSystem implements ecs.IEntityE
     update(entities: PlayerEnt[]): void {
         this.player.Transform.position.x += this.movement.heading.x * this.dt * this.movement.speed;
         this.player.Transform.position.y += this.movement.heading.y * this.dt * this.movement.speed;
+
+        let gun = this.player.PlayerNode.gunNode!.children[0];
+        Vec3.lerp(pos, gun.position, Vec3.ZERO, this.dt * 10);
+        gun.setPosition(pos);
     }
 
     createPlayer(node: Node) {

@@ -1,6 +1,6 @@
 import { v3 } from "cc";
 import { ecs } from "../../../Libs/ECS";
-import { CameraFollowComponent } from "../../Components/CameraFOllowComponent";
+import { CameraFollowComponent } from "../../Components/CameraFollowComponent";
 import { Transform } from "../../Components/Transform";
 import { PlayerEnt } from "../EntityFactory";
 

@@ -62,7 +62,11 @@ export class MouseSystem extends ecs.ComblockSystem implements ecs.IEntityEnterS
     }
 
     onMouseDown(event: EventMouse) {
-        let gunPointNode = this.playerNode.gunNode!.children[0].children[0];
+        let gunNode = this.playerNode.gunNode!.children[0];
+        gunNode.setPosition(-4, 0, 0);
+
+        let gunPointNode = gunNode.children[0];
+
         gunPointNode.getComponent(UITransform)?.convertToWorldSpaceAR(Vec3.ZERO, lpos);
         let bulletPos = Global.gameWorld.avatarLayer.getComponent(UITransform)!.convertToNodeSpaceAR(lpos, lpos);
         Global.uiEvent.emit(UI_EVENT.CREATE_BULLET, this.mouse.heading, bulletPos);

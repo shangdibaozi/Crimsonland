@@ -2,7 +2,7 @@ import { ecs } from "../../Libs/ECS";
 import { AIComponent } from "../Components/AIComponent";
 import { AvatarProperties } from "../Components/AvatarProperties";
 import { BulletNode } from "../Components/BulletNode";
-import { CameraFollowComponent } from "../Components/CameraFOllowComponent";
+import { CameraFollowComponent } from "../Components/CameraFollowComponent";
 import { Collision } from "../Components/Collision";
 import { Damage } from "../Components/Damage";
 import { EnemyNode } from "../Components/EnemyNode";
