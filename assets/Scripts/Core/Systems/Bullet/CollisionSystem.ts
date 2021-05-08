@@ -50,7 +50,7 @@ export class CollisionSystem extends ecs.ComblockSystem {
                     }
                     else {
                         // 子弹打中怪物后怪物击退效果
-                        Vec3.multiplyScalar(tmp, bulletEnt.get(Movement).heading, 10);
+                        Vec3.multiplyScalar(tmp, bulletEnt.get(Movement).heading, 5);
                         transformEnemy.position.add(tmp);
                     }
 

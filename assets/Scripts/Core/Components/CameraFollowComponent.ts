@@ -5,7 +5,7 @@ import { ecs } from "../../Libs/ECS";
 export class CameraFollowComponent extends ecs.IComponent {
     camera: Node | null = null;
 
-    smoothTime = 2.2;
+    smoothTime = 0.7;
     xVelocity: number = 0;
     yVelocity: number = 0;
 

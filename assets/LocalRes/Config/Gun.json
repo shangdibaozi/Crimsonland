@@ -2,7 +2,7 @@
     "10000" : {
         "Name": "",
         "Damage": 20,
-        "RateOfFire": 2,
+        "RateOfFire": 8,
         "Speed": 400,
         "NumberPerShoot": 1,
         "MaxAmount": 20,
