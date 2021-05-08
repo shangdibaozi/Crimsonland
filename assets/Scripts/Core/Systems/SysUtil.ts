@@ -20,7 +20,7 @@ export class SysUtil {
         player.CameraFollow.camera = Global.gameWorld!.camera.node;
 
         // 判断运行环境
-        player.add(Keyboard);
+        // player.add(Keyboard);
 
         let gunNode = instantiate(Global.gunCfg!.gunInfos[0].gun);
         gunNode.parent = player.PlayerNode.gunNode;
