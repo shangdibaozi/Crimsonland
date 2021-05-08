@@ -5,9 +5,11 @@ import { ecs } from "../../Libs/ECS";
 export class Movement extends ecs.IComponent {
     heading: Vec3 = v3(0, 0, 0);
     speed: number = 0;
+    maxSeed: number = 0;
 
     reset() {
         Vec3.zero(this.heading);
         this.speed = 0;
+        this.maxSeed = 0;
     }
 }

@@ -5,8 +5,8 @@ const { ccclass, property } = _decorator;
 
 @ccclass('GunInfo')
 class GunInfo {
-    @property
-    name: string = '';
+    @property(Prefab)
+    gun!: Prefab;
 
     @property(Prefab)
     bullet!: Prefab;
@@ -19,5 +19,9 @@ export class GunConfig extends Component {
 
     onLoad() {
         Global.gunCfg = this;
+    }
+
+    onDestroy() {
+        Global.gunCfg = null;
     }
 }

@@ -8,7 +8,7 @@ export class ObjPool {
     private static monsterPool: Node[] = [];
 
     static getBullet() {
-        let node = this.bulletPool.pop() || instantiate(Global.gunCfg.gunInfos[0].bullet);
+        let node = this.bulletPool.pop() || instantiate(Global.gunCfg!.gunInfos[0].bullet);
         node.active = true;
         return node;
     }
@@ -19,7 +19,7 @@ export class ObjPool {
     }
 
     static getMonster() {
-        let node = this.monsterPool.pop() || instantiate(Util.randomChoice(Global.gameWorld.monstersPrefab));
+        let node = this.monsterPool.pop() || instantiate(Util.randomChoice(Global.gameWorld!.monstersPrefab));
         node.active = true;
         return node;
     }

@@ -3,17 +3,17 @@ import { ecs } from "../../../Libs/ECS";
 import { AvatarProperties } from "../../Components/AvatarProperties";
 import { BulletNode } from "../../Components/BulletNode";
 import { Collision } from "../../Components/Collision";
-import { Damage } from "../../Components/Damage";
 import { Movement } from "../../Components/Movement";
 import { TagEnemy } from "../../Components/TagEnemy";
 import { Transform } from "../../Components/Transform";
+import { BulletEnt } from "../EntityFactory";
 
 
 
 let tmp = v3();
 
 export class CollisionSystem extends ecs.ComblockSystem {
-    bulletGroup!: ecs.Group;
+    bulletGroup!: ecs.Group<BulletEnt>;
 
     init() {
 
@@ -40,7 +40,7 @@ export class CollisionSystem extends ecs.ComblockSystem {
                     continue;
                 }
                 else {
-                    let damage = bulletEnt.get(Damage).val;
+                    let damage = bulletEnt.BulletBase.damage;
                     let avatarProperties = enemyEnt.get(AvatarProperties);
 
                     avatarProperties.health =  Math.max(0, avatarProperties.health - damage);

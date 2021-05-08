@@ -10,15 +10,10 @@ import { Movement } from "../../Components/Movement";
 import { PlayerNode } from "../../Components/PlayerNode";
 import { TagEnemy } from "../../Components/TagEnemy";
 import { Transform } from "../../Components/Transform";
+import { MonsterEnt } from "../EntityFactory";
 
 let pos = v3();
 
-class MonsterEnt extends ecs.Entity {
-    AI!: AIComponent;
-    Movement!: Movement;
-    Transform!: Transform;
-    ECSNode!: ECSNode;
-}
 
 export class AI extends ecs.ComblockSystem {
 

@@ -1,7 +1,6 @@
 
 export enum UI_EVENT {
-    CREATE_PLAYER_ENT = 1000,
-    CREATE_BULLET,
+    NONE = 1000,
     START_GAME
 }
 

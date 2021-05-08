@@ -28,7 +28,8 @@ const DIR2HEADING: {[key: string]: Vec3} = {
 
 @ecs.register('Keyboard')
 export class Keyboard extends ecs.IComponent {
-    private state: number = 0;
+    state: number = 0;
+    private lastState: number = 0;
 
     get isADown() {
         return !!(this.state & 1);
@@ -80,12 +81,17 @@ export class Keyboard extends ecs.IComponent {
 
     getHeading(): Vec3 {
         if(this.state in DIR2HEADING) {
+            this.lastState = this.state;
             return DIR2HEADING[this.state];
+        }
+        else if(this.lastState in DIR2HEADING) {
+            return DIR2HEADING[this.lastState];
         }
         return Vec3.ZERO;
     }
 
     reset() {
+        this.lastState = 0;
         this.state = 0;
     }
 }

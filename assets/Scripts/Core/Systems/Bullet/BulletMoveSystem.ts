@@ -4,26 +4,16 @@ import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
 import { BulletNode } from "../../Components/BulletNode";
 import { Collision } from "../../Components/Collision";
-import { Damage } from "../../Components/Damage";
 import { Lifetime } from "../../Components/Lifetime";
 import { Movement } from "../../Components/Movement";
 import { Transform } from "../../Components/Transform";
 import { ObjPool } from "../../ObjPool";
-import { EntityFactory } from "../EntityFactory";
-
-class BulletEnt extends ecs.Entity {
-    Movement!: Movement;
-    Transform!: Transform;
-    Lifetime!: Lifetime;
-    BulletNode!: BulletNode;
-    Collision!: Collision;
-    Damage!: Damage;
-}
+import { BulletEnt, EntityFactory } from "../EntityFactory";
 
 export class BulletMoveSystem extends ecs.ComblockSystem {
 
     init() {
-        Global.uiEvent.on(UI_EVENT.CREATE_BULLET, this.onCreateBullet, this);
+        // Global.uiEvent.on(UI_EVENT.CREATE_BULLET, this.onCreateBullet, this);
     }
 
     filter(): ecs.IMatcher {
@@ -45,7 +35,7 @@ export class BulletMoveSystem extends ecs.ComblockSystem {
 
     onCreateBullet(heading: Vec3, pos: Vec3) {
         let bulletNode = ObjPool.getBullet();
-        bulletNode.parent = Global.gameWorld.bulletLayer;
+        bulletNode.parent = Global.gameWorld!.bulletLayer;
         bulletNode.setPosition(pos);
         bulletNode.angle = Math.atan2(heading.y, heading.x) * macro.DEG;
         
@@ -60,6 +50,6 @@ export class BulletMoveSystem extends ecs.ComblockSystem {
 
         ent.Collision.radius = 6;
 
-        ent.Damage.val = 5;
+        ent.BulletBase.damage = 5;
     }
 }

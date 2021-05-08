@@ -24,6 +24,12 @@ export class KeyboardSystem extends ecs.ComblockSystem implements ecs.IEntityEnt
     }
 
     update(entities: ecs.Entity[]): void {
+        if(this.keyboard.state === 0) {
+            this.movement.speed = 0;
+        }
+        else {
+            this.movement.speed = this.movement.maxSeed;
+        }
         Vec3.copy(this.movement.heading, this.keyboard.getHeading());
     }
 
