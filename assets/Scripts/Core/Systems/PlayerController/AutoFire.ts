@@ -79,6 +79,7 @@ export class AutoFire extends ecs.ComblockSystem {
         }
         playerNode.gunNode!.angle = angle;
 
+        gunBase.amount -= 1;
         let bulletNode = ObjPool.getBullet();
         bulletNode.parent = Global.gameWorld!.bulletLayer;
         bulletNode.setPosition(pos);

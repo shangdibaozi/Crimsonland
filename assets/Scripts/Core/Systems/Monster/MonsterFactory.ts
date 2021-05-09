@@ -39,7 +39,7 @@ export class MonsterFactory extends ecs.ComblockSystem {
         }
         let time = entities[0].get(Timer).time -= this.dt;
         if(time <= 0) {
-            entities[0].get(Timer).time = 200000000;
+            entities[0].get(Timer).time = 2;
         
              let monsterNode = ObjPool.getMonster();
             monsterNode.parent = Global.gameWorld!.avatarLayer;
@@ -57,7 +57,7 @@ export class MonsterFactory extends ecs.ComblockSystem {
             // enemyEnt.get(Damage).val = 10;
 
             let prop = enemyEnt.get(AvatarProperties);
-            prop.maxHealth = prop.health = 100000;
+            prop.maxHealth = prop.health = 100;
         }
     }
 
