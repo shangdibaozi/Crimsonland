@@ -10,7 +10,7 @@
  * 如果多个按钮响应相同的操作，那么可以按照如下规则给这些按钮命名：_btnTest_1、_btnTest_2，其中回调方法为on_btnTest，按钮在脚本中的名称为_btnTest_1、_btnTest_2
  */
 
-import { Node, Component, error, Button, EventHandler } from "cc";
+import { Node, Component, error, Button, EventHandler, Toggle } from "cc";
 
 type UICacheStruct = { [key: string]: { [key: string]: number[] } };
 
@@ -79,9 +79,10 @@ export class UIHelper {
         // console.log('---------------------bindUI2Target---------------------', target.name);
         for (let i = nodes.length - 1, node = null; i >= 0; i--) {
             node = nodes[i];
-            let index = node.name.indexOf('$')
+            let index = node.name.indexOf('$');
             let hasComp = index > 0;
             let hasBtn = node.name.indexOf('_btn') >= 0;
+            let hasToggle = node.name.indexOf('_toggle') >= 0;
 
             let propertyName = hasComp ? node.name.substring(0, index) : node.name;
             // @ts-ignore
@@ -91,12 +92,10 @@ export class UIHelper {
             hasComp && this.bindCompnent(node, index);
             // 给按钮绑定事件
             if (hasBtn) {
-                let btnName: string = node.name;
-                btnName = (index < 0 ? btnName : btnName.substring(0, index));
-                let second_ = btnName.indexOf('_', 1); // 查找是否有第二个“_”，第二个“_”前面的字符串为回调方法，这样就能让需要有相同回调方法的按钮响应同一个方法。
-                btnName = second_ > -1 ? btnName.substring(0, second_) : btnName;
-                let callbackName = `on${btnName}`;
-                this.bindBtnEvent(node, target, callbackName);
+                this.bindBtnEvent(node, target);
+            }
+            if(hasToggle) {
+                this.bindToggleEvent(node, target);
             }
         }
     }
@@ -160,11 +159,17 @@ export class UIHelper {
     /**
      * 绑定按钮回调
      */
-    private bindBtnEvent(btnNode: Node, target: Component, callbackName: string) {
+    private bindBtnEvent(btnNode: Node, target: Component) {
+        let btnName: string = btnNode.name;
+        let index = btnName.indexOf('$');
+        btnName = (index < 0 ? btnName : btnName.substring(0, index));
+        let second_ = btnName.indexOf('_', 1); // 查找是否有第二个“_”，第二个“_”前面的字符串为回调方法，这样就能让需要有相同回调方法的按钮响应同一个方法。
+        btnName = second_ > -1 ? btnName.substring(0, second_) : btnName;
+
         let eventHandler = new EventHandler();
         eventHandler.target = target.node;
         eventHandler.component = target.name.substring(target.name.indexOf('<') + 1, target.name.indexOf('>'));
-        eventHandler.handler = callbackName // 绑定回调方法名称
+        eventHandler.handler = `on${btnName}`; // 绑定回调方法名称
         eventHandler.customEventData = '';
         let btnComp = btnNode.getComponent(Button);
         if (btnComp) { // 如果使用了cc.instantiate创建的结点会拷贝原来的事件
@@ -178,5 +183,17 @@ export class UIHelper {
             btnComp.target = btnNode;
         }
         btnComp.clickEvents.push(eventHandler);
+    }
+
+    private bindToggleEvent(toggleNode: Node, target: Component) {
+        let nodeName = toggleNode.name;
+        let callbackName = 'on' + (nodeName.indexOf('$') < 0 ? nodeName : nodeName.substring(0, nodeName.indexOf('$')));
+        let toggleComp = toggleNode.getComponent(Toggle)!;
+        let eventHandler                = new EventHandler();
+        eventHandler.target             = target.node;
+        eventHandler.component          = target.name.substring(target.name.indexOf('<') + 1, target.name.indexOf('>'));
+        eventHandler.handler            = callbackName // 绑定回调方法名称
+        eventHandler.customEventData    = '';
+        toggleComp.checkEvents.push(eventHandler);
     }
 }

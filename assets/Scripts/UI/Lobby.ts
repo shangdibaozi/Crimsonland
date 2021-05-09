@@ -1,37 +1,38 @@
 
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, Node, log } from 'cc';
+import { UI_EVENT } from '../Constants';
+import { Global } from '../Global';
 import { UIBase } from './UIBase/UIBase';
 const { ccclass, property } = _decorator;
 
 @ccclass('Lobby')
 export class Lobby extends UIBase {
-    // [1]
-    // dummy = '';
-
-    // [2]
-    // @property
-    // serializableDummy = 0;
+    _toggleNearest!: Node;
+    _toggleLessBlood!: Node;
+    _toggleLock!: Node;
 
     onLoad() {
-        // this.adapterSize();
+        this._toggleNearest.$Toggle.isChecked = true;
+        this._toggleLessBlood.$Toggle.isChecked = false;
+        this._toggleLock.$Toggle.isChecked = false;
     }
 
     start () {
-        // [3]
+        
+    }
+    
+    on_toggleNearest() {
+        log('on_btnNear');
+        Global.uiEvent.emit(UI_EVENT.SHOOT_NEAR, this._toggleNearest.$Toggle);
     }
 
-    // update (deltaTime: number) {
-    //     // [4]
-    // }
-}
+    on_toggleLessBlood() {
+        log('on_btnLessBlood');
+        Global.uiEvent.emit(UI_EVENT.SHOOT_LESS_BLOOD, this._toggleLessBlood.$Toggle);
+    }
 
-/**
- * [1] Class member could be defined like this.
- * [2] Use `property` decorator if your want the member to be serializable.
- * [3] Your initialization goes here.
- * [4] Your update function goes here.
- *
- * Learn more about scripting: https://docs.cocos.com/creator/3.0/manual/en/scripting/
- * Learn more about CCClass: https://docs.cocos.com/creator/3.0/manual/en/scripting/ccclass.html
- * Learn more about life-cycle callbacks: https://docs.cocos.com/creator/3.0/manual/en/scripting/life-cycle-callbacks.html
- */
+    on_toggleLock() {
+        log('on_btnNearAndLessBlood');
+        Global.uiEvent.emit(UI_EVENT.SHOOT_LOCK);
+    }
+}

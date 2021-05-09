@@ -41,24 +41,30 @@ export class MonsterFactory extends ecs.ComblockSystem {
         if(time <= 0) {
             entities[0].get(Timer).time = 2;
         
-             let monsterNode = ObjPool.getMonster();
-            monsterNode.parent = Global.gameWorld!.avatarLayer;
-            monsterNode.setPosition(v3(Util.randomRange(-500, 500), Util.randomRange(-500, 500), 0));
-
-            let enemyEnt = EntityFactory.createMonster();
-            enemyEnt.get(EnemyNode).root = monsterNode;
-
-            Vec3.copy(enemyEnt.get(Transform).position, monsterNode.position);
-
-            enemyEnt.get(Collision).radius = 30;
-
-            enemyEnt.get(Movement).speed = 30;
-
-            // enemyEnt.get(Damage).val = 10;
-
-            let prop = enemyEnt.get(AvatarProperties);
-            prop.maxHealth = prop.health = 100;
+            for(let i = 0; i < 3; i++) {
+                this.generateMonster();
+            }
         }
+    }
+
+    generateMonster() {
+        let monsterNode = ObjPool.getMonster();
+        monsterNode.parent = Global.gameWorld!.avatarLayer;
+        monsterNode.setPosition(v3(Util.randomRange(-500, 500), Util.randomRange(-500, 500), 0));
+
+        let enemyEnt = EntityFactory.createMonster();
+        enemyEnt.get(EnemyNode).root = monsterNode;
+
+        Vec3.copy(enemyEnt.get(Transform).position, monsterNode.position);
+
+        enemyEnt.get(Collision).radius = 30;
+
+        enemyEnt.get(Movement).speed = 30;
+
+        // enemyEnt.get(Damage).val = 10;
+
+        let prop = enemyEnt.get(AvatarProperties);
+        prop.maxHealth = prop.health = 100;
     }
 
     onStartGame() {

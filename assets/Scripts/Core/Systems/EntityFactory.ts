@@ -14,10 +14,11 @@ import { Transform } from "../Components/Transform";
 import { BulletBase } from "../Components/Weapon/BulletBase";
 import { GunNode } from "../Components/Weapon/GunNode";
 import { ECSNode } from "../Components/ECSNode";
+import { AutoFireComponent } from "../Components/AutoFireComponent";
 
 export class EntityFactory {
     static createPlayerEnt() {
-        return ecs.createEntityWithComps<PlayerEnt>(PlayerNode, Movement, Transform, Collision, AvatarProperties, CameraFollowComponent);
+        return ecs.createEntityWithComps<PlayerEnt>(PlayerNode, Movement, Transform, Collision, AvatarProperties, CameraFollowComponent, AutoFireComponent);
     }
 
     static createMonster() {
@@ -42,6 +43,7 @@ export class PlayerEnt extends ecs.Entity {
     Collision!: Collision;
     CameraFollow!: CameraFollowComponent;
     AvatarProperties!: AvatarProperties;
+    AutoFire!: AutoFireComponent;
 }
 
 export class MonsterEnt extends ecs.Entity {
@@ -49,6 +51,7 @@ export class MonsterEnt extends ecs.Entity {
     Movement!: Movement;
     Transform!: Transform;
     ECSNode!: ECSNode;
+    AvatarProperties!: AvatarProperties;
 }
 
 export class BulletEnt extends ecs.Entity {
