@@ -1,4 +1,3 @@
-import { sys } from "cc";
 import { ecs } from "../../../Libs/ECS";
 import { AutoFire } from "./AutoFire";
 import { CameraFollow } from "./CameraFollow";

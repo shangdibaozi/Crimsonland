@@ -61,6 +61,7 @@ export class BulletEnt extends ecs.Entity {
     BulletNode!: BulletNode;
     Collision!: Collision;
     BulletBase!: BulletBase;
+    ECSNode!: ECSNode;
 }
 
 export class GunEnt extends ecs.Entity {

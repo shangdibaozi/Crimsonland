@@ -15,6 +15,8 @@ export class Lobby extends UIBase {
         this._toggleNearest.$Toggle.isChecked = true;
         this._toggleLessBlood.$Toggle.isChecked = false;
         this._toggleLock.$Toggle.isChecked = false;
+
+        this._toggleLessBlood.active = false; // 吃了可以看见血量的buff后才显示
     }
 
     start () {

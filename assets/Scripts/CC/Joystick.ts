@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, UITransform, Prefab, CameraComponent, SystemEventType, EventTouch, v3, Vec2, Vec3, UIOpacity, CCInteger, v2 } from 'cc';
+import { _decorator, Component, Node, SystemEventType, EventTouch, v3, Vec2, Vec3, UIOpacity, CCInteger } from 'cc';
 import { UI_EVENT } from '../Constants';
 import { Global } from '../Global';
 const { ccclass, property } = _decorator;
