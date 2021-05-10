@@ -29,6 +29,10 @@ export class MonsterFactory extends ecs.ComblockSystem {
         Global.uiEvent.on(UI_EVENT.START_GAME, this.onStartGame, this);
     }
 
+    onDestroy() {
+        Global.uiEvent.targetOff(this);
+    }
+
     filter(): ecs.IMatcher {
         return ecs.allOf(Timer);
     }

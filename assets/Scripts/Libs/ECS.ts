@@ -765,6 +765,10 @@ export module ecs {
 
         }
 
+        onDestroy(): void {
+
+        }
+
         hasEntity(): boolean {
             return this.group.count > 0;
         }
@@ -855,9 +859,7 @@ export module ecs {
         }
 
         init() {
-            for (let i = 0; i < this.systemCnt; i++) {
-                this.executeSystemFlows[i].init();
-            }
+            this.executeSystemFlows.forEach(sys => sys.init());
         }
 
         execute(dt: number) {
@@ -865,6 +867,10 @@ export module ecs {
                 // @ts-ignore
                 this.executeSystemFlows[i].execute(dt);
             }
+        }
+
+        clear() {
+            this.executeSystemFlows.forEach(sys => sys.onDestroy());
         }
     }
 

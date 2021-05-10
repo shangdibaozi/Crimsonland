@@ -11,7 +11,10 @@ export class KeyboardSystem extends ecs.ComblockSystem implements ecs.IEntityEnt
     init() {
         systemEvent.on(SystemEventType.KEY_DOWN, this.onKeyDown, this);
         systemEvent.on(SystemEventType.KEY_UP, this.onKeyUp, this);
+    }
 
+    onDestroy() {
+        systemEvent.targetOff(this);
     }
 
     filter(): ecs.IMatcher {

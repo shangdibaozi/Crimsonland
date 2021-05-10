@@ -20,6 +20,10 @@ export class PlayerMoveSystem extends ecs.ComblockSystem implements ecs.IEntityE
         Global.uiEvent.on(UI_EVENT.PLAYER_STOP_MOVE, this.onPlayerStopMove, this);
     }
 
+    onDestroy() {
+        Global.uiEvent.targetOff(this);
+    }
+
     filter(): ecs.IMatcher {
         return ecs.allOf(PlayerNode, Movement, Transform);
     }

@@ -33,6 +33,10 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
         Global.uiEvent.on(UI_EVENT.SHOOT_LOCK, this.onShootLock, this);
     }
 
+    onDestroy() {
+        Global.uiEvent.targetOff(this);
+    }
+
     filter(): ecs.IMatcher {
         return ecs.allOf(AutoFireComponent);
     }
