@@ -106,6 +106,7 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
         let gunNode = gunBase.ent.get(GunNode);
         gunNode.root!.setPosition(gunBase.kickbackAmount, 0, 0);
         gunNode.gunPointUITransform!.convertToWorldSpaceAR(Vec3.ZERO, pos);
+        
         let bulletPos = Global.gameWorld!.avatarLayerUITransform.convertToNodeSpaceAR(pos, pos);
 
         Vec3.subtract(heading, monsterEnt!.Transform.position, bulletPos);

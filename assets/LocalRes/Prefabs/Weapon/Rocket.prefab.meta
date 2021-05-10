@@ -2,12 +2,12 @@
   "ver": "1.1.27",
   "importer": "prefab",
   "imported": true,
-  "uuid": "7d4b2831-87fe-4427-bf0d-3c4eb8ee8787",
+  "uuid": "b5b96cbc-9fa8-4999-9a1b-0aa5bb6eae1f",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "Shotgun"
+    "syncNodeName": "Rocket"
   }
 }

@@ -9,7 +9,7 @@ export class PlayerControllerSystem extends ecs.System {
     constructor() {
         super();
 
-        this.add(new KeyboardSystem());
+        // this.add(new KeyboardSystem());
         this.add(new PlayerMoveSystem());
         this.add(new CameraFollow());
         this.add(new AutoFire());

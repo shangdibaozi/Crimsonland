@@ -18,10 +18,9 @@ export class SysUtil {
         player.Collision.radius = 14;
 
         player.CameraFollow.camera = Global.gameWorld!.camera.node;
+        
 
-        // 判断运行环境
-        // player.add(Keyboard);
-
+        // 游戏开始默认给玩家的是手枪
         let gunNode = instantiate(Global.gunCfg!.gunInfos[0].gun);
         gunNode.parent = player.PlayerNode.gunNode;
         let gunEnt = EntityFactory.createGunEnt();
