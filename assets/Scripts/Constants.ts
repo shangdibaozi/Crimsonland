@@ -16,4 +16,4 @@ export enum AI_STATE {
     ATTACK
 }
 
-export const ITEM_COLLISION_RADIUS = 30;
+export const ITEM_COLLISION_RADIUS = 20;

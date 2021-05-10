@@ -2,12 +2,12 @@
     "10000" : {
         "Name": "",
         "Damage": 20,
-        "RateOfFire": 8,
-        "Speed": 400,
+        "RateOfFire": 4,
+        "Speed": 300,
         "NumberPerShoot": 1,
-        "MaxAmount": 20,
+        "MaxAmount": 30,
         "KickbackAmount": -3,
-        "TimeOfAddBullet": 2
+        "TimeOfAddBullet": 1
     }
 
 }
