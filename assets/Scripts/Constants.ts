@@ -15,3 +15,5 @@ export enum AI_STATE {
     FOLLOW,
     ATTACK
 }
+
+export const ITEM_COLLISION_RADIUS = 30;

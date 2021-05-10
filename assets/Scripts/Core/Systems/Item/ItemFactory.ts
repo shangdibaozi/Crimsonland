@@ -1,4 +1,5 @@
 import { instantiate } from "cc";
+import { ITEM_COLLISION_RADIUS } from "../../../Constants";
 import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
 import { Util } from "../../../Util";
@@ -30,6 +31,9 @@ export class ItemFactory extends ecs.ComblockSystem {
                 let itemEnt = EntityFactory.createItemEnt();
                 itemEnt.ECSNode.val = gunNode;
                 itemEnt.Lifetime.time = 40;
+
+                itemEnt.Transform.position.set(pos);
+                itemEnt.Collision.radius = ITEM_COLLISION_RADIUS;
 
                 itemEnt.add(TagGun);
             }

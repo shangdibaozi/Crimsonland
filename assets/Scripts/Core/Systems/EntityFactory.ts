@@ -16,10 +16,11 @@ import { GunNode } from "../Components/Weapon/GunNode";
 import { ECSNode } from "../Components/ECSNode";
 import { AutoFireComponent } from "../Components/AutoFireComponent";
 import { TagItem } from "../Components/Tag/TagItem";
+import { TagPlayer } from "../Components/Tag/TagPlayer";
 
 export class EntityFactory {
     static createPlayerEnt() {
-        return ecs.createEntityWithComps<PlayerEnt>(PlayerNode, Movement, Transform, Collision, AvatarProperties, CameraFollowComponent, AutoFireComponent);
+        return ecs.createEntityWithComps<PlayerEnt>(PlayerNode, Movement, Transform, Collision, AvatarProperties, CameraFollowComponent, AutoFireComponent, TagPlayer);
     }
 
     static createMonster() {
@@ -37,7 +38,7 @@ export class EntityFactory {
     }
 
     static createItemEnt() {
-        let ent = ecs.createEntityWithComps<ItemEnt>(TagItem, Lifetime, ECSNode);
+        let ent = ecs.createEntityWithComps<ItemEnt>(TagItem, Lifetime, ECSNode, Transform, Collision);
 
         return ent;
     }
@@ -80,4 +81,6 @@ export class ItemEnt extends ecs.Entity {
     TagItem!: TagItem;
     Lifetime!: Lifetime
     ECSNode!: ECSNode;
+    Transform!: Transform;
+    Collision!: Collision;
 }
