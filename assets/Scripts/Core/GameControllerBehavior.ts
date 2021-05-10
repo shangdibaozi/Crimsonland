@@ -16,6 +16,9 @@ export class GameControllerBehavior extends Component {
         this.rootSystem.init();
 
         Global.uiEvent.emit(UI_EVENT.START_GAME);
+
+        // @ts-ignore
+        window['ecs'] = ecs;
     }
 
     stopEcs() {

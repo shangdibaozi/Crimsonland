@@ -8,7 +8,7 @@ import { ECSNode } from "../../Components/ECSNode";
 import { EnemyNode } from "../../Components/EnemyNode";
 import { Movement } from "../../Components/Movement";
 import { PlayerNode } from "../../Components/PlayerNode";
-import { TagEnemy } from "../../Components/TagEnemy";
+import { TagEnemy } from "../../Components/Tag/TagEnemy";
 import { Transform } from "../../Components/Transform";
 import { MonsterEnt } from "../EntityFactory";
 

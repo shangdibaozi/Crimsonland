@@ -7,7 +7,7 @@ import { AvatarProperties } from "../../Components/AvatarProperties";
 import { Collision } from "../../Components/Collision";
 import { EnemyNode } from "../../Components/EnemyNode";
 import { Movement } from "../../Components/Movement";
-import { TagEnemy } from "../../Components/TagEnemy";
+import { TagEnemy } from "../../Components/Tag/TagEnemy";
 import { Transform } from "../../Components/Transform";
 import { ObjPool } from "../../ObjPool";
 import { EntityFactory } from "../EntityFactory";

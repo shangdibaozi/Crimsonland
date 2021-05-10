@@ -3,10 +3,11 @@ import { ecs } from "../../../Libs/ECS";
 import { AvatarProperties } from "../../Components/AvatarProperties";
 import { BulletNode } from "../../Components/BulletNode";
 import { Collision } from "../../Components/Collision";
+import { MonsterDead } from "../../Components/MonsterDead";
 import { Movement } from "../../Components/Movement";
-import { TagEnemy } from "../../Components/TagEnemy";
+import { TagEnemy } from "../../Components/Tag/TagEnemy";
 import { Transform } from "../../Components/Transform";
-import { BulletEnt } from "../EntityFactory";
+import { BulletEnt, MonsterEnt } from "../EntityFactory";
 
 
 
@@ -24,7 +25,7 @@ export class CollisionSystem extends ecs.ComblockSystem {
         return ecs.allOf(Transform, Collision, TagEnemy);
     }
 
-    update(entities: ecs.Entity[]): void {
+    update(entities: MonsterEnt[]): void {
         for(let i = this.bulletGroup.matchEntities.length - 1; i >= 0; i--) {
             let bulletEnt = this.bulletGroup.matchEntities[i];
             let transformBullet = bulletEnt.get(Transform);
@@ -45,6 +46,8 @@ export class CollisionSystem extends ecs.ComblockSystem {
 
                     avatarProperties.health =  Math.max(0, avatarProperties.health - damage);
                     if(avatarProperties.health <= 0) {
+                        let monsterDeadComp = ecs.createEntityWithComp(MonsterDead);
+                        Vec3.copy(monsterDeadComp.pos, enemyEnt.Transform.position)
                         enemyEnt.destroy();
                         entities.splice(j, 1);
                     }
