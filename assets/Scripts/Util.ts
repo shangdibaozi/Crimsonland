@@ -1,3 +1,4 @@
+import { Quat } from "cc";
 
 export class Util {
 
@@ -112,5 +113,29 @@ export class Util {
             }
         }
         return idx;
+    }
+
+    /**
+    * 四元数插值
+    * 
+    * https://forum.cocos.org/t/topic/100870
+    * @param out 
+    * @param a 
+    * @param b 
+    * @param t 
+    */
+     static quatLerp(out: Quat, a: Quat, b: Quat, t: number) {
+        if (Quat.dot(a, b) < 0.0) {
+            out.x = -b.x;
+            out.y = -b.y;
+            out.z = -b.z;
+            out.w = -b.w;
+        }
+        else {
+            Quat.copy(out, b);
+        }
+        Quat.lerp(out, a, out, t);
+        Quat.normalize(out, out);
+        return out;
     }
 }

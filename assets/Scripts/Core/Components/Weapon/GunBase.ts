@@ -1,3 +1,4 @@
+import { v3, Vec3 } from "cc";
 import { ecs } from "../../../Libs/ECS";
 
 @ecs.register('GunBase')
@@ -42,6 +43,8 @@ export class GunBase extends ecs.IComponent {
      * 装满弹夹需要的时间
      */
     timeOfAddBullet: number = 1;
+
+    
 
     init(cfg: GunInfo) {
         this.damage = cfg.Damage;

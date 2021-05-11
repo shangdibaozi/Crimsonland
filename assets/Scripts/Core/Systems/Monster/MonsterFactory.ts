@@ -38,7 +38,7 @@ export class MonsterFactory extends ecs.ComblockSystem {
     }
 
     update(entities: ecs.Entity[]): void {
-        if(ecs.query(ecs.allOf(Transform, Collision, TagEnemy)).length >= 200) {
+        if(ecs.query(ecs.allOf(Transform, Collision, TagEnemy)).length >= 4) {
             return;
         }
         let time = entities[0].get(Timer).time -= this.dt;
