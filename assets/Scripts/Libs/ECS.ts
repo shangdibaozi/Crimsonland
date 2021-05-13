@@ -606,6 +606,7 @@ export module ecs {
     class Matcher implements IMatcher {
         protected rules: BaseOf[] = [];
         protected _indices: number[] | null = null;
+        public isMatch!: (entity: Entity) => boolean;
         /**
          * 匹配器关注的组件索引。在创建Group时，Context根据组件id去给Group关联组件的添加和移除事件。
          */
@@ -615,6 +616,7 @@ export module ecs {
                 this.rules.forEach((rule) => {
                     Array.prototype.push.apply(this._indices, rule.indices);
                 });
+                this.bindMatchMethod();
             }
             return this._indices;
         }
@@ -676,21 +678,33 @@ export module ecs {
             return s;
         }
 
-        public isMatch(entity: Entity): boolean {
-            if (this.rules.length === 1) {
-                return this.rules[0].isMatch(entity);
+        private bindMatchMethod() {
+            if(this.rules.length === 1) {
+                this.isMatch = this.isMatch1;
             }
-            else if (this.rules.length === 2) {
-                return this.rules[0].isMatch(entity) && this.rules[1].isMatch(entity);
+            else if(this.rules.length === 2) {
+                this.isMatch = this.isMatch2;
             }
             else {
-                for (let rule of this.rules) {
-                    if (!rule.isMatch(entity)) {
-                        return false;
-                    }
-                }
-                return true;
+                this.isMatch = this.isMatchMore;
             }
+        }
+
+        private isMatch1(entity: Entity): boolean {
+            return this.rules[0].isMatch(entity);
+        }
+
+        private isMatch2(entity: Entity): boolean {
+            return this.rules[0].isMatch(entity) && this.rules[1].isMatch(entity);
+        }
+
+        private isMatchMore(entity: Entity): boolean {
+            for (let rule of this.rules) {
+                if (!rule.isMatch(entity)) {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 
