@@ -119,7 +119,6 @@
     "__prefab": {
       "__id__": 4
     },
-    "_priority": 0,
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 18,
@@ -159,7 +158,8 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "3b073835-5562-42cf-b095-8a31d62b6d08@f9941"
+      "__uuid__": "3b073835-5562-42cf-b095-8a31d62b6d08@f9941",
+      "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
     "_fillType": 0,
@@ -192,7 +192,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "ShootPoint",
+    "_name": "Muzzle",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -246,7 +246,6 @@
     "__prefab": {
       "__id__": 10
     },
-    "_priority": 0,
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1,
@@ -284,7 +283,6 @@
     "__prefab": {
       "__id__": 13
     },
-    "_priority": 0,
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 18,

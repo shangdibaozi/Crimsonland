@@ -156,7 +156,8 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
         gunNode.root!.setPosition(gunBase.kickbackAmount, 0, 0);
         
         gunBase.amount -= 1;
-        let bulletNode = ObjPool.getNode(NODE_TYPE.BULLET_PISTAL, true, Global.gameWorld!.bulletLayer);
+        let bulletNode = ObjPool.getNode(gunBase.bulletName);
+        bulletNode.active = true;
         bulletNode.parent = Global.gameWorld!.bulletLayer;
         bulletNode.setPosition(pos);
         bulletNode.angle = angle;

@@ -5,6 +5,7 @@ import { ecs } from "../../../Libs/ECS";
 import { Util } from "../../../Util";
 import { MonsterDead } from "../../Components/MonsterDead";
 import { TagGun } from "../../Components/Tag/TagGun.";
+import { ObjPool } from "../../ObjPool";
 import { EntityFactory } from "../EntityFactory";
 
 export class ItemFactory extends ecs.ComblockSystem {
@@ -24,7 +25,7 @@ export class ItemFactory extends ecs.ComblockSystem {
             let pos = ent.get(MonsterDead).pos;
 
             if(Math.random() <= 0.3 && this.gunGroup.count < 3) {
-                let gunNode = instantiate(Util.randomChoice(Global.gunCfg!.gunInfos).gun);
+                let gunNode = ObjPool.getRandomGun();
                 gunNode.parent = Global.gameWorld!.avatarLayer;
                 gunNode.setPosition(pos);
     

@@ -1,8 +1,10 @@
 import { instantiate, Node, Prefab, resources } from "cc";
+import { Util } from "../Util";
 
 export enum NODE_TYPE {
     BULLET_PISTAL = 'Bullet_A',
-    MONSTER = 'Skeleton_01'
+    MONSTER = 'Skeleton_01',
+    GUN_ROCKET = 'Rocket'
 }
 
 export class ObjPool {
@@ -10,9 +12,11 @@ export class ObjPool {
     private static _pools: Map<string, Node[]> = new Map();
     private static prefabs: Map<string, Prefab> = new Map();
 
-    static loadPrefabs() {
+    private static prefabType: Map<string, Prefab[]> = new Map();
+
+    private static load(folder: string) {
         return new Promise<boolean>((resolve, reject) => {
-            resources.loadDir('ObjPrefabs', Prefab, (err: Error | null, prefabs: Prefab[]) => {
+            resources.loadDir(`Prefabs/${folder}`, Prefab, (err: Error | null, prefabs: Prefab[]) => {
                 if(err) {
                     reject(false);
                 }
@@ -20,13 +24,20 @@ export class ObjPool {
                     prefabs.forEach(prefab => {
                         this.prefabs.set(prefab.data.name, prefab);
                     });
+                    this.prefabType.set(folder, prefabs);
                     resolve(true);
                 }
             });
         });
     }
 
-    static getNode(nodeName: string, active: boolean, parent: Node) {
+    static async loadPrefabs() {
+        await this.load('Guns');
+        await this.load('Monsters');
+        await this.load('Bullets');
+    }
+
+    static getNode(nodeName: string) {
         if(!this._pools.has(nodeName)) {
             this._pools.set(nodeName, []);
         }
@@ -38,13 +49,19 @@ export class ObjPool {
         else {
             node = lst!.pop()!;
         }
-        node.active = true;
-        node.parent = parent;
         return node;
     }
 
     static putNode(node: Node) {
         node.active = false;
         this._pools.get(node.name)!.push(node);
+    }
+
+    static get guns() {
+        return this.prefabType.get('Guns')!;
+    }
+
+    static getRandomGun() {
+        return this.getNode(Util.randomChoice(this.guns).data.name);
     }
 }

@@ -1,13 +1,25 @@
 {
     "10000" : {
-        "Name": "",
-        "Damage": 1,
+        "Name": "pistal",
+        "Damage": 5,
         "RateOfFire": 4,
         "Speed": 300,
         "NumberPerShoot": 1,
         "MaxAmount": 30,
         "KickbackAmount": -3,
-        "TimeOfAddBullet": 1
+        "TimeOfAddBullet": 1,
+        "BulletName": "Bullet_A"
+    },
+    "10001" : {
+        "Name": "Rocket",
+        "Damage": 40,
+        "RateOfFire": 1,
+        "Speed": 200,
+        "NumberPerShoot": 1,
+        "MaxAmount": 5,
+        "KickbackAmount": -4,
+        "TimeOfAddBullet": 2,
+        "BulletName": "Bullet_Rocket"
     }
 
 }

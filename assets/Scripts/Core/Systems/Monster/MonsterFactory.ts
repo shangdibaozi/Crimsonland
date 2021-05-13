@@ -52,7 +52,9 @@ export class MonsterFactory extends ecs.ComblockSystem {
     }
 
     generateMonster() {
-        let monsterNode = ObjPool.getNode(NODE_TYPE.MONSTER, true, Global.gameWorld!.avatarLayer);
+        let monsterNode = ObjPool.getNode(NODE_TYPE.MONSTER);
+        monsterNode.active = true;
+        monsterNode.parent = Global.gameWorld!.avatarLayer;
         monsterNode.setPosition(v3(Util.randomRange(-500, 500), Util.randomRange(-500, 500), 0));
 
         let enemyEnt = EntityFactory.createMonster();

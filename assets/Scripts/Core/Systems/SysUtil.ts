@@ -2,6 +2,7 @@ import { Global } from "../../Global";
 import { Keyboard } from "../Components/Keyboard";
 import { EntityFactory, PlayerEnt } from "./EntityFactory";
 import { instantiate, Node, UITransform } from "cc";
+import { NODE_TYPE, ObjPool } from "../ObjPool";
 
 export class SysUtil {
 
@@ -21,12 +22,13 @@ export class SysUtil {
         
 
         // 游戏开始默认给玩家的是手枪
-        let gunNode = instantiate(Global.gunCfg!.gunInfos[0].gun);
+        let gunNode = ObjPool.getNode(NODE_TYPE.GUN_ROCKET);
+        gunNode.active = true;
         gunNode.parent = player.PlayerNode.gunNode;
         let gunEnt = EntityFactory.createGunEnt();
         gunEnt.GunNode.root = gunNode;
-        gunEnt.GunNode.gunPointUITransform = gunNode.getChildByName('ShootPoint')?.getComponent(UITransform)!; 
-        gunEnt.GunBase.init(Global.cfgMgr!.gunCfg[10000]);
+        gunEnt.GunNode.gunPointUITransform = gunNode.getChildByName('Muzzle')?.getComponent(UITransform)!; 
+        gunEnt.GunBase.init(Global.cfgMgr!.gunCfg[10001]);
         player.AvatarProperties.weaponEid = gunEnt.eid;
     }
 }

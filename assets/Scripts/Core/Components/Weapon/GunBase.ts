@@ -44,7 +44,7 @@ export class GunBase extends ecs.IComponent {
      */
     timeOfAddBullet: number = 1;
 
-    
+    bulletName: string = '';
 
     init(cfg: GunInfo) {
         this.damage = cfg.Damage;
@@ -54,6 +54,7 @@ export class GunBase extends ecs.IComponent {
         this.maxAmount = this.amount = cfg.MaxAmount;
         this.kickbackAmount = cfg.KickbackAmount;
         this.timeOfAddBullet = cfg.TimeOfAddBullet;
+        this.bulletName = cfg.BulletName;
     }
 
     reset() {
@@ -67,5 +68,6 @@ export class GunBase extends ecs.IComponent {
         this.maxAmount = 0;
         this.kickbackAmount = -3;
         this.timeOfAddBullet = 1;
+        this.bulletName = '';
     }
 }

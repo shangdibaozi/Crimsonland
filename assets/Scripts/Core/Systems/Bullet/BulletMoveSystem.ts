@@ -34,7 +34,9 @@ export class BulletMoveSystem extends ecs.ComblockSystem {
     }
 
     onCreateBullet(heading: Vec3, pos: Vec3) {
-        let bulletNode = ObjPool.getNode(NODE_TYPE.BULLET_PISTAL, true, Global.gameWorld!.bulletLayer);
+        let bulletNode = ObjPool.getNode(NODE_TYPE.BULLET_PISTAL);
+        bulletNode.active = true;
+        bulletNode.parent = Global.gameWorld!.bulletLayer;
         bulletNode.setPosition(pos);
         bulletNode.angle = Math.atan2(heading.y, heading.x) * macro.DEG;
         

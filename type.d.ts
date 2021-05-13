@@ -8,4 +8,5 @@ type GunInfo = {
     MaxAmount: number;
     KickbackAmount: number;
     TimeOfAddBullet: number;
+    BulletName: string;
 };
