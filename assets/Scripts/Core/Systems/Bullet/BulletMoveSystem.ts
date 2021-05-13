@@ -7,7 +7,7 @@ import { Collision } from "../../Components/Collision";
 import { Lifetime } from "../../Components/Lifetime";
 import { Movement } from "../../Components/Movement";
 import { Transform } from "../../Components/Transform";
-import { ObjPool } from "../../ObjPool";
+import { NODE_TYPE, ObjPool } from "../../ObjPool";
 import { BulletEnt, EntityFactory } from "../EntityFactory";
 
 export class BulletMoveSystem extends ecs.ComblockSystem {
@@ -34,8 +34,7 @@ export class BulletMoveSystem extends ecs.ComblockSystem {
     }
 
     onCreateBullet(heading: Vec3, pos: Vec3) {
-        let bulletNode = ObjPool.getBullet();
-        bulletNode.parent = Global.gameWorld!.bulletLayer;
+        let bulletNode = ObjPool.getNode(NODE_TYPE.BULLET_PISTAL, true, Global.gameWorld!.bulletLayer);
         bulletNode.setPosition(pos);
         bulletNode.angle = Math.atan2(heading.y, heading.x) * macro.DEG;
         

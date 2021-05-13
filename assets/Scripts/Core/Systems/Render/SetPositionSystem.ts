@@ -16,7 +16,7 @@ export class SetPositionSystem extends ecs.ComblockSystem {
         for(let e of entities) {
             e.ECSNode.val.setPosition(e.Transform.position);
 
-            e.ECSNode.uiTransform.priority = 1600 - (e.ECSNode.val.position.y - e.ECSNode.uiTransform.height * 0.5);
+            e.ECSNode.val.setSiblingIndex(1600 - (e.ECSNode.val.position.y - e.ECSNode.uiTransform.height * 0.5));
         }
     }
 

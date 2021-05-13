@@ -17,7 +17,7 @@ export class EnemyNode extends ecs.IComponent {
     reset() {
         let node = this.ent.get(ECSNode).val;
         if(node) {
-            ObjPool.putMonster(node);
+            ObjPool.putNode(node);
         }
     }
 }

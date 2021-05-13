@@ -1,31 +1,50 @@
-import { instantiate, Node } from "cc";
-import { Global } from "../Global";
-import { Util } from "../Util";
+import { instantiate, Node, Prefab, resources } from "cc";
+
+export enum NODE_TYPE {
+    BULLET_PISTAL = 'Bullet_A',
+    MONSTER = 'Skeleton_01'
+}
 
 export class ObjPool {
-    private static bulletPool: Node[] = [];
 
-    private static monsterPool: Node[] = [];
+    private static _pools: Map<string, Node[]> = new Map();
+    private static prefabs: Map<string, Prefab> = new Map();
 
-    static getBullet() {
-        let node = this.bulletPool.pop() || instantiate(Global.gunCfg!.gunInfos[0].bullet);
+    static loadPrefabs() {
+        return new Promise<boolean>((resolve, reject) => {
+            resources.loadDir('ObjPrefabs', Prefab, (err: Error | null, prefabs: Prefab[]) => {
+                if(err) {
+                    reject(false);
+                }
+                else {
+                    prefabs.forEach(prefab => {
+                        this.prefabs.set(prefab.data.name, prefab);
+                    });
+                    resolve(true);
+                }
+            });
+        });
+    }
+
+    static getNode(nodeName: string, active: boolean, parent: Node) {
+        if(!this._pools.has(nodeName)) {
+            this._pools.set(nodeName, []);
+        }
+        let lst = this._pools.get(nodeName)!;
+        let node!: Node;
+        if(lst.length === 0) {
+            node = instantiate(this.prefabs.get(nodeName)!);
+        }
+        else {
+            node = lst!.pop()!;
+        }
         node.active = true;
+        node.parent = parent;
         return node;
     }
 
-    static putBullet(bullet: Node) {
-        bullet.active = false;
-        this.bulletPool.push(bullet);
-    }
-
-    static getMonster() {
-        let node = this.monsterPool.pop() || instantiate(Util.randomChoice(Global.gameWorld!.monstersPrefab));
-        node.active = true;
-        return node;
-    }
-
-    static putMonster(monster: Node) {
-        monster.active = false;
-        this.monsterPool.push(monster);
+    static putNode(node: Node) {
+        node.active = false;
+        this._pools.get(node.name)!.push(node);
     }
 }

@@ -9,7 +9,7 @@ import { EnemyNode } from "../../Components/EnemyNode";
 import { Movement } from "../../Components/Movement";
 import { TagEnemy } from "../../Components/Tag/TagEnemy";
 import { Transform } from "../../Components/Transform";
-import { ObjPool } from "../../ObjPool";
+import { NODE_TYPE, ObjPool } from "../../ObjPool";
 import { EntityFactory } from "../EntityFactory";
 
 
@@ -52,8 +52,7 @@ export class MonsterFactory extends ecs.ComblockSystem {
     }
 
     generateMonster() {
-        let monsterNode = ObjPool.getMonster();
-        monsterNode.parent = Global.gameWorld!.avatarLayer;
+        let monsterNode = ObjPool.getNode(NODE_TYPE.MONSTER, true, Global.gameWorld!.avatarLayer);
         monsterNode.setPosition(v3(Util.randomRange(-500, 500), Util.randomRange(-500, 500), 0));
 
         let enemyEnt = EntityFactory.createMonster();

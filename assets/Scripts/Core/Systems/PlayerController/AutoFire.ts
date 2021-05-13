@@ -7,7 +7,7 @@ import { AutoFireComponent } from "../../Components/AutoFireComponent";
 import { TagEnemy } from "../../Components/Tag/TagEnemy";
 import { GunBase } from "../../Components/Weapon/GunBase";
 import { GunNode } from "../../Components/Weapon/GunNode";
-import { ObjPool } from "../../ObjPool";
+import { NODE_TYPE, ObjPool } from "../../ObjPool";
 import { BulletEnt, EntityFactory, GunEnt, MonsterEnt, PlayerEnt } from "../EntityFactory";
 
 let pos = v3();
@@ -156,7 +156,7 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
         gunNode.root!.setPosition(gunBase.kickbackAmount, 0, 0);
         
         gunBase.amount -= 1;
-        let bulletNode = ObjPool.getBullet();
+        let bulletNode = ObjPool.getNode(NODE_TYPE.BULLET_PISTAL, true, Global.gameWorld!.bulletLayer);
         bulletNode.parent = Global.gameWorld!.bulletLayer;
         bulletNode.setPosition(pos);
         bulletNode.angle = angle;
