@@ -14,7 +14,7 @@
         "Name": "Rocket",
         "Damage": 40,
         "RateOfFire": 1,
-        "Speed": 200,
+        "Speed": 100,
         "NumberPerShoot": 1,
         "MaxAmount": 5,
         "KickbackAmount": -4,
