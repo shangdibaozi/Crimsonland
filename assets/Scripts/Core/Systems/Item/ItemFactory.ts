@@ -25,7 +25,10 @@ export class ItemFactory extends ecs.ComblockSystem {
             let pos = ent.get(MonsterDead).pos;
 
             if(Math.random() <= 0.3 && this.gunGroup.count < 3) {
-                let gunNode = ObjPool.getRandomGun();
+                let gunTableId = Number(Util.randomChoice(Object.keys(Global.cfgMgr!.gunCfg)));
+                let gunCfg = Global.cfgMgr!.gunCfg[gunTableId];
+
+                let gunNode = ObjPool.getNode(gunCfg.PrefabName);
                 gunNode.parent = Global.gameWorld!.avatarLayer;
                 gunNode.setPosition(pos);
     
@@ -37,6 +40,9 @@ export class ItemFactory extends ecs.ComblockSystem {
                 itemEnt.Collision.radius = ITEM_COLLISION_RADIUS;
 
                 itemEnt.add(TagGun);
+
+                // 
+                itemEnt.TagItem.tableId = gunTableId;
             }
 
             ent.destroy();

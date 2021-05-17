@@ -1,11 +1,13 @@
 import { UITransform, v3, Vec3 } from "cc";
 import { ITEM_COLLISION_RADIUS } from "../../../Constants";
+import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
 import { Collision } from "../../Components/Collision";
 import { TagGun } from "../../Components/Tag/TagGun.";
 import { TagItem } from "../../Components/Tag/TagItem";
 import { TagPlayer } from "../../Components/Tag/TagPlayer";
 import { Transform } from "../../Components/Transform";
+import { ObjPool } from "../../ObjPool";
 import { GunEnt, ItemEnt, PlayerEnt } from "../EntityFactory";
 
 let tmpDelta = v3();
@@ -31,15 +33,16 @@ export class ItemCollisionSystem extends ecs.ComblockSystem {
                 if(ent.has(TagGun)) {
                     // 更换武器
                     let gunEnt = ecs.getEntityByEid<GunEnt>(this.playerGroup.entity.AvatarProperties.weaponEid);
-                    // TODO: 枪节点回收
-                    gunEnt.GunNode.root?.destroy();
+                    // 枪节点回收
+                    ObjPool.putNode(gunEnt.GunNode.root!);
                     let newGunNode = ent.ECSNode.val;
                     newGunNode.setPosition(Vec3.ZERO);
                     gunEnt.GunNode.root = newGunNode;
                     gunEnt.GunNode.gunPointUITransform = newGunNode.getChildByName('Muzzle')!.getComponent(UITransform);
                     newGunNode.parent = this.playerGroup.entity.PlayerNode.gunNode;
 
-                    // TODO: 修改枪的参数
+                    // 修改枪的参数
+                    gunEnt.GunBase.init(Global.cfgMgr!.gunCfg[ent.TagItem.tableId]);
                 }
 
                 ent.destroy();

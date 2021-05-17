@@ -1,6 +1,7 @@
 
 type GunInfo = {
     Name: string;
+    PrefabName: string;
     Damage: number;
     RateOfFire: number;
     Speed: number;

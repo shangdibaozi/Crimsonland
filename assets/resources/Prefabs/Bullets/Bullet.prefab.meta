@@ -2,12 +2,12 @@
   "ver": "1.1.27",
   "importer": "prefab",
   "imported": true,
-  "uuid": "2026d695-18de-4ac4-a141-28d333ea4b8b",
+  "uuid": "ce5d16d0-abbe-49e2-85e1-904e2128cfb4",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "Shot"
+    "syncNodeName": "Bullet"
   }
 }

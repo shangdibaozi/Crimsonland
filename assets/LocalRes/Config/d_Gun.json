@@ -2,6 +2,7 @@
     "10000": {
         "GunID": 10000,
         "Name": "手枪",
+        "PrefabName": "Pistol",
         "Damage": 8,
         "RateOfFire": 2,
         "Speed": 100,
@@ -14,6 +15,7 @@
     "10001": {
         "GunID": 10001,
         "Name": "加农炮",
+        "PrefabName": "Cannon",
         "Damage": 30,
         "RateOfFire": 1,
         "Speed": 100,
@@ -26,6 +28,7 @@
     "10002": {
         "GunID": 10002,
         "Name": "火焰发射器",
+        "PrefabName": "FlameThrower",
         "Damage": 15,
         "RateOfFire": 5,
         "Speed": 100,
@@ -38,6 +41,7 @@
     "10003": {
         "GunID": 10003,
         "Name": "镭射枪",
+        "PrefabName": "Laser",
         "Damage": 18,
         "RateOfFire": 1,
         "Speed": 100,
@@ -50,6 +54,7 @@
     "10004": {
         "GunID": 10004,
         "Name": "物质枪",
+        "PrefabName": "Matter",
         "Damage": 19,
         "RateOfFire": 2,
         "Speed": 100,
@@ -62,6 +67,7 @@
     "10005": {
         "GunID": 10005,
         "Name": "冲锋枪",
+        "PrefabName": "Mg",
         "Damage": 11,
         "RateOfFire": 10,
         "Speed": 100,
@@ -74,6 +80,7 @@
     "10006": {
         "GunID": 10006,
         "Name": "火箭筒",
+        "PrefabName": "Rocket",
         "Damage": 25,
         "RateOfFire": 1,
         "Speed": 100,
@@ -86,6 +93,7 @@
     "10007": {
         "GunID": 10007,
         "Name": "狙击枪",
+        "PrefabName": "Spazer",
         "Damage": 22,
         "RateOfFire": 1,
         "Speed": 100,
