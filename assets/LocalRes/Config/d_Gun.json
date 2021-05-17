@@ -1,0 +1,98 @@
+{
+    "10000": {
+        "GunID": 10000,
+        "Name": "手枪",
+        "Damage": 8,
+        "RateOfFire": 2,
+        "Speed": 100,
+        "NumberPerShoot": 1,
+        "MaxAmount": 20,
+        "KickbackAmount": 1,
+        "TimeOfAddBullet": 1,
+        "BulletName": "Bullet_A"
+    },
+    "10001": {
+        "GunID": 10001,
+        "Name": "加农炮",
+        "Damage": 30,
+        "RateOfFire": 1,
+        "Speed": 100,
+        "NumberPerShoot": 1,
+        "MaxAmount": 4,
+        "KickbackAmount": 5,
+        "TimeOfAddBullet": 4,
+        "BulletName": "Bullet_Rocket"
+    },
+    "10002": {
+        "GunID": 10002,
+        "Name": "火焰发射器",
+        "Damage": 15,
+        "RateOfFire": 5,
+        "Speed": 100,
+        "NumberPerShoot": 1,
+        "MaxAmount": 30,
+        "KickbackAmount": 1,
+        "TimeOfAddBullet": 2,
+        "BulletName": "Bullet_Fire"
+    },
+    "10003": {
+        "GunID": 10003,
+        "Name": "镭射枪",
+        "Damage": 18,
+        "RateOfFire": 1,
+        "Speed": 100,
+        "NumberPerShoot": 1,
+        "MaxAmount": 15,
+        "KickbackAmount": 2,
+        "TimeOfAddBullet": 2,
+        "BulletName": "Bullet_C"
+    },
+    "10004": {
+        "GunID": 10004,
+        "Name": "物质枪",
+        "Damage": 19,
+        "RateOfFire": 2,
+        "Speed": 100,
+        "NumberPerShoot": 1,
+        "MaxAmount": 15,
+        "KickbackAmount": 2,
+        "TimeOfAddBullet": 2,
+        "BulletName": "Bullet_D"
+    },
+    "10005": {
+        "GunID": 10005,
+        "Name": "冲锋枪",
+        "Damage": 11,
+        "RateOfFire": 10,
+        "Speed": 100,
+        "NumberPerShoot": 1,
+        "MaxAmount": 40,
+        "KickbackAmount": 2,
+        "TimeOfAddBullet": 2,
+        "BulletName": "Bullet"
+    },
+    "10006": {
+        "GunID": 10006,
+        "Name": "火箭筒",
+        "Damage": 25,
+        "RateOfFire": 1,
+        "Speed": 100,
+        "NumberPerShoot": 1,
+        "MaxAmount": 6,
+        "KickbackAmount": 3,
+        "TimeOfAddBullet": 2,
+        "BulletName": "Bullet_Rocket"
+    },
+    "10007": {
+        "GunID": 10007,
+        "Name": "狙击枪",
+        "Damage": 22,
+        "RateOfFire": 1,
+        "Speed": 100,
+        "NumberPerShoot": 1,
+        "MaxAmount": 15,
+        "KickbackAmount": 4,
+        "TimeOfAddBullet": 1,
+        "BulletName": "Bullet_B"
+    }
+}

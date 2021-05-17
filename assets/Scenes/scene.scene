@@ -126,7 +126,7 @@
     "_enabled": true,
     "__prefab": null,
     "gunJson": {
-      "__uuid__": "b4b6f4f2-e008-427b-8c1f-8f06a43d46cb",
+      "__uuid__": "07cd7ad3-5ad7-4915-884f-41cd3eadd40d",
       "__expectedType__": "cc.JsonAsset"
     },
     "_id": "87bS4I89BMlZjP8/Mjti2d"
@@ -339,7 +339,7 @@
     "_priority": 1073741824,
     "_fov": 29.999999999999996,
     "_fovAxis": 0,
-    "_orthoHeight": 479.99999999999994,
+    "_orthoHeight": 480,
     "_near": 1,
     "_far": 1000,
     "_color": {
