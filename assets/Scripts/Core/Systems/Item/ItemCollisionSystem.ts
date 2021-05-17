@@ -36,7 +36,7 @@ export class ItemCollisionSystem extends ecs.ComblockSystem {
                     let newGunNode = ent.ECSNode.val;
                     newGunNode.setPosition(Vec3.ZERO);
                     gunEnt.GunNode.root = newGunNode;
-                    gunEnt.GunNode.gunPointUITransform = newGunNode.getChildByName('ShootPoint')!.getComponent(UITransform);
+                    gunEnt.GunNode.gunPointUITransform = newGunNode.getChildByName('Muzzle')!.getComponent(UITransform);
                     newGunNode.parent = this.playerGroup.entity.PlayerNode.gunNode;
 
                     // TODO: 修改枪的参数
