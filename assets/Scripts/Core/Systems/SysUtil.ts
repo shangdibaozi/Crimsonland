@@ -1,7 +1,7 @@
 import { Global } from "../../Global";
 import { Keyboard } from "../Components/Keyboard";
 import { EntityFactory, PlayerEnt } from "./EntityFactory";
-import { instantiate, Node, UITransform } from "cc";
+import { instantiate, Node, UITransform, Vec3 } from "cc";
 import { NODE_TYPE, ObjPool } from "../ObjPool";
 
 export class SysUtil {
@@ -12,9 +12,10 @@ export class SysUtil {
         player.PlayerNode.bodyNode = node.children[0];
         player.PlayerNode.gunNode = node.children[1];
 
-        player.Movement.maxSeed = 50;
+        player.Movement.maxSpeed = 50;
         player.Movement.speed = 0;
         player.Movement.heading.x = 1;
+        player.Movement.velocity.set(Vec3.ZERO);
 
         player.Collision.radius = 14;
 

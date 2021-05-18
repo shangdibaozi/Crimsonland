@@ -6,14 +6,17 @@ import { PlayerNode } from '../../Components/PlayerNode';
 import { PlayerEnt } from '../EntityFactory';
 import { Global } from '../../../Global';
 import { UI_EVENT } from '../../../Constants';
-import { Vec3 } from 'cc';
+import { clamp, v3, Vec3 } from 'cc';
 
-
+let tmpV3 = v3();
+let length = 0;
 
 export class PlayerMoveSystem extends ecs.ComblockSystem implements ecs.IEntityEnterSystem {
     player!: PlayerEnt;
     movement!: Movement;
 
+    isAcccelerate: boolean = false;
+    isDecelerate: boolean = false;
 
     init() {
         Global.uiEvent.on(UI_EVENT.PLAYER_MOVE, this.onPlayerMove, this);
@@ -34,16 +37,38 @@ export class PlayerMoveSystem extends ecs.ComblockSystem implements ecs.IEntityE
     }
 
     update(entities: PlayerEnt[]): void {
-        this.player.Transform.position.x += this.movement.heading.x * this.dt * this.movement.speed;
-        this.player.Transform.position.y += this.movement.heading.y * this.dt * this.movement.speed;
+        Vec3.add(tmpV3, this.movement.velocity, Vec3.multiplyScalar(tmpV3, this.movement.acceleration, this.dt));
+        length = Vec3.len(tmpV3);
+        if(length > this.movement.maxSpeed) {
+            Vec3.multiplyScalar(this.movement.velocity, tmpV3, 1 / length * this.movement.maxSpeed);
+        }
+        else {
+            if(this.isDecelerate && length <= 1) {
+                this.movement.velocity.set(Vec3.ZERO);
+                this.movement.acceleration.set(Vec3.ZERO);
+            }
+            else {
+                this.movement.velocity.set(tmpV3);
+            }
+        }
+        this.player.Transform.position.x += this.movement.velocity.x * this.dt;
+        this.player.Transform.position.y += this.movement.velocity.y * this.dt;
     }
     
+    /**
+     * @param heading 可以看做控制玩家运动合力的方向
+     */
     onPlayerMove(heading: Vec3) {
-        Vec3.copy(this.player.Movement.heading, heading);
-        this.player.Movement.speed = this.player.Movement.maxSeed;
+        Vec3.multiplyScalar(this.player.Movement.acceleration, heading, this.player.Movement.maxSpeed);
+        this.isAcccelerate = true;
+        this.isDecelerate = false;
     }
 
     onPlayerStopMove() {
-        this.player.Movement.speed = 0;
+        // this.player.Movement.speed = 0;
+        length = Vec3.len(this.movement.velocity);
+        Vec3.multiplyScalar(this.movement.acceleration, this.movement.velocity, -1 / length * this.movement.maxSpeed);
+        this.isAcccelerate = false;
+        this.isDecelerate = true;
     }
 }
