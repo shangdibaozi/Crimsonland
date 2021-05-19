@@ -5,7 +5,7 @@
         "PrefabName": "Pistol",
         "Damage": 8,
         "RateOfFire": 2,
-        "Speed": 100,
+        "Speed": 250,
         "NumberPerShoot": 1,
         "MaxAmount": 20,
         "KickbackAmount": 1,

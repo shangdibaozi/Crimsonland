@@ -59,12 +59,18 @@ export class PlayerMoveSystem extends ecs.ComblockSystem implements ecs.IEntityE
      * @param heading 可以看做控制玩家运动合力的方向
      */
     onPlayerMove(heading: Vec3) {
+        if(!this.player) {
+            return;
+        }
         Vec3.multiplyScalar(this.player.Movement.acceleration, heading, this.player.Movement.maxSpeed);
         this.isAcccelerate = true;
         this.isDecelerate = false;
     }
 
     onPlayerStopMove() {
+        if(!this.player) {
+            return;
+        }
         // this.player.Movement.speed = 0;
         length = Vec3.len(this.movement.velocity);
         Vec3.multiplyScalar(this.movement.acceleration, this.movement.velocity, -1 / length * this.movement.maxSpeed);

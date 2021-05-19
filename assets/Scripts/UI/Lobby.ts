@@ -9,12 +9,10 @@ const { ccclass, property } = _decorator;
 export class Lobby extends UIBase {
     _toggleNearest!: Node;
     _toggleLessBlood!: Node;
-    _toggleLock!: Node;
 
     onLoad() {
         this._toggleNearest.$Toggle.isChecked = true;
         this._toggleLessBlood.$Toggle.isChecked = false;
-        this._toggleLock.$Toggle.isChecked = false;
 
         this._toggleLessBlood.active = false; // 吃了可以看见血量的buff后才显示
     }
@@ -33,8 +31,8 @@ export class Lobby extends UIBase {
         Global.uiEvent.emit(UI_EVENT.SHOOT_LESS_BLOOD, this._toggleLessBlood.$Toggle);
     }
 
-    on_toggleLock() {
-        log('on_btnNearAndLessBlood');
-        Global.uiEvent.emit(UI_EVENT.SHOOT_LOCK);
+    on_btnChangeTarget() {
+        log('on_btnChangeTarget');
+        Global.uiEvent.emit(UI_EVENT.SHOOT_CHANGE_TARGET);
     }
 }

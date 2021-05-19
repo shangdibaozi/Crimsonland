@@ -4,7 +4,7 @@ import { ecs } from "../../Libs/ECS";
 @ecs.register('AutoFire')
 export class AutoFireComponent extends ecs.IComponent {
     searchMonster: number = -1;
-    isLock: boolean = false;
+    isLock: boolean = true;
     monsterEid: number = -1;
     /**
      * 是否射击过
@@ -14,7 +14,7 @@ export class AutoFireComponent extends ecs.IComponent {
     reset() {
         this.searchMonster = -1;
         this.monsterEid = -1;
-        this.isLock = false;
+        this.isLock = true;
         this.isShooted = true;
     }
 }

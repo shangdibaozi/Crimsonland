@@ -23,13 +23,15 @@ export class SysUtil {
         
 
         // 游戏开始默认给玩家的是手枪
-        let gunNode = ObjPool.getNode(NODE_TYPE.GUN_ROCKET);
+        let gunId = 10001;
+        let gunCfg = Global.cfgMgr!.gunCfg[gunId];
+        let gunNode = ObjPool.getNode(gunCfg.PrefabName);
         gunNode.active = true;
         gunNode.parent = player.PlayerNode.gunNode;
         let gunEnt = EntityFactory.createGunEnt();
         gunEnt.GunNode.root = gunNode;
         gunEnt.GunNode.gunPointUITransform = gunNode.getChildByName('Muzzle')?.getComponent(UITransform)!; 
-        gunEnt.GunBase.init(Global.cfgMgr!.gunCfg[10001]);
+        gunEnt.GunBase.init(gunCfg);
         player.AvatarProperties.weaponEid = gunEnt.eid;
     }
 }

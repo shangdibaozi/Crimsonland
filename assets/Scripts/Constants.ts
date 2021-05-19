@@ -6,7 +6,7 @@ export enum UI_EVENT {
     PLAYER_STOP_MOVE,
     SHOOT_NEAR,
     SHOOT_LESS_BLOOD,
-    SHOOT_LOCK
+    SHOOT_CHANGE_TARGET
 }
 
 export enum AI_STATE {
