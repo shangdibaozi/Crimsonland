@@ -79,7 +79,9 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
             let gunNode = this.playerEnt.PlayerNode!.gunNode;
             let gunNodeRad = gunNode!.angle * macro.RAD;
             heading1.set(Math.cos(gunNodeRad), Math.sin(gunNodeRad), 0);
-            let detalAngle = Math.acos(heading1.dot(heading)) * macro.DEG;  // 当前枪朝向向量和要对准的怪物朝向向量间的夹角
+            let val = Math.floor(heading1.dot(heading) * 10000) * 0.0001;
+            // Math.acos(1.0000000000000002) = NaN
+            let detalAngle = Math.acos(val) * macro.DEG;  // 当前枪朝向向量和要对准的怪物朝向向量间的夹角
             Vec3.cross(outV3, heading1, heading);
             detalAngle *= outV3.z > 0 ? 1 : -1;
             let angle = gunNode!.angle + detalAngle;

@@ -73,6 +73,9 @@ export class PlayerMoveSystem extends ecs.ComblockSystem implements ecs.IEntityE
         }
         // this.player.Movement.speed = 0;
         length = Vec3.len(this.movement.velocity);
+        if(length === 0) {
+            return;
+        }
         Vec3.multiplyScalar(this.movement.acceleration, this.movement.velocity, -1 / length * this.movement.maxSpeed);
         this.isAcccelerate = false;
         this.isDecelerate = true;

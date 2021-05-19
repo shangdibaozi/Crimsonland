@@ -28,6 +28,7 @@ export class SysUtil {
         let gunNode = ObjPool.getNode(gunCfg.PrefabName);
         gunNode.active = true;
         gunNode.parent = player.PlayerNode.gunNode;
+        gunNode.setPosition(Vec3.ZERO);
         let gunEnt = EntityFactory.createGunEnt();
         gunEnt.GunNode.root = gunNode;
         gunEnt.GunNode.gunPointUITransform = gunNode.getChildByName('Muzzle')?.getComponent(UITransform)!; 

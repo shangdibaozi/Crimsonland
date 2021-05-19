@@ -70,7 +70,7 @@
         "PrefabName": "Mg",
         "Damage": 11,
         "RateOfFire": 10,
-        "Speed": 100,
+        "Speed": 300,
         "NumberPerShoot": 1,
         "MaxAmount": 40,
         "KickbackAmount": 2,
