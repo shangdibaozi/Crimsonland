@@ -32,6 +32,7 @@ export class ObjPool {
     }
 
     static async loadPrefabs() {
+        await this.load('Effects');
         await this.load('Guns');
         await this.load('Monsters');
         await this.load('Bullets');

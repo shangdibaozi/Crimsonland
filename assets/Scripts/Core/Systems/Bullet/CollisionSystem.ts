@@ -1,4 +1,4 @@
-import { v3, Vec3 } from "cc";
+import { v3, Vec3, Animation, AnimationState } from "cc";
 import { ecs } from "../../../Libs/ECS";
 import { AvatarProperties } from "../../Components/AvatarProperties";
 import { BulletNode } from "../../Components/BulletNode";
@@ -7,6 +7,7 @@ import { MonsterDead } from "../../Components/MonsterDead";
 import { Movement } from "../../Components/Movement";
 import { TagEnemy } from "../../Components/Tag/TagEnemy";
 import { Transform } from "../../Components/Transform";
+import { ObjPool } from "../../ObjPool";
 import { BulletEnt, MonsterEnt } from "../EntityFactory";
 
 
@@ -43,8 +44,24 @@ export class CollisionSystem extends ecs.ComblockSystem {
                 else {
                     let damage = bulletEnt.BulletBase.damage;
                     let avatarProperties = enemyEnt.get(AvatarProperties);
-
                     avatarProperties.health =  Math.max(0, avatarProperties.health - damage);
+                    enemyEnt.EnemyNode.hpBar!.progress = avatarProperties.health / avatarProperties.maxHealth;
+
+                    let explode = enemyEnt.ECSNode.val.getChildByName('Explode');
+                    if(!explode) {
+                        explode = ObjPool.getNode('Explode');
+                        explode.parent = enemyEnt.ECSNode.val;
+                        explode.setPosition(Vec3.ZERO);
+                        explode.getComponent(Animation)!.on(Animation.EventType.FINISHED, (state: Animation.EventType, clip: AnimationState) => {
+                            clip['_targetNode']!.active = false;
+                        }, explode);
+                    }
+                    else {
+                        explode.getComponent(Animation)!.play();
+                        explode.active = true;
+                    }
+                    
+
                     if(avatarProperties.health <= 0) {
                         let monsterDeadComp = ecs.createEntityWithComp(MonsterDead);
                         Vec3.copy(monsterDeadComp.pos, enemyEnt.Transform.position)

@@ -58,7 +58,7 @@ export class MonsterFactory extends ecs.ComblockSystem {
         monsterNode.setPosition(v3(Util.randomRange(-500, 500), Util.randomRange(-500, 500), 0));
 
         let enemyEnt = EntityFactory.createMonster();
-        enemyEnt.get(EnemyNode).root = monsterNode;
+        enemyEnt.EnemyNode.root = monsterNode;
 
         Vec3.copy(enemyEnt.get(Transform).position, monsterNode.position);
 
@@ -70,6 +70,7 @@ export class MonsterFactory extends ecs.ComblockSystem {
 
         let prop = enemyEnt.get(AvatarProperties);
         prop.maxHealth = prop.health = 100;
+        enemyEnt.EnemyNode.hpBar!.progress = 1;
     }
 
     onStartGame() {

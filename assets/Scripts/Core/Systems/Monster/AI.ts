@@ -13,7 +13,7 @@ import { Transform } from "../../Components/Transform";
 import { MonsterEnt } from "../EntityFactory";
 
 let pos = v3();
-
+let scale = v3();
 
 export class AI extends ecs.ComblockSystem {
 
@@ -81,7 +81,10 @@ export class AI extends ecs.ComblockSystem {
                     }
                 }
                 
-                e.ECSNode.val.setScale(e.Movement.heading.x > 0 ? 1 : -1, 1, 1);
+                // 不改变身体的缩放比
+                e.EnemyNode.body!.getScale(scale);
+                scale.x = (e.Movement.heading.x > 0 ? 1 : -1) * Math.abs(scale.x);
+                e.EnemyNode.body!.setScale(scale);
             }
         }
     }

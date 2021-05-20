@@ -24,7 +24,7 @@ export class EntityFactory {
     }
 
     static createMonster() {
-        return ecs.createEntityWithComps(TagEnemy, Movement, EnemyNode, Transform, Collision, AIComponent, AvatarProperties);
+        return ecs.createEntityWithComps<MonsterEnt>(TagEnemy, Movement, EnemyNode, Transform, Collision, AIComponent, AvatarProperties);
     }
 
     static createBullet() {
@@ -60,6 +60,7 @@ export class MonsterEnt extends ecs.Entity {
     Transform!: Transform;
     ECSNode!: ECSNode;
     AvatarProperties!: AvatarProperties;
+    EnemyNode!: EnemyNode;
 }
 
 export class BulletEnt extends ecs.Entity {
