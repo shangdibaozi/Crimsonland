@@ -1,6 +1,8 @@
+import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
 import { ECSNode } from "../../Components/ECSNode";
 import { Transform } from "../../Components/Transform";
+import { Node } from "cc";
 
 class Ent extends ecs.Entity {
     Transform!: Transform;
@@ -8,16 +10,23 @@ class Ent extends ecs.Entity {
 }
 
 export class SetPositionSystem extends ecs.ComblockSystem {
+
+    flag = true;
+
     filter(): ecs.IMatcher {
         return ecs.allOf(Transform, ECSNode);
     }
 
     update(entities: Ent[]): void {
-        for(let e of entities) {
-            e.ECSNode.val.setPosition(e.Transform.position);
-
-            e.ECSNode.val.setSiblingIndex(1600 - (e.ECSNode.val.position.y - e.ECSNode.uiTransform.height * 0.5));
+        entities.forEach(e => e.ECSNode.val!.setPosition(e.Transform.position));
+        if(this.flag) {
+            // 更新渲染层级
+            Global.gameWorld?.avatarLayer.children.sort((a: Node, b: Node) => {
+                return b.position.y - a.position.y;
+            });
+            Global.gameWorld?.avatarLayer._updateSiblingIndex();
         }
+        this.flag = !this.flag;
     }
 
 }
