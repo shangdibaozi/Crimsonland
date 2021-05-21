@@ -58,6 +58,7 @@ export class MonsterEnt extends ecs.Entity {
     AI!: AIComponent;
     Movement!: Movement;
     Transform!: Transform;
+    Collision!: Collision;
     ECSNode!: ECSNode;
     AvatarProperties!: AvatarProperties;
     EnemyNode!: EnemyNode;
