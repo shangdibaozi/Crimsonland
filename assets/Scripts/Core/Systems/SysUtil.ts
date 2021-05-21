@@ -9,8 +9,8 @@ export class SysUtil {
     static createPlayer(node: Node) {
         let player = EntityFactory.createPlayerEnt() as PlayerEnt;
         player.PlayerNode.root = node;
-        player.PlayerNode.bodyNode = node.children[0];
-        player.PlayerNode.gunNode = node.children[1];
+        player.PlayerNode.bodyNode = node.getChildByName('Body');
+        player.PlayerNode.gunNode = node.getChildByName('GunPos');
 
         player.Movement.maxSpeed = 50;
         player.Movement.speed = 0;
