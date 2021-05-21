@@ -7,6 +7,7 @@ import { TagGun } from "../../Components/Tag/TagGun.";
 import { TagItem } from "../../Components/Tag/TagItem";
 import { TagPlayer } from "../../Components/Tag/TagPlayer";
 import { Transform } from "../../Components/Transform";
+import { GunNode } from "../../Components/Weapon/GunNode";
 import { ObjPool } from "../../ObjPool";
 import { GunEnt, ItemEnt, PlayerEnt } from "../EntityFactory";
 
@@ -35,10 +36,10 @@ export class ItemCollisionSystem extends ecs.ComblockSystem {
                     let gunEnt = ecs.getEntityByEid<GunEnt>(this.playerGroup.entity.AvatarProperties.weaponEid);
                     // 枪节点回收
                     ObjPool.putNode(gunEnt.GunNode.root!);
-                    let newGunNode = ent.ECSNode.val;
+                    let newGunNode = ent.ECSNode.val!;
+                    ent.ECSNode.val = null; // 实体销毁时会回收ECSNode组件中的节点，但是当前枪结点已经在使用，所以值为null不让回收
                     newGunNode.setPosition(Vec3.ZERO);
                     gunEnt.GunNode.root = newGunNode;
-                    gunEnt.GunNode.gunPointUITransform = newGunNode.getChildByName('Muzzle')!.getComponent(UITransform);
                     newGunNode.parent = this.playerGroup.entity.PlayerNode.gunNode;
 
                     // 修改枪的参数

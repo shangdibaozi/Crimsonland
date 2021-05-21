@@ -1,7 +1,6 @@
 import { ecs } from "../../Libs/ECS";
 import { error, Node, ProgressBar } from "cc";
 import { ECSNode } from "./ECSNode";
-import { ObjPool } from "../ObjPool";
 
 @ecs.register('EnemyNode')
 export class EnemyNode extends ecs.IComponent {
@@ -20,11 +19,7 @@ export class EnemyNode extends ecs.IComponent {
     hpBar: ProgressBar | null = null;
 
     reset() {
-        let node = this.ent.get(ECSNode).val;
         this.body = null;
         this.hpBar = null;
-        if(node) {
-            ObjPool.putNode(node);
-        }
     }
 }

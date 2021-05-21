@@ -31,7 +31,6 @@ export class SysUtil {
         gunNode.setPosition(Vec3.ZERO);
         let gunEnt = EntityFactory.createGunEnt();
         gunEnt.GunNode.root = gunNode;
-        gunEnt.GunNode.gunPointUITransform = gunNode.getChildByName('Muzzle')?.getComponent(UITransform)!; 
         gunEnt.GunBase.init(gunCfg);
         player.AvatarProperties.weaponEid = gunEnt.eid;
     }

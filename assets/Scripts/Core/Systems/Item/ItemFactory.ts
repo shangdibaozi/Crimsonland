@@ -1,4 +1,4 @@
-import { instantiate } from "cc";
+import { Animation, instantiate } from "cc";
 import { ITEM_COLLISION_RADIUS } from "../../../Constants";
 import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
@@ -31,6 +31,8 @@ export class ItemFactory extends ecs.ComblockSystem {
                 let gunNode = ObjPool.getNode(gunCfg.PrefabName);
                 gunNode.parent = Global.gameWorld!.avatarLayer;
                 gunNode.setPosition(pos);
+                gunNode.getComponent(Animation)!.play('GunSuspension');
+                gunNode.getChildByName('Shadow')!.active = true;
     
                 let itemEnt = EntityFactory.createItemEnt();
                 itemEnt.ECSNode.val = gunNode;
