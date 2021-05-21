@@ -12,7 +12,6 @@ export class ItemLifetimeSystem extends ecs.ComblockSystem {
     update(entities: ecs.Entity[]): void {
         for(let e of entities) {
             if((e.get(Lifetime).time -= this.dt) <= 0) {
-                e.get(ECSNode).val.destroy();
                 e.destroy();
             }
         }

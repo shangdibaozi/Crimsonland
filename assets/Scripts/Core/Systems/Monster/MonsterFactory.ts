@@ -62,7 +62,7 @@ export class MonsterFactory extends ecs.ComblockSystem {
 
         Vec3.copy(enemyEnt.get(Transform).position, monsterNode.position);
 
-        enemyEnt.get(Collision).radius = 30;
+        enemyEnt.get(Collision).radius = 15;
 
         enemyEnt.get(Movement).speed = 30;
 

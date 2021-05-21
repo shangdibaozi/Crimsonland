@@ -54,6 +54,9 @@ export class ObjPool {
     }
 
     static putNode(node: Node) {
+        if(this._pools.get(node.name)!.indexOf(node) >= 0) {
+            debugger;
+        }
         node.active = false;
         this._pools.get(node.name)!.push(node);
     }

@@ -1,4 +1,4 @@
-import { macro, v3, Vec3, log, Toggle, lerp } from "cc";
+import { macro, v3, Vec3, log, Toggle, lerp, UITransform, CircleCollider2D } from "cc";
 import { UI_EVENT } from "../../../Constants";
 import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
@@ -178,7 +178,7 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
 
         ent.Lifetime.time = 30;
 
-        ent.Collision.radius = 6;
+        ent.Collision.radius = bulletNode.getComponent(UITransform)!.width * 0.5;
 
         ent.BulletBase.damage = gunBase.damage;
     }

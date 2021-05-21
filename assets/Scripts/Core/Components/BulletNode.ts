@@ -15,9 +15,6 @@ export class BulletNode extends ecs.IComponent {
     }
 
     reset() {
-        let node = this.ent.get(ECSNode).val;
-        if(node) {
-            ObjPool.putNode(node);
-        }
+        
     }
 }

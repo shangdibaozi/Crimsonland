@@ -1,6 +1,7 @@
 import { ecs } from "../../Libs/ECS";
 import { Node, UITransform } from "cc";
 import { ObjPool } from "../ObjPool";
+import { EntityLink } from "../../CC/EntityLink";
 
 @ecs.register('ECSNode')
 export class ECSNode extends ecs.IComponent {
@@ -11,6 +12,12 @@ export class ECSNode extends ecs.IComponent {
         this._val = node;
         if(node) {
             this.uiTransform = node.getComponent(UITransform)!;
+
+            let linkComp = node.getComponent(EntityLink);
+            if(!linkComp) {
+                linkComp = node.addComponent(EntityLink);
+            }
+            linkComp.link(this.ent.eid);
         }
     }
 
@@ -20,9 +27,11 @@ export class ECSNode extends ecs.IComponent {
 
     
     reset() {
-        if(this.val) {
-            ObjPool.putNode(this.val);
+        if(this._val) {
+            ObjPool.putNode(this._val);
+            this._val.getComponent(EntityLink)?.unlink();
         }
+
         this.uiTransform = null;
         this._val = null;
     }

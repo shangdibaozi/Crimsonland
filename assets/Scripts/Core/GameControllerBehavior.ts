@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Camera } from 'cc';
+import { _decorator, Component, Node, Camera, Contact2DType, PhysicsSystem2D, Collider2D, IPhysics2DContact } from 'cc';
 import { UI_EVENT } from '../Constants';
 import { Global } from '../Global';
 import { ecs } from '../Libs/ECS';
@@ -21,6 +21,10 @@ export class GameControllerBehavior extends Component {
 
         // @ts-ignore
         window['ecs'] = ecs;
+        // @ts-ignore
+        window['ObjPool'] = ObjPool;
+
+        
     }
 
     stopEcs() {
@@ -32,4 +36,6 @@ export class GameControllerBehavior extends Component {
     update (deltaTime: number) {
         this.rootSystem!.execute(deltaTime);
     }
+
+    
 }
