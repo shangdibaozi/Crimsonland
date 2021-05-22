@@ -46,12 +46,6 @@ export class AI extends ecs.ComblockSystem {
                             e.AI.offset.x = Util.randomRange(-100, 100);
                             e.AI.offset.y = Util.randomRange(-100, 100);
                             e.AI.offset.z = 0;
-                            // pos.x = Util.randomRange(-100, 100);
-                            // pos.y = Util.randomRange(-100, 100);
-                            // pos.z = 0;
-                            
-                            // Vec3.add(e.AI.targetPos, pos, playerPos);
-                            
                             e.AI.aiState = AI_STATE.MOVE_TO;
                         }
                         break;
@@ -63,7 +57,15 @@ export class AI extends ecs.ComblockSystem {
                         e.Transform.position.add(Vec3.multiplyScalar(pos, e.Movement.heading, this.dt * e.Movement.speed));
 
                         if(Vec3.subtract(pos, e.AI.targetPos, e.Transform.position).lengthSqr() <= 10000) {
-                            e.AI.aiState = AI_STATE.FOLLOW;
+                            if(Math.random() < 0.5) {
+                                e.AI.aiState = AI_STATE.FOLLOW;
+                                log('----------')
+                            }
+                            else {
+                                console.log('==============')
+                                e.AI.aiState = AI_STATE.WAIT;
+                                e.AI.waitTime = Util.randomRange(0.5, 1);
+                            }
                         }
 
                         break;
@@ -78,6 +80,13 @@ export class AI extends ecs.ComblockSystem {
                             e.AI.aiState = AI_STATE.IDLE;
                         }
                         break;
+                    }
+                    case AI_STATE.WAIT: {
+                        e.AI.waitTime -= this.dt;
+                        if(e.AI.waitTime <= 0) {
+                            e.AI.aiState = AI_STATE.IDLE;
+                        }
+                        continue;
                     }
                 }
                 

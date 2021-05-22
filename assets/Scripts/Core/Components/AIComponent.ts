@@ -7,11 +7,14 @@ export class AIComponent extends ecs.IComponent {
 
     aiState: AI_STATE = AI_STATE.IDLE;
 
+    waitTime: number = 0;
+
     targetPos: Vec3 = v3();
 
     offset: Vec3 = v3();
 
     reset() {
         this.aiState = AI_STATE.IDLE;
+        this.waitTime = 0;
     }
 }

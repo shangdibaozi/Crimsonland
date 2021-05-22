@@ -42,7 +42,7 @@ export class CollisionSystem extends ecs.ComblockSystem {
 
     onBeginContact (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
         // 只在两个碰撞体开始接触时被调用一次
-        console.log('onBeginContact');
+        // console.log('onBeginContact');
         
 
         let selfEnt = selfCollider.getComponent(EntityLink)!.getEnt();

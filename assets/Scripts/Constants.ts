@@ -13,7 +13,8 @@ export enum AI_STATE {
     IDLE,
     MOVE_TO,
     FOLLOW,
-    ATTACK
+    ATTACK,
+    WAIT
 }
 
 export const ITEM_COLLISION_RADIUS = 15;

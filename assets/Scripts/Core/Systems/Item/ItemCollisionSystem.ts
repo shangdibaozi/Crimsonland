@@ -1,4 +1,4 @@
-import { UITransform, v3, Vec3 } from "cc";
+import { v3, Vec3 } from "cc";
 import { ITEM_COLLISION_RADIUS } from "../../../Constants";
 import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
@@ -7,7 +7,6 @@ import { TagGun } from "../../Components/Tag/TagGun.";
 import { TagItem } from "../../Components/Tag/TagItem";
 import { TagPlayer } from "../../Components/Tag/TagPlayer";
 import { Transform } from "../../Components/Transform";
-import { GunNode } from "../../Components/Weapon/GunNode";
 import { ObjPool } from "../../ObjPool";
 import { GunEnt, ItemEnt, PlayerEnt } from "../EntityFactory";
 

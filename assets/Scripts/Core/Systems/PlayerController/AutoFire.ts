@@ -91,7 +91,7 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
             *      return from + (to - from) * ratio;
                 * }
                 */
-            gunNode!.angle = lerp(gunNode!.angle, angle, this.dt * 10);
+            gunNode!.angle = lerp(gunNode!.angle, angle, this.dt * 20);
             
             if(Math.abs(gunNode!.angle - angle) <= CAN_FIRE_ANGLE) {
                 if(!autoFire.isShooted) {
