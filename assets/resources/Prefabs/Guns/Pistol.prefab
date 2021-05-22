@@ -33,10 +33,13 @@
       },
       {
         "__id__": 20
+      },
+      {
+        "__id__": 22
       }
     ],
     "_prefab": {
-      "__id__": 22
+      "__id__": 24
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -462,6 +465,35 @@
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "023Vre3PRFwqhd2ez1/i2q"
+  },
+  {
+    "__type__": "7748a8PN7tJaIttka5UcSpp",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 23
+    },
+    "layer": null,
+    "bullet": {
+      "__uuid__": "050876d9-30db-45d4-8a4c-25ff39ca418d",
+      "__expectedType__": "cc.Prefab"
+    },
+    "muzzle": {
+      "__id__": 14
+    },
+    "speed": 400,
+    "rateOfFire": 7,
+    "kickbackAmount": 1,
+    "angle": 3,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "a7N9hRxaZPbLGs7KEMhxXt"
   },
   {
     "__type__": "cc.PrefabInfo",

@@ -3,7 +3,7 @@
         "GunID": 10000,
         "Name": "手枪",
         "PrefabName": "Pistol",
-        "Damage": 8,
+        "Damage": 4,
         "RateOfFire": 2,
         "Speed": 250,
         "NumberPerShoot": 1,
@@ -23,7 +23,7 @@
         "MaxAmount": 4,
         "KickbackAmount": 5,
         "TimeOfAddBullet": 4,
-        "BulletName": "Bullet_Rocket"
+        "BulletName": "Bullet_Cannon"
     },
     "10002": {
         "GunID": 10002,

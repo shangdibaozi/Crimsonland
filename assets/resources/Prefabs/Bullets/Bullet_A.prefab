@@ -71,7 +71,7 @@
       "__id__": 1
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 3
@@ -155,17 +155,17 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 247,
-      "g": 141,
-      "b": 58,
+      "r": 255,
+      "g": 255,
+      "b": 255,
       "a": 200
     },
     "_preview": true,
-    "_fadeTime": 0.4,
+    "_fadeTime": 0.2,
     "_minSeg": 0,
     "_stroke": 3,
     "_texture": {
-      "__uuid__": "24a704da-2867-446d-8d1a-5e920c75e09d@6c48a",
+      "__uuid__": "4f46fd9e-fd53-4b5d-8c56-1d892a66496c@6c48a",
       "__expectedType__": "cc.Texture2D"
     },
     "_fastMode": false,

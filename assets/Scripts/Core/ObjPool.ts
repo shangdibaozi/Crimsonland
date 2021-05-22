@@ -38,14 +38,14 @@ export class ObjPool {
         await this.load('Bullets');
     }
 
-    static getNode(nodeName: string) {
+    static getNode(nodeName: string, prefab: Prefab | null = null) {
         if(!this._pools.has(nodeName)) {
             this._pools.set(nodeName, []);
         }
         let lst = this._pools.get(nodeName)!;
         let node!: Node;
         if(lst.length === 0) {
-            node = instantiate(this.prefabs.get(nodeName)!);
+            node = instantiate(prefab || this.prefabs.get(nodeName)!);
         }
         else {
             node = lst!.pop()!;
