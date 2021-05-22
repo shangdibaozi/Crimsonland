@@ -59,10 +59,8 @@ export class AI extends ecs.ComblockSystem {
                         if(Vec3.subtract(pos, e.AI.targetPos, e.Transform.position).lengthSqr() <= 10000) {
                             if(Math.random() < 0.5) {
                                 e.AI.aiState = AI_STATE.FOLLOW;
-                                log('----------')
                             }
                             else {
-                                console.log('==============')
                                 e.AI.aiState = AI_STATE.WAIT;
                                 e.AI.waitTime = Util.randomRange(0.5, 1);
                             }

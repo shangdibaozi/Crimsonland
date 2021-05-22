@@ -1,4 +1,4 @@
-import { macro, v3, Vec3, log, Toggle, lerp, UITransform, CircleCollider2D } from "cc";
+import { macro, v3, Vec3, log, Toggle, lerp, UITransform, CircleCollider2D, systemEvent, SystemEvent, EventMouse, Vec2 } from "cc";
 import { UI_EVENT } from "../../../Constants";
 import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
@@ -10,6 +10,7 @@ import { ObjPool } from "../../ObjPool";
 import { BulletEnt, EntityFactory, GunEnt, MonsterEnt, PlayerEnt } from "../EntityFactory";
 
 let pos = v3();
+let pos1 = v3();
 let heading = v3();
 let heading1 = v3();
 let tmpDelta = v3();
@@ -50,6 +51,7 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
     }
 
     update(entities: PlayerEnt[]): void {
+        // return;
         let weid = this.playerEnt.AvatarProperties.weaponEid;
         let gunEnt = ecs.getEntityByEid<GunEnt>(weid);
         let gunBase = gunEnt.GunBase;
@@ -57,14 +59,14 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
 
         let monsterEnt = ecs.getEntityByEid<MonsterEnt>(this.playerEnt.AutoFire.monsterEid);
         if(monsterEnt) {
-            // 获得子弹出生点的世界坐标
-            gunBase.ent.get(GunNode).gunPointUITransform!.convertToWorldSpaceAR(Vec3.ZERO, pos);
-            // 将子弹出生点从世界坐标转换到节点坐标系下
-            let bulletPos = Global.gameWorld!.avatarLayerUITransform.convertToNodeSpaceAR(pos, pos);
-    
-            Vec3.subtract(heading, monsterEnt!.Transform.position, bulletPos);
-            Vec3.normalize(heading, heading);
             let playerNode = this.playerEnt.PlayerNode;
+            // 计算握枪点的坐标
+            Vec3.add(pos, playerNode.root.position, playerNode.gunNode!.position);
+            // 计算敌人身体中心点坐标
+            Vec3.add(pos1, monsterEnt!.Transform.position, monsterEnt.EnemyNode.body!.position);
+            Vec3.subtract(heading, pos1, pos);
+            Vec3.normalize(heading, heading);
+            
             if(heading.x < 0) {
                 playerNode.bodyNode!.setScale(-1, 1, 1);
                 playerNode.gunNode!.setScale(1, -1, 1);
@@ -73,7 +75,6 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
                 playerNode.bodyNode!.setScale(1, 1, 1);
                 playerNode.gunNode!.setScale(1, 1, 1);
             }
-    
     
             // 对枪的朝向进行插值，确保每次都是按最小角度进行旋转
             let gunNode = this.playerEnt.PlayerNode!.gunNode;
@@ -97,7 +98,7 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
                 if(!autoFire.isShooted) {
                     gunNodeRad = gunNode!.angle * macro.RAD;
                     heading.set(Math.cos(gunNodeRad), Math.sin(gunNodeRad), 0);
-                    this.shoot(gunBase, gunNode!.angle, heading);
+                    this.shoot(gunEnt, gunNode!.angle, heading);
                     autoFire.isShooted = true;
                 }
             }
@@ -157,7 +158,8 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
         autoFire.monsterEid = monsterEnt.eid;
     }
 
-    shoot(gunBase: GunBase, angle: number, heading: Vec3) {
+    shoot(gunEnt: GunEnt, angle: number, heading: Vec3) {
+        let gunBase = gunEnt.GunBase;
         // 后坐力
         let gunNode = gunBase.ent.get(GunNode);
         gunNode.root!.setPosition(gunBase.kickbackAmount, 0, 0);
@@ -165,7 +167,12 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
         gunBase.amount -= 1;
         let bulletNode = ObjPool.getNode(gunBase.bulletName);
         bulletNode.active = true;
-        bulletNode.parent = Global.gameWorld!.bulletLayer;
+        bulletNode.parent = Global.gameWorld!.avatarLayer;
+
+        let xDist = gunEnt.GunNode.gunPointUITransform!.node.position.x;
+        let rad = angle * macro.RAD;
+        pos.x += xDist * Math.cos(rad);
+        pos.y += xDist * Math.sin(rad);
         bulletNode.setPosition(pos);
         bulletNode.angle = angle;
         

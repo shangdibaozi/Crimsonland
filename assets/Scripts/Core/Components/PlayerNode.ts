@@ -15,6 +15,10 @@ export class PlayerNode extends ecs.IComponent {
         }
     }
 
+    get root() {
+        return this.ent.get(ECSNode)!.val!;
+    }
+
     bodyNode: Node | null = null;
     gunNode: Node | null = null;
     hpBar: ProgressBar | null = null;

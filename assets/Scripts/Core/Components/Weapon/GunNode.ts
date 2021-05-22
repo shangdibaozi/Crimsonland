@@ -12,10 +12,16 @@ export class GunNode extends ecs.IComponent {
             pos.y = 0;
             body.setPosition(pos);
             node.getComponent(Animation)!.stop();
-            this.ent.add(ECSNode).val = node;
+            
             this.shadow = node.getChildByName('Shadow');
             this.shadow!.active = false;
-            this.gunPointUITransform = node.getChildByName('Muzzle')?.getComponent(UITransform)!; 
+            
+            this.gunPointUITransform = node.getChildByName('Muzzle')!.getComponent(UITransform)!;
+            
+            if(!this.ent.has(ECSNode)) {
+                this.ent.add(ECSNode);
+            }
+            this.ent.get(ECSNode).val = node;
         }
     }
 
@@ -25,7 +31,7 @@ export class GunNode extends ecs.IComponent {
 
     shadow: Node | null = null;
     gunPointUITransform: UITransform | null = null;
-    
+
     reset() {
         this.shadow = null;
         this.gunPointUITransform = null;

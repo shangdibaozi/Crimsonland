@@ -18,9 +18,6 @@ export class GameWorld extends Component {
     avatarLayerUITransform!: UITransform;
 
     @property(Node)
-    bulletLayer!: Node;
-
-    @property(Node)
     playerNode!: Node;
 
     @property(Prefab)
