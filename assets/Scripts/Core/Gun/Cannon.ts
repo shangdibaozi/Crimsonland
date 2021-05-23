@@ -7,6 +7,7 @@ import { Util } from '../../Util';
 import { ECSNode } from '../Components/ECSNode';
 import { Lifetime } from '../Components/Lifetime';
 import { Movement } from '../Components/Movement';
+import { TagRotate } from '../Components/Tag/TagRotate';
 import { ObjPool } from '../ObjPool';
 const { ccclass, property, executeInEditMode, playOnFocus } = _decorator;
 
@@ -15,17 +16,10 @@ let pos1 = v3();
 let gHeading = v3(1, 0, 0);
 let tmpHeading = v3();
 
-@ecs.register('TagPistolBullet')
-class TagPistolBullet extends ecs.IComponent {
-    reset() {
-
-    }
-}
-
-@ccclass('Pistol')
+@ccclass('Cannon')
 // @executeInEditMode
 // @playOnFocus
-export class Pistol extends Component {
+export class Cannon extends Component {
     @property(Node)
     layer!: Node;
 
@@ -59,12 +53,15 @@ export class Pistol extends Component {
     })
     angle: number = 3;
 
+    
+
+
     private time = 0;
     
     private bulletGroup!: ecs.Group;
 
     onLoad() {
-        this.bulletGroup = ecs.createGroup(ecs.allOf(ECSNode, Movement, Lifetime, TagPistolBullet));
+        this.bulletGroup = ecs.createGroup(ecs.allOf(ECSNode, Movement, Lifetime, TagRotate));
 
         systemEvent.on(SystemEvent.EventType.MOUSE_DOWN, (event: EventMouse) => {
             event.getLocation(pos as unknown as Vec2);
@@ -91,18 +88,20 @@ export class Pistol extends Component {
         this.layer.getComponent(UITransform)!.convertToNodeSpaceAR(pos, pos);
         bulletNode.setPosition(pos);
 
-        let bulletEnt = ecs.createEntityWithComps(ECSNode, Movement, Lifetime, TagPistolBullet);
+        let bulletEnt = ecs.createEntityWithComps(ECSNode, Movement, Lifetime, TagRotate);
         bulletEnt.get(ECSNode).val = bulletNode;
         let movement = bulletEnt.get(Movement);
         Vec3.multiplyScalar(movement.velocity, heading, this.speed);
         bulletEnt.get(Lifetime).time = 3;
+
+        bulletEnt.get(TagRotate).speed = 300;
     }
 
     update(dt: number) {
         this.time += this.rateOfFire * dt;
         if(this.time >= 1) {
             this.time -= 1;
-
+            
             let angle = Math.atan2(gHeading.y, gHeading.x) * macro.DEG;
             angle += Util.randomRange(-this.angle, this.angle);
             let rad = angle * macro.RAD;
@@ -126,6 +125,9 @@ export class Pistol extends Component {
             Vec3.multiplyScalar(pos, movement.velocity, dt)
             node.getPosition(pos1);
             node?.setPosition(Vec3.add(pos, pos, pos1));
+
+            let angle = node.angle + ent.get(TagRotate).speed * dt;
+            node.angle = angle % 360;
         });
 
         Vec3.lerp(pos, this.node.position, Vec3.ZERO, dt * 10);
