@@ -1951,7 +1951,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 20.951,
-      "y": -0.559,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -2077,11 +2077,10 @@
     "muzzle": {
       "__id__": 73
     },
-    "speed": 40,
-    "rateOfFire": 40,
+    "speed": 100,
+    "rateOfFire": 100,
     "kickbackAmount": 0,
     "angle": 90,
-    "fireLength": 100,
     "_id": "e7cU0tKWtPZpGTsRjt+pc6"
   },
   {

@@ -28,15 +28,15 @@ export class FlameThrower extends Component {
 
     @property({
         type: CCInteger,
-        tooltip: '子弹速度'
+        tooltip: '子弹速度（速度越大，火焰长度越长）'
     })
     speed: number = 250;
-
+    
     @property({
         type: CCInteger,
         tooltip: '射击频率，即1s能射出多少发子弹'
     })
-    rateOfFire: number = 5;
+    rateOfFire: number = 40;
 
     @property({
         type: CCFloat,
@@ -49,11 +49,8 @@ export class FlameThrower extends Component {
         tooltip: '偏移角度'
     })
     angle: number = 3;
-
-    @property({
-        type: CCInteger,
-        tooltip: '火焰长度'
-    })
+    
+    // 火焰长度
     fireLength: number = 100;
 
     private time = 0;
@@ -73,10 +70,9 @@ export class FlameThrower extends Component {
             let angle = Math.atan2(gHeading.y, gHeading.x) * macro.DEG;
             this.node.angle = angle;
         });
-    }
 
-    onDisable() {
         
+        this.fireLength = 100 + (this.speed - 40) / (100 - 40) * (300 - 100); // 火焰长度最小100最大300
     }
 
     createBullet(heading: Vec3, lineHeading: Vec3, angle: number) {
@@ -101,7 +97,7 @@ export class FlameThrower extends Component {
         bulletEnt.get(TagFireBullet).targetPoint.set(pos);
     }
 
-    flag = 1;
+    flag = 0;
     update(dt: number) {
         this.time += this.rateOfFire * dt;
         if(this.time >= 1) {
@@ -119,8 +115,6 @@ export class FlameThrower extends Component {
             tmpHeading.set(Math.cos(rad), Math.sin(rad), 0);
             gHeading1.set(Math.cos(baseRad), Math.sin(baseRad), 0);
             this.createBullet(tmpHeading, gHeading1, angle);
-
-            // this.node.setPosition(this.kickbackAmount, 0, 0);
         }
 
         this.bulletGroup.matchEntities.forEach(ent => {
@@ -129,17 +123,14 @@ export class FlameThrower extends Component {
             let lifeTime = ent.get(Lifetime);
             let targetPoint = ent.get(TagFireBullet).targetPoint;
 
-
-            Vec3.subtract(gHeading, targetPoint, node.position);
-            let dist = gHeading.length();
-
             lifeTime.time -= dt;
-            if(lifeTime.time <= 0 || dist <= 1) {
+            if(lifeTime.time <= 0) {
                 ent.destroy();
                 return;
             }
 
-            gHeading.multiplyScalar(1 / dist * this.speed * 0.5);
+            Vec3.subtract(gHeading, targetPoint, node.position);
+            gHeading.normalize().multiplyScalar(this.speed * 0.5);
 
             Vec3.add(movement.velocity, movement.velocity, gHeading);
 
@@ -152,9 +143,6 @@ export class FlameThrower extends Component {
             node.getPosition(pos1);
             node!.setPosition(Vec3.add(pos, pos, pos1));
         });
-
-        Vec3.lerp(pos, this.node.position, Vec3.ZERO, dt * 10);
-        this.node.setPosition(pos);
     }
 
 }
