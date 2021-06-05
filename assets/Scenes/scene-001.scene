@@ -520,7 +520,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -270,
-      "y": 0,
+      "y": 261.525,
       "z": 0
     },
     "_lrot": {
@@ -976,20 +976,24 @@
     "__prefab": {
       "__id__": 36
     },
-    "layer": {
+    "isDebug": true,
+    "parentLayer": {
       "__id__": 7
+    },
+    "muzzle": {
+      "__id__": 28
     },
     "bullet": {
       "__uuid__": "050876d9-30db-45d4-8a4c-25ff39ca418d",
       "__expectedType__": "cc.Prefab"
     },
-    "muzzle": {
-      "__id__": 28
-    },
-    "speed": 300,
-    "rateOfFire": 2,
     "kickbackAmount": 1,
     "angle": 2,
+    "rateOfFire": 2,
+    "numberPerShoot": 1,
+    "maxAmount": 10,
+    "timeOfAddBullet": 1,
+    "speed": 300,
     "_id": "c5/u/ubuVJsJelkcUCfX8d"
   },
   {
@@ -1071,7 +1075,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -270,
-      "y": -41.785,
+      "y": 145.018,
       "z": 0
     },
     "_lrot": {
@@ -1525,20 +1529,24 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "layer": {
+    "isDebug": true,
+    "parentLayer": {
       "__id__": 7
+    },
+    "muzzle": {
+      "__id__": 51
     },
     "bullet": {
       "__uuid__": "85a2aaf6-8daa-4f39-98b1-98a19ea9abbe",
       "__expectedType__": "cc.Prefab"
     },
-    "muzzle": {
-      "__id__": 51
-    },
-    "speed": 250,
-    "rateOfFire": 6,
     "kickbackAmount": 2,
     "angle": 4,
+    "rateOfFire": 6,
+    "numberPerShoot": 1,
+    "maxAmount": 10,
+    "timeOfAddBullet": 1,
+    "speed": 250,
     "_id": "0ejYWfTS9KxpvP7RLB0yXx"
   },
   {
@@ -1616,7 +1624,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -270,
-      "y": -104.639,
+      "y": 6.006,
       "z": 0
     },
     "_lrot": {
@@ -2070,20 +2078,24 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "layer": {
+    "isDebug": true,
+    "parentLayer": {
       "__id__": 7
+    },
+    "muzzle": {
+      "__id__": 73
     },
     "bullet": {
       "__uuid__": "a193cf86-7743-4bfd-aa81-e4c6214c5af5",
       "__expectedType__": "cc.Prefab"
     },
-    "muzzle": {
-      "__id__": 73
-    },
-    "speed": 100,
-    "rateOfFire": 100,
     "kickbackAmount": 0,
     "angle": 90,
+    "rateOfFire": 100,
+    "numberPerShoot": 1,
+    "maxAmount": 10,
+    "timeOfAddBullet": 1,
+    "speed": 100,
     "_id": "e7cU0tKWtPZpGTsRjt+pc6"
   },
   {
@@ -2615,21 +2627,24 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "isDebug": false,
-    "layer": {
+    "isDebug": true,
+    "parentLayer": {
       "__id__": 7
+    },
+    "muzzle": {
+      "__id__": 95
     },
     "bullet": {
       "__uuid__": "ce5d16d0-abbe-49e2-85e1-904e2128cfb4",
       "__expectedType__": "cc.Prefab"
     },
-    "muzzle": {
-      "__id__": 95
-    },
-    "speed": 500,
-    "rateOfFire": 20,
     "kickbackAmount": 3,
     "angle": 2,
+    "rateOfFire": 20,
+    "numberPerShoot": 1,
+    "maxAmount": 10,
+    "timeOfAddBullet": 1,
+    "speed": 500,
     "_id": "65MhLVwFpOBJnPZo19atnE"
   },
   {

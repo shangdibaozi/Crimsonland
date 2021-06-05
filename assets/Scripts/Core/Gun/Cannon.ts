@@ -1,14 +1,14 @@
 
-import { _decorator, Component, Node, Prefab, CCInteger, CCFloat, instantiate, v3, Vec3, lerp, systemEvent, SystemEvent, EventMouse, Vec2, UITransform, macro } from 'cc';
-import { UI_EVENT } from '../../Constants';
-import { Global } from '../../Global';
+import { _decorator, v3, Vec3, systemEvent, SystemEvent, EventMouse, Vec2, UITransform, macro } from 'cc';
 import { ecs } from '../../Libs/ECS';
 import { Util } from '../../Util';
 import { ECSNode } from '../Components/ECSNode';
 import { Lifetime } from '../Components/Lifetime';
 import { Movement } from '../Components/Movement';
 import { TagRotate } from '../Components/Tag/TagRotate';
+import { BulletBase } from '../Components/Weapon/BulletBase';
 import { ObjPool } from '../ObjPool';
+import { GunBase } from './GunBase';
 const { ccclass, property, executeInEditMode, playOnFocus } = _decorator;
 
 let pos = v3();
@@ -17,62 +17,13 @@ let gHeading = v3(1, 0, 0);
 let tmpHeading = v3();
 
 @ccclass('Cannon')
-// @executeInEditMode
-// @playOnFocus
-export class Cannon extends Component {
-    @property(Node)
-    layer!: Node;
-
-    @property(Prefab)
-    bullet!: Prefab;
-
-    @property(Node)
-    muzzle!: Node;
-
-    @property({
-        type: CCInteger,
-        tooltip: '子弹速度'
-    })
-    speed: number = 250;
-
-    @property({
-        type: CCInteger,
-        tooltip: '射击频率，即1s能射出多少发子弹'
-    })
-    rateOfFire: number = 2;
-
-    @property({
-        type: CCFloat,
-        tooltip: '后坐力'
-    })
-    kickbackAmount: number = 1;
-
-    @property({
-        type: CCFloat,
-        tooltip: '偏移角度'
-    })
-    angle: number = 3;
-
-    
-
-
-    private time = 0;
-    
+export class Cannon extends GunBase {
     private bulletGroup!: ecs.Group;
 
+    private compLst: ecs.ComponentConstructor[] = [ECSNode, Movement, Lifetime, TagRotate, BulletBase];
+
     onLoad() {
-        this.bulletGroup = ecs.createGroup(ecs.allOf(ECSNode, Movement, Lifetime, TagRotate));
-
-        systemEvent.on(SystemEvent.EventType.MOUSE_DOWN, (event: EventMouse) => {
-            event.getLocation(pos as unknown as Vec2);
-            this.layer.getComponent(UITransform)!.convertToNodeSpaceAR(pos, pos);
-
-            Vec3.subtract(gHeading, pos, this.node.position);
-            gHeading.normalize();
-
-            let angle = Math.atan2(gHeading.y, gHeading.x) * macro.DEG;
-            this.node.angle = angle;
-        });
+        this.bulletGroup = ecs.createGroup(ecs.allOf(...this.compLst));
     }
 
     onDisable() {
@@ -82,34 +33,39 @@ export class Cannon extends Component {
     createBullet(heading: Vec3) {
         let bulletNode = ObjPool.getNode(this.bullet.data.name, this.bullet);
         bulletNode.active = true;
-        bulletNode.parent = this.layer;
+        bulletNode.parent = this.parentLayer;
         
         this.muzzle.getComponent(UITransform)!.convertToWorldSpaceAR(Vec3.ZERO, pos);
-        this.layer.getComponent(UITransform)!.convertToNodeSpaceAR(pos, pos);
+        this.parentLayer.getComponent(UITransform)!.convertToNodeSpaceAR(pos, pos);
         bulletNode.setPosition(pos);
 
-        let bulletEnt = ecs.createEntityWithComps(ECSNode, Movement, Lifetime, TagRotate);
+        let bulletEnt = ecs.createEntityWithComps(...this.compLst);
         bulletEnt.get(ECSNode).val = bulletNode;
         let movement = bulletEnt.get(Movement);
         Vec3.multiplyScalar(movement.velocity, heading, this.speed);
         bulletEnt.get(Lifetime).time = 3;
 
         bulletEnt.get(TagRotate).speed = 300;
+        bulletEnt.get(BulletBase).damage = this.damage;
+    }
+
+    shoot() {
+        if(!this.canShoot) {
+            return; 
+        }
+        this.canShoot = false;
+
+        let angle = Math.atan2(this.shootHeading.y, this.shootHeading.x) * macro.DEG;
+        angle += Util.randomRange(-this.angle, this.angle);
+        let rad = angle * macro.RAD;
+        tmpHeading.set(Math.cos(rad), Math.sin(rad), 0);
+        this.createBullet(tmpHeading);
+
+        this.node.setPosition(this.kickbackAmount, 0, 0);
     }
 
     update(dt: number) {
-        this.time += this.rateOfFire * dt;
-        if(this.time >= 1) {
-            this.time -= 1;
-            
-            let angle = Math.atan2(gHeading.y, gHeading.x) * macro.DEG;
-            angle += Util.randomRange(-this.angle, this.angle);
-            let rad = angle * macro.RAD;
-            tmpHeading.set(Math.cos(rad), Math.sin(rad), 0);
-            this.createBullet(tmpHeading);
-
-            this.node.setPosition(this.kickbackAmount, 0, 0);
-        }
+        super.update(dt);
 
         this.bulletGroup.matchEntities.forEach(ent => {
             let node = ent.get(ECSNode).val!;
@@ -129,8 +85,5 @@ export class Cannon extends Component {
             let angle = node.angle + ent.get(TagRotate).speed * dt;
             node.angle = angle % 360;
         });
-
-        Vec3.lerp(pos, this.node.position, Vec3.ZERO, dt * 10);
-        this.node.setPosition(pos);
     }
 }

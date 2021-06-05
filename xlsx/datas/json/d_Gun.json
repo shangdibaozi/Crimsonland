@@ -13,7 +13,7 @@
         "MaxAmount": 20,
         "KickbackAmount": 1,
         "TimeOfAddBullet": 1,
-        "BulletName": "Bullet_A"
+        "ComponentName": "Pistol"
     },
     "10001": {
         "GunID": 10001,
@@ -29,7 +29,7 @@
         "MaxAmount": 10,
         "KickbackAmount": 5,
         "TimeOfAddBullet": 4,
-        "BulletName": "Bullet_Cannon"
+        "ComponentName": "Cannon"
     },
     "10002": {
         "GunID": 10002,
@@ -45,7 +45,7 @@
         "MaxAmount": 30,
         "KickbackAmount": 1,
         "TimeOfAddBullet": 2,
-        "BulletName": "Bullet_Fire"
+        "ComponentName": "FlameThrower"
     },
     "10005": {
         "GunID": 10005,
@@ -61,6 +61,6 @@
         "MaxAmount": 40,
         "KickbackAmount": 3,
         "TimeOfAddBullet": 2,
-        "BulletName": "Bullet"
+        "ComponentName": "Mg"
     }
 }

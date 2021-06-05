@@ -2,8 +2,6 @@ import { v3, Vec3, Animation, AnimationState, Contact2DType, PhysicsSystem2D, Co
 import { EntityLink } from "../../../CC/EntityLink";
 import { ecs } from "../../../Libs/ECS";
 import { Util } from "../../../Util";
-import { BulletNode } from "../../Components/BulletNode";
-import { Collision } from "../../Components/Collision";
 import { MonsterDead } from "../../Components/MonsterDead";
 import { Movement } from "../../Components/Movement";
 import { TagEnemy } from "../../Components/Tag/TagEnemy";
@@ -11,17 +9,13 @@ import { Transform } from "../../Components/Transform";
 import { ObjPool } from "../../ObjPool";
 import { BulletEnt, MonsterEnt } from "../EntityFactory";
 
-
-
 let tmp = v3();
 
 export class CollisionSystem extends ecs.ComblockSystem {
-    bulletGroup!: ecs.Group<BulletEnt>;
 
     hitedEnemies: number[] = [];
 
     init() {
-        this.bulletGroup = ecs.createGroup(ecs.allOf(Transform, Collision, BulletNode));
 
         // 注册全局碰撞回调函数
         if (PhysicsSystem2D.instance) {
@@ -33,7 +27,7 @@ export class CollisionSystem extends ecs.ComblockSystem {
     }
     
     filter(): ecs.IMatcher {
-        return ecs.allOf(Transform, Collision, TagEnemy);
+        return ecs.allOf(Transform, TagEnemy);
     }
 
     update(entities: MonsterEnt[]): void {

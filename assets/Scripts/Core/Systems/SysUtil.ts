@@ -1,8 +1,8 @@
 import { Global } from "../../Global";
-import { Keyboard } from "../Components/Keyboard";
 import { EntityFactory, PlayerEnt } from "./EntityFactory";
-import { instantiate, Node, UITransform, Vec3 } from "cc";
-import { NODE_TYPE, ObjPool } from "../ObjPool";
+import { Node, Vec3 } from "cc";
+import { ObjPool } from "../ObjPool";
+import { GunBase } from "../Gun/GunBase";
 
 export class SysUtil {
 
@@ -30,8 +30,7 @@ export class SysUtil {
         gunNode.parent = player.PlayerNode.gunNode;
         gunNode.setPosition(Vec3.ZERO);
         let gunEnt = EntityFactory.createGunEnt();
-        gunEnt.GunNode.root = gunNode;
-        gunEnt.GunBase.init(gunCfg);
+        gunEnt.GunNode.init(gunNode, Global.gameWorld!.avatarLayer, gunCfg);
         player.AvatarProperties.weaponEid = gunEnt.eid;
     }
 }

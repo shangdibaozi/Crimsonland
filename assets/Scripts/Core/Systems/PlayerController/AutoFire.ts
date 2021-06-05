@@ -1,13 +1,10 @@
-import { macro, v3, Vec3, log, Toggle, lerp, UITransform, CircleCollider2D, systemEvent, SystemEvent, EventMouse, Vec2 } from "cc";
+import { macro, v3, Vec3, log, Toggle, lerp } from "cc";
 import { UI_EVENT } from "../../../Constants";
 import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
 import { AutoFireComponent } from "../../Components/AutoFireComponent";
 import { TagEnemy } from "../../Components/Tag/TagEnemy";
-import { GunBase } from "../../Components/Weapon/GunBase";
-import { GunNode } from "../../Components/Weapon/GunNode";
-import { ObjPool } from "../../ObjPool";
-import { BulletEnt, EntityFactory, GunEnt, MonsterEnt, PlayerEnt } from "../EntityFactory";
+import { GunEnt, MonsterEnt, PlayerEnt } from "../EntityFactory";
 
 let pos = v3();
 let pos1 = v3();
@@ -51,11 +48,8 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
     }
 
     update(entities: PlayerEnt[]): void {
-        // return;
         let weid = this.playerEnt.AvatarProperties.weaponEid;
         let gunEnt = ecs.getEntityByEid<GunEnt>(weid);
-        let gunBase = gunEnt.GunBase;
-        let autoFire = this.playerEnt.AutoFire;
 
         let monsterEnt = ecs.getEntityByEid<MonsterEnt>(this.playerEnt.AutoFire.monsterEid);
         if(monsterEnt) {
@@ -95,39 +89,64 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
             gunNode!.angle = lerp(gunNode!.angle, angle, this.dt * 20);
             
             if(Math.abs(gunNode!.angle - angle) <= CAN_FIRE_ANGLE) {
-                if(!autoFire.isShooted) {
-                    gunNodeRad = gunNode!.angle * macro.RAD;
-                    heading.set(Math.cos(gunNodeRad), Math.sin(gunNodeRad), 0);
-                    this.shoot(gunEnt, gunNode!.angle, heading);
-                    autoFire.isShooted = true;
-                }
+                gunEnt.GunNode.gunBase!.shootHeading.set(heading);
+                gunEnt.GunNode.gunBase!.shoot();
             }
         }
         else {
-            this.getMonster(gunBase);
+            this.getMonster();
         }
 
-        if(gunBase.amount > 0 && autoFire.isShooted) {
-            gunBase.curFT += this.dt * gunBase.rateOfFire;
-            if(gunBase.curFT > 1) {
-                gunBase.curFT -= 1;
-                autoFire.isShooted = false;
-            }
-        }
-        else {
-            gunBase.curABT += this.dt;
-            if(gunBase.curABT >= gunBase.timeOfAddBullet) {
-                gunBase.curABT = 0;
-                gunBase.amount = gunBase.maxAmount;
-            }
-        }
-
-        let gun = gunEnt.GunNode.root!;
-        Vec3.lerp(pos, gun.position, Vec3.ZERO, this.dt * 10);
-        gun.setPosition(pos);
+        // if(gunBase.amount > 0 && autoFire.isShooted) {
+        //     gunBase.curFT += this.dt * gunBase.rateOfFire;
+        //     if(gunBase.curFT > 1) {
+        //         gunBase.curFT -= 1;
+        //         autoFire.isShooted = false;
+        //     }
+        // }
+        // else {
+        //     gunBase.curABT += this.dt;
+        //     if(gunBase.curABT >= gunBase.timeOfAddBullet) {
+        //         gunBase.curABT = 0;
+        //         gunBase.amount = gunBase.maxAmount;
+        //     }
+        // }
     }
 
-    getMonster(gunBase: GunBase) {
+    
+
+    // shoot(gunEnt: GunEnt, angle: number, heading: Vec3) {
+    //     let gunBase = gunEnt.GunBase;
+    //     // 后坐力
+    //     let gunNode = gunBase.ent.get(GunNode);
+    //     gunNode.root!.setPosition(gunBase.kickbackAmount, 0, 0);
+        
+    //     gunBase.amount -= 1;
+    //     let bulletNode = ObjPool.getNode(gunBase.bulletName);
+    //     bulletNode.active = true;
+    //     bulletNode.parent = Global.gameWorld!.avatarLayer;
+
+    //     let xDist = gunEnt.GunNode.gunPointUITransform!.node.position.x;
+    //     let rad = angle * macro.RAD;
+    //     pos.x += xDist * Math.cos(rad);
+    //     pos.y += xDist * Math.sin(rad);
+    //     bulletNode.setPosition(pos);
+    //     bulletNode.angle = angle;
+        
+    //     let ent = EntityFactory.createBullet() as BulletEnt;
+    //     Vec3.copy(ent.Movement.heading, heading);
+    //     ent.Movement.speed = gunBase.speed;
+
+    //     Vec3.copy(ent.Transform.position, pos);
+
+    //     ent.Lifetime.time = 30;
+
+    //     ent.Collision.radius = bulletNode.getComponent(UITransform)!.width * 0.5;
+
+    //     ent.BulletBase.damage = gunBase.damage;
+    // }
+
+    getMonster() {
         if(this.monsterGroup.count === 0) {
             return;
         }
@@ -156,38 +175,6 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
         }
 
         autoFire.monsterEid = monsterEnt.eid;
-    }
-
-    shoot(gunEnt: GunEnt, angle: number, heading: Vec3) {
-        let gunBase = gunEnt.GunBase;
-        // 后坐力
-        let gunNode = gunBase.ent.get(GunNode);
-        gunNode.root!.setPosition(gunBase.kickbackAmount, 0, 0);
-        
-        gunBase.amount -= 1;
-        let bulletNode = ObjPool.getNode(gunBase.bulletName);
-        bulletNode.active = true;
-        bulletNode.parent = Global.gameWorld!.avatarLayer;
-
-        let xDist = gunEnt.GunNode.gunPointUITransform!.node.position.x;
-        let rad = angle * macro.RAD;
-        pos.x += xDist * Math.cos(rad);
-        pos.y += xDist * Math.sin(rad);
-        bulletNode.setPosition(pos);
-        bulletNode.angle = angle;
-        
-        let ent = EntityFactory.createBullet() as BulletEnt;
-        ent.BulletNode.root = bulletNode;
-        Vec3.copy(ent.Movement.heading, heading);
-        ent.Movement.speed = gunBase.speed;
-
-        Vec3.copy(ent.Transform.position, pos);
-
-        ent.Lifetime.time = 30;
-
-        ent.Collision.radius = bulletNode.getComponent(UITransform)!.width * 0.5;
-
-        ent.BulletBase.damage = gunBase.damage;
     }
 
     getNearestMonster(playerPos: Vec3) {
@@ -262,8 +249,7 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
     onShootChangeTarget() {
         let weid = this.playerEnt.AvatarProperties.weaponEid;
         let gunEnt = ecs.getEntityByEid<GunEnt>(weid);
-        let gunBase = gunEnt.GunBase;
         this.playerEnt.AutoFire.monsterEid = -1;
-        this.getMonster(gunBase);
+        this.getMonster();
     }
 }

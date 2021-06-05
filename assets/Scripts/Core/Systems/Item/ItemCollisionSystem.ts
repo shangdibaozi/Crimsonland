@@ -38,11 +38,8 @@ export class ItemCollisionSystem extends ecs.ComblockSystem {
                     let newGunNode = ent.ECSNode.val!;
                     ent.ECSNode.val = null; // 实体销毁时会回收ECSNode组件中的节点，但是当前枪结点已经在使用，所以值为null不让回收
                     newGunNode.setPosition(Vec3.ZERO);
-                    gunEnt.GunNode.root = newGunNode;
                     newGunNode.parent = this.playerGroup.entity.PlayerNode.gunNode;
-
-                    // 修改枪的参数
-                    gunEnt.GunBase.init(Global.cfgMgr!.gunCfg[ent.TagItem.tableId]);
+                    gunEnt.GunNode.init(newGunNode, Global.gameWorld!.avatarLayer, Global.cfgMgr!.gunCfg[ent.TagItem.tableId]);
                 }
 
                 ent.destroy();

@@ -1,7 +1,7 @@
 // 重构原则：如无必要，勿增实体。
 export module ecs {
     //#region 类型声明
-    type ComponentConstructor<T extends IComponent = IComponent> = {
+    export type ComponentConstructor<T extends IComponent = IComponent> = {
         /**
          * 每类组件的唯一id
          */

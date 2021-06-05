@@ -477,23 +477,26 @@
     "__prefab": {
       "__id__": 23
     },
-    "layer": null,
+    "isDebug": false,
+    "muzzle": {
+      "__id__": 14
+    },
     "bullet": {
       "__uuid__": "050876d9-30db-45d4-8a4c-25ff39ca418d",
       "__expectedType__": "cc.Prefab"
     },
-    "muzzle": {
-      "__id__": 14
-    },
-    "speed": 400,
-    "rateOfFire": 7,
-    "kickbackAmount": 1,
+    "kickbackAmount": 0,
     "angle": 3,
+    "rateOfFire": 40,
+    "numberPerShoot": 1,
+    "maxAmount": 10,
+    "timeOfAddBullet": 1,
+    "speed": 250,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "a7N9hRxaZPbLGs7KEMhxXt"
+    "fileId": "caLwcnYfdAbLZavb+UhiYp"
   },
   {
     "__type__": "cc.PrefabInfo",

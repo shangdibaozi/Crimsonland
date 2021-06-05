@@ -33,10 +33,13 @@
       },
       {
         "__id__": 20
+      },
+      {
+        "__id__": 22
       }
     ],
     "_prefab": {
-      "__id__": 22
+      "__id__": 24
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -462,6 +465,38 @@
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "77saoXSh5IzauUARknXQAX"
+  },
+  {
+    "__type__": "0e0c10G4WhJCZxviiEkHuJg",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 23
+    },
+    "isDebug": false,
+    "muzzle": {
+      "__id__": 14
+    },
+    "bullet": {
+      "__uuid__": "a193cf86-7743-4bfd-aa81-e4c6214c5af5",
+      "__expectedType__": "cc.Prefab"
+    },
+    "kickbackAmount": 0,
+    "angle": 3,
+    "rateOfFire": 40,
+    "numberPerShoot": 1,
+    "maxAmount": 10,
+    "timeOfAddBullet": 1,
+    "speed": 250,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "6ckzYDAJVGpK8GdXfVzxok"
   },
   {
     "__type__": "cc.PrefabInfo",

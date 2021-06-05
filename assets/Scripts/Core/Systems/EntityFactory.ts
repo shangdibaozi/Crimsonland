@@ -1,8 +1,6 @@
 import { ecs } from "../../Libs/ECS";
 import { AIComponent } from "../Components/AIComponent";
 import { AvatarProperties } from "../Components/AvatarProperties";
-import { GunBase } from "../Components/Weapon/GunBase";
-import { BulletNode } from "../Components/BulletNode";
 import { CameraFollowComponent } from "../Components/CameraFollowComponent";
 import { Collision } from "../Components/Collision";
 import { EnemyNode } from "../Components/EnemyNode";
@@ -28,11 +26,11 @@ export class EntityFactory {
     }
 
     static createBullet() {
-        return ecs.createEntityWithComps<BulletEnt>(Movement, Transform, Lifetime, BulletNode, Collision, BulletBase);
+        return ecs.createEntityWithComps<BulletEnt>(Movement, Transform, Lifetime, Collision, BulletBase);
     }
 
     static createGunEnt() {
-        let ent = ecs.createEntityWithComps<GunEnt>(GunNode, GunBase);
+        let ent = ecs.createEntityWithComps<GunEnt>(GunNode);
 
         return ent;
     }
@@ -68,7 +66,6 @@ export class BulletEnt extends ecs.Entity {
     Movement!: Movement;
     Transform!: Transform;
     Lifetime!: Lifetime;
-    BulletNode!: BulletNode;
     Collision!: Collision;
     BulletBase!: BulletBase;
     ECSNode!: ECSNode;
@@ -76,7 +73,6 @@ export class BulletEnt extends ecs.Entity {
 
 export class GunEnt extends ecs.Entity {
     GunNode!: GunNode;
-    GunBase!: GunBase;
 }
 
 export class ItemEnt extends ecs.Entity {
