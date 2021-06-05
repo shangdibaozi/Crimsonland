@@ -89,7 +89,7 @@ export class FlameThrower extends Component {
         bulletEnt.get(ECSNode).val = bulletNode;
         let movement = bulletEnt.get(Movement);
         Vec3.multiplyScalar(movement.velocity, heading, this.speed);
-        bulletEnt.get(Lifetime).time = 3;
+        bulletEnt.get(Lifetime).time = 6;
 
         pos.x += lineHeading.x * this.fireLength;
         pos.y += lineHeading.y * this.fireLength;
