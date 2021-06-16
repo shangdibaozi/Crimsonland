@@ -23,7 +23,7 @@ export class SysUtil {
         
 
         // 游戏开始默认给玩家的是手枪
-        let gunId = 10001;
+        let gunId = 10002;
         let gunCfg = Global.cfgMgr!.gunCfg[gunId];
         let gunNode = ObjPool.getNode(gunCfg.PrefabName);
         gunNode.active = true;

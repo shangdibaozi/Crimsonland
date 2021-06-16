@@ -85,7 +85,7 @@ export abstract class GunBase extends Component {
     canShoot: boolean = true;
     private shootTime = 0;
 
-    public shootHeading: Vec3 = v3();
+    public shootHeading: Vec3 = v3(1, 0, 0);
 
     onLoad() {
         if(this.isDebug) {
@@ -110,6 +110,7 @@ export abstract class GunBase extends Component {
         this.maxAmount = this.amount = cfg.MaxAmount;
         this.kickbackAmount = cfg.KickbackAmount;
         this.timeOfAddBullet = cfg.TimeOfAddBullet;
+        this.angle = cfg.Angle;
 
         this.parentLayer = parentLayer;
     }

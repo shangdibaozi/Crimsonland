@@ -4,6 +4,7 @@ type GunInfo = {
     PrefabName: string;
     Damage: number;
     RateOfFire: number;
+    Angle: number;
     Speed: number;
     NumberPerShoot: number;
     MaxAmount: number;

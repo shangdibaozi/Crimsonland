@@ -60,7 +60,7 @@ export class FlameThrower extends GunBase {
         }
         this.canShoot = false;
         
-        let baseRad = Math.atan2(this.shootHeading.y, this.shootHeading.x)
+        let baseRad = Math.atan2(this.shootHeading.y, this.shootHeading.x);
         let baseAngle = baseRad * macro.DEG;
 
         
@@ -70,8 +70,8 @@ export class FlameThrower extends GunBase {
         angle += this.angle * (this.flag === 1 ? 1 : (this.flag === 0) ? 0 : -1);
         let rad = angle * macro.RAD;
         tmpHeading.set(Math.cos(rad), Math.sin(rad), 0);
-        gHeading1.set(Math.cos(baseRad), Math.sin(baseRad), 0);
-        this.createBullet(tmpHeading, gHeading1, angle);
+        
+        this.createBullet(tmpHeading, this.shootHeading, angle);
     }
 
     flag = 0;
@@ -90,19 +90,31 @@ export class FlameThrower extends GunBase {
             }
 
             Vec3.subtract(gHeading, targetPoint, node.position);
-            gHeading.normalize().multiplyScalar(this.speed * 0.5);
+            gHeading.normalize().multiplyScalar(this.speed);
 
-            Vec3.add(movement.velocity, movement.velocity, gHeading);
+            Vec3.subtract(tmpHeading, gHeading, movement.velocity);
+            tmpHeading.normalize().multiplyScalar(this.speed);
+            
+            movement.acceleration.set(tmpHeading);
 
-            let length = movement.velocity.length();
-            if(length > this.speed * 10) {
-                movement.velocity.multiplyScalar(1 / length * this.speed * 10);
+            Vec3.multiplyScalar(tmpHeading, movement.acceleration, dt);
+
+            Vec3.add(movement.velocity, movement.velocity, tmpHeading);
+            let dist = movement.velocity.length();
+            if(dist > this.speed) {
+                movement.velocity.multiplyScalar(this.speed / dist);
             }
 
-            Vec3.multiplyScalar(pos, movement.velocity, dt)
+            Vec3.multiplyScalar(pos, movement.velocity, dt);
+            movement.acceleration.set(Vec3.ZERO);
             node.getPosition(pos1);
             node!.setPosition(Vec3.add(pos, pos, pos1));
+
+            node.angle = Math.atan2(movement.velocity.y, movement.velocity.x) * macro.DEG;
+
+            if(Vec3.subtract(tmpHeading, node.position, targetPoint).length() <= 2) {
+                ent.destroy();
+            }
         });
     }
-
 }

@@ -2090,8 +2090,8 @@
       "__expectedType__": "cc.Prefab"
     },
     "kickbackAmount": 0,
-    "angle": 90,
-    "rateOfFire": 100,
+    "angle": 35,
+    "rateOfFire": 20,
     "numberPerShoot": 1,
     "maxAmount": 10,
     "timeOfAddBullet": 1,
