@@ -2090,8 +2090,8 @@
       "__expectedType__": "cc.Prefab"
     },
     "kickbackAmount": 0,
-    "angle": 35,
-    "rateOfFire": 20,
+    "angle": 40,
+    "rateOfFire": 30,
     "numberPerShoot": 1,
     "maxAmount": 10,
     "timeOfAddBullet": 1,
@@ -2216,7 +2216,7 @@
         "__id__": 95
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 98

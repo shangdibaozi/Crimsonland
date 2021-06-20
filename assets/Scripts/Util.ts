@@ -2,10 +2,15 @@ import { Quat } from "cc";
 
 export class Util {
 
+    /**
+     * 
+     * @param minVal 
+     * @param maxVal 
+     * @returns [minVal, maxVal)
+     */
     static randomRange(minVal: number, maxVal: number) {
         return Math.random() * (maxVal - minVal) + minVal;
     }
-
 
     /**
      * 求以n为底x的对数
