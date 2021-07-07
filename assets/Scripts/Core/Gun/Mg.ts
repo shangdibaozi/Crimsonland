@@ -83,4 +83,11 @@ export class Mg extends GunBase {
             node!.setPosition(Vec3.add(pos, pos, pos1));
         });
     }
+
+    reset() {
+        this.bulletGroup.matchEntities.forEach(ent => {
+            ent.destroy();
+        });
+        this.isOnTheGround = true;
+    }
 }

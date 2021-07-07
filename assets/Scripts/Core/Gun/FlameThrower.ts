@@ -133,4 +133,12 @@ export class FlameThrower extends GunBase {
             }
         });
     }
+
+    reset() {
+        this.bulletGroup.matchEntities.forEach(ent => {
+            ent.destroy();
+        });
+        this.isOnTheGround = true;
+        this.flag = 0;
+    }
 }

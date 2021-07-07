@@ -87,6 +87,8 @@ export abstract class GunBase extends Component {
 
     public shootHeading: Vec3 = v3(1, 0, 0);
 
+    public isOnTheGround = true;
+
     onLoad() {
         if(this.isDebug) {
             systemEvent.on(SystemEvent.EventType.MOUSE_DOWN, (event: EventMouse) => {
@@ -99,6 +101,9 @@ export abstract class GunBase extends Component {
                 let angle = Math.atan2(this.shootHeading.y, this.shootHeading.x) * macro.DEG;
                 this.node.angle = angle;
             });
+        }
+        else {
+            
         }
     }
 
@@ -116,8 +121,12 @@ export abstract class GunBase extends Component {
     }
 
     abstract shoot(): void;
+    abstract reset(): void;
 
     update(dt: number) {
+        if(this.isOnTheGround) {
+            return;
+        }
         if(!this.canShoot) {
             this.shootTime += this.rateOfFire * dt;
             if(this.shootTime >= 1) {

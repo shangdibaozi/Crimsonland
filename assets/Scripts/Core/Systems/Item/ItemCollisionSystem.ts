@@ -33,6 +33,7 @@ export class ItemCollisionSystem extends ecs.ComblockSystem {
                 if(ent.has(TagGun)) {
                     // 更换武器
                     let gunEnt = ecs.getEntityByEid<GunEnt>(this.playerGroup.entity.AvatarProperties.weaponEid);
+                    gunEnt.GunNode.gunBase!.reset();
                     // 枪节点回收
                     ObjPool.putNode(gunEnt.GunNode.root!);
                     let newGunNode = ent.ECSNode.val!;

@@ -510,6 +510,14 @@ export module ecs {
             this._removedEntities = removedEntities;
         }
 
+        createEntity<E extends Entity = Entity>() {
+            let ent = createEntity<E>();
+            for(let idx of this.matcher.indices) {
+                ent.add(componentConstructors[idx]);
+            }
+            return ent;
+        }
+
         clear() {
             this._matchEntities.clear();
             this._entitiesCache = null;

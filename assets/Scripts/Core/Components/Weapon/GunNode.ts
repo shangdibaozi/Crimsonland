@@ -29,6 +29,7 @@ export class GunNode extends ecs.IComponent {
         this.ent.get(ECSNode).val = node;
         this.gunBase = node.getComponent(cfg.ComponentName) as GunBase;
         this.gunBase.init(cfg, parentLayer);
+        this.gunBase.isOnTheGround = false;
     }
 
     shadow: Node | null = null;
@@ -38,6 +39,7 @@ export class GunNode extends ecs.IComponent {
     reset() {
         this.shadow = null;
         this.gunPointUITransform = null;
+        this.gunBase!.reset();
         this.gunBase = null;
     }
 }

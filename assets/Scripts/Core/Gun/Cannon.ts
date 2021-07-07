@@ -86,4 +86,11 @@ export class Cannon extends GunBase {
             node.angle = angle % 360;
         });
     }
+
+    reset() {
+        this.bulletGroup.matchEntities.forEach(ent => {
+            ent.destroy();
+        });
+        this.isOnTheGround = true;
+    }
 }
