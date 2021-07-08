@@ -1,13 +1,14 @@
 [
   {
     "__type__": "cc.AnimationClip",
-    "_name": "walk",
+    "_name": "Shield",
     "_objFlags": 0,
     "_native": "",
     "sample": 10,
     "speed": 1,
-    "wrapMode": 2,
+    "wrapMode": 1,
     "events": [],
+    "enableTrsBlending": false,
     "_duration": 0.4,
     "_keys": [
       [
@@ -24,22 +25,29 @@
           {
             "__id__": 1
           },
+          {
+            "__id__": 2
+          },
           "spriteFrame"
         ],
         "data": {
           "keys": 0,
           "values": [
             {
-              "__uuid__": "92c51497-c033-49c2-adb4-e36c617c7cfd@f9941"
+              "__uuid__": "9702c466-ff4e-4f20-aa5e-6790a1e0afc2@6065d",
+              "__expectedType__": "cc.SpriteFrame"
             },
             {
-              "__uuid__": "e62f10ff-c6c8-46cf-b85b-a556cebee7ee@f9941"
+              "__uuid__": "9702c466-ff4e-4f20-aa5e-6790a1e0afc2@270d8",
+              "__expectedType__": "cc.SpriteFrame"
             },
             {
-              "__uuid__": "1b60b3b0-f50e-4556-93ff-2ff5be65c163@f9941"
+              "__uuid__": "9702c466-ff4e-4f20-aa5e-6790a1e0afc2@4e480",
+              "__expectedType__": "cc.SpriteFrame"
             },
             {
-              "__uuid__": "731fd638-6433-416b-a6ad-63afd49ea6d9@f9941"
+              "__uuid__": "9702c466-ff4e-4f20-aa5e-6790a1e0afc2@44a56",
+              "__expectedType__": "cc.SpriteFrame"
             }
           ],
           "easingMethods": {}
@@ -47,7 +55,11 @@
       }
     ],
     "_commonTargets": [],
-    "_hash": 846860622
+    "_hash": 4159003851
+  },
+  {
+    "__type__": "cc.animation.HierarchyPath",
+    "path": "Body/BodySprite"
   },
   {
     "__type__": "cc.animation.ComponentPath",
