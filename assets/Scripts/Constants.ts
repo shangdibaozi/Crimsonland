@@ -10,11 +10,23 @@ export enum UI_EVENT {
 }
 
 export enum AI_STATE {
+    NONE,
     IDLE,
     MOVE_TO,
     FOLLOW,
     ATTACK,
-    WAIT
+    WAIT,
+    TAKE_HIT,
+    TAKE_HITING,
+    TAKE_HIT_OVER,
+}
+
+export enum PhysicsGroup {
+    DEFAULT = 1 << 0,
+    Player_Attack = 1 << 1,
+    Enemy_Body = 1 << 2,
+    Player_Body = 1 << 3,
+    Enemy_Attack = 1 << 4
 }
 
 export const ITEM_COLLISION_RADIUS = 15;

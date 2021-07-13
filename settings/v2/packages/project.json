@@ -16,17 +16,27 @@
     "collisionGroups": [
       {
         "index": 1,
-        "name": "Player_Bullet"
+        "name": "Player_Attack"
       },
       {
         "index": 2,
-        "name": "Enemy"
+        "name": "Enemy_Body"
+      },
+      {
+        "index": 3,
+        "name": "Player_Body"
+      },
+      {
+        "index": 4,
+        "name": "Enemy_Attack"
       }
     ],
     "collisionMatrix": {
-      "0": 0,
+      "0": 4,
       "1": 4,
-      "2": 2
+      "2": 3,
+      "3": 16,
+      "4": 8
     }
   },
   "custom_joint_texture_layouts": [

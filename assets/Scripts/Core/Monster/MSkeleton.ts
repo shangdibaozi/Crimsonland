@@ -1,5 +1,8 @@
 
-import { _decorator, Component, Node, Animation } from 'cc';
+import { _decorator, Component, Node, Animation, Collider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D } from 'cc';
+import { EntityLink } from '../../CC/EntityLink';
+import { AI_STATE } from '../../Constants';
+import { MonsterEnt } from '../Systems/EntityFactory';
 const { ccclass, property } = _decorator;
 
 type AnimationType = 'Attack' | 'Death' | 'Idle' | 'Move' | 'Shield' | 'Take Hit';
@@ -19,8 +22,6 @@ export class MSkeleton extends Component {
         this.attackArea.active = false;
 
         this.animation = this.getComponent(Animation)!;
-
-        // this.playAnimation('Attack');
     }
 
     start () {
@@ -28,17 +29,30 @@ export class MSkeleton extends Component {
     }
 
     onEnable() {
-        this.playAnimation('Idle');
+        this.playAnimation('Attack');
     }
 
+    /**
+     * 动画帧事件回调
+     */
     onAttackAreaEnable() {
+        this.attackArea.active = true;
         console.log(this.attackArea.active);
     }
 
+    /**
+     * 动画帧事件回调
+     */
     onAttackAreaDisable() {
+        this.attackArea.active = false;
         console.log(this.attackArea.active);
     }
 
+    onTakeHitOver() {
+        let monsterEnt = this.getComponent(EntityLink)!.getEnt() as MonsterEnt;
+        monsterEnt.AI.aiState = AI_STATE.TAKE_HIT_OVER;
+    }
+    
     playAnimation(animationName: AnimationType) {
         this.animation.play(animationName);
     }

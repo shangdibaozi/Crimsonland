@@ -9,13 +9,13 @@
     "wrapMode": 1,
     "events": [
       {
-        "frame": 0,
+        "frame": 0.3,
         "func": "",
         "params": []
       },
       {
-        "frame": 0.4,
-        "func": "",
+        "frame": 0.3,
+        "func": "onTakeHitOver",
         "params": []
       }
     ],
@@ -66,7 +66,7 @@
       }
     ],
     "_commonTargets": [],
-    "_hash": 1616409051
+    "_hash": 1137645038
   },
   {
     "__type__": "cc.animation.HierarchyPath",

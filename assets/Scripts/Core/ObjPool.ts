@@ -3,7 +3,7 @@ import { Util } from "../Util";
 
 export enum NODE_TYPE {
     BULLET_PISTAL = 'Bullet_A',
-    MONSTER = 'Skeleton_01',
+    MONSTER = 'Skeleton',
     GUN_ROCKET = 'Rocket'
 }
 

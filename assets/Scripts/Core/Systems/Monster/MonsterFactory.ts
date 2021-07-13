@@ -1,5 +1,5 @@
 import { instantiate, v3, Vec3 } from "cc";
-import { UI_EVENT } from "../../../Constants";
+import { AI_STATE, UI_EVENT } from "../../../Constants";
 import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
 import { Util } from "../../../Util";
@@ -71,6 +71,8 @@ export class MonsterFactory extends ecs.ComblockSystem {
         let prop = enemyEnt.get(AvatarProperties);
         prop.maxHealth = prop.health = 100;
         enemyEnt.EnemyNode.hpBar!.progress = 1;
+
+        enemyEnt.AI.aiState = AI_STATE.NONE;
     }
 
     onStartGame() {

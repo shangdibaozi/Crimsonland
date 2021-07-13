@@ -35,18 +35,30 @@ export class AI extends ecs.ComblockSystem {
 
             for(let e of entities) {
                 switch(e.AI.aiState) {
+                    case AI_STATE.NONE: {
+                        this.switchTo(e, AI_STATE.IDLE);
+                        break;
+                    }
+                    case AI_STATE.TAKE_HIT: {
+                        this.switchTo(e, AI_STATE.TAKE_HITING);
+                        break;
+                    }
+                    case AI_STATE.TAKE_HIT_OVER: {
+                        this.switchTo(e, AI_STATE.MOVE_TO);
+                        break;
+                    }
                     case AI_STATE.IDLE: {
                         if(Math.random() < -0.3) {
                             // 防止怪物都聚集到一起
                             e.AI.offset.x = Util.randomRange(-20, 20);
                             e.AI.offset.y = Util.randomRange(-20, 20);
-                            e.AI.aiState = AI_STATE.FOLLOW;
+                            this.switchTo(e, AI_STATE.FOLLOW);
                         }
                         else {
                             e.AI.offset.x = Util.randomRange(-100, 100);
                             e.AI.offset.y = Util.randomRange(-100, 100);
                             e.AI.offset.z = 0;
-                            e.AI.aiState = AI_STATE.MOVE_TO;
+                            this.switchTo(e, AI_STATE.MOVE_TO);
                         }
                         break;
                     }
@@ -58,10 +70,10 @@ export class AI extends ecs.ComblockSystem {
 
                         if(Vec3.subtract(pos, e.AI.targetPos, e.Transform.position).lengthSqr() <= 10000) {
                             if(Math.random() < 0.5) {
-                                e.AI.aiState = AI_STATE.FOLLOW;
+                                this.switchTo(e, AI_STATE.FOLLOW);
                             }
                             else {
-                                e.AI.aiState = AI_STATE.WAIT;
+                                this.switchTo(e, AI_STATE.WAIT);
                                 e.AI.waitTime = Util.randomRange(0.5, 1);
                             }
                         }
@@ -75,14 +87,14 @@ export class AI extends ecs.ComblockSystem {
                         e.Transform.position.add(Vec3.multiplyScalar(pos, e.Movement.heading, this.dt * e.Movement.speed));
 
                         if(Vec3.subtract(pos, e.AI.targetPos, e.Transform.position).lengthSqr() <= 100) {
-                            e.AI.aiState = AI_STATE.IDLE;
+                            this.switchTo(e, AI_STATE.IDLE);
                         }
                         break;
                     }
                     case AI_STATE.WAIT: {
                         e.AI.waitTime -= this.dt;
                         if(e.AI.waitTime <= 0) {
-                            e.AI.aiState = AI_STATE.IDLE;
+                            this.switchTo(e, AI_STATE.IDLE);
                         }
                         continue;
                     }
@@ -94,5 +106,21 @@ export class AI extends ecs.ComblockSystem {
                 e.EnemyNode.body!.setScale(scale);
             }
         }
+    }
+
+    switchTo(ent: MonsterEnt, targetState: AI_STATE) {
+        if(targetState === AI_STATE.IDLE || targetState === AI_STATE.WAIT) {
+            ent.EnemyNode.animation!.play('Idle');
+        }
+        else if(targetState === AI_STATE.ATTACK) {
+            ent.EnemyNode.animation!.play('Attack');
+        }
+        else if(targetState === AI_STATE.FOLLOW || targetState === AI_STATE.MOVE_TO) {
+            ent.EnemyNode.animation!.play('Move');
+        }
+        else if(targetState === AI_STATE.TAKE_HITING) {
+            ent.EnemyNode.animation!.play('Take Hit');
+        }
+        ent.AI.aiState = targetState;
     }
 }
