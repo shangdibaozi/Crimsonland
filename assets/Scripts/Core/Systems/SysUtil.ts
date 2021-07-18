@@ -17,8 +17,6 @@ export class SysUtil {
         player.Movement.heading.x = 1;
         player.Movement.velocity.set(Vec3.ZERO);
 
-        player.Collision.radius = 14;
-
         player.CameraFollow.camera = Global.gameWorld!.camera.node;
         
 

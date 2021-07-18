@@ -1,5 +1,5 @@
 
-import { _decorator, v3, Vec3, systemEvent, SystemEvent, EventMouse, Vec2, UITransform, macro } from 'cc';
+import { _decorator, v3, Vec3, UITransform, macro } from 'cc';
 import { ecs } from '../../Libs/ECS';
 import { Util } from '../../Util';
 import { ECSNode } from '../Components/ECSNode';
@@ -9,6 +9,7 @@ import { BulletBase } from '../Components/Weapon/BulletBase';
 import { ObjPool } from '../ObjPool';
 import { BulletEnt } from '../Systems/EntityFactory';
 import { GunBase } from './GunBase';
+import { TagPistolBullet } from '../Components/Tag/TagPistolBullet';
 const { ccclass, property, executeInEditMode, playOnFocus } = _decorator;
 
 let pos = v3();
@@ -16,12 +17,6 @@ let pos1 = v3();
 let gHeading = v3(1, 0, 0);
 let tmpHeading = v3();
 
-@ecs.register('TagPistolBullet')
-class TagPistolBullet extends ecs.IComponent {
-    reset() {
-
-    }
-}
 
 @ccclass('Pistol')
 export class Pistol extends GunBase {

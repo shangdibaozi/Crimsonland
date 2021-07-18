@@ -3,7 +3,6 @@ import { AI_STATE } from "../../../Constants";
 import { ecs } from "../../../Libs/ECS";
 import { Util } from "../../../Util";
 import { AIComponent } from "../../Components/AIComponent";
-import { Collision } from "../../Components/Collision";
 import { ECSNode } from "../../Components/ECSNode";
 import { EnemyNode } from "../../Components/EnemyNode";
 import { Movement } from "../../Components/Movement";
@@ -24,7 +23,7 @@ export class AI extends ecs.ComblockSystem {
     }
     
     filter(): ecs.IMatcher {
-        return ecs.allOf(TagEnemy, Transform, Collision, AIComponent, ECSNode);
+        return ecs.allOf(TagEnemy, Transform, AIComponent, ECSNode);
     }
 
     update(entities: MonsterEnt[]): void {

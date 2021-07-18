@@ -29,14 +29,19 @@
       {
         "index": 4,
         "name": "Enemy_Attack"
+      },
+      {
+        "index": 5,
+        "name": "Ground_Item"
       }
     ],
     "collisionMatrix": {
       "0": 4,
       "1": 4,
       "2": 3,
-      "3": 16,
-      "4": 8
+      "3": 48,
+      "4": 8,
+      "5": 8
     }
   },
   "custom_joint_texture_layouts": [

@@ -26,7 +26,6 @@ export enum PhysicsGroup {
     Player_Attack = 1 << 1,
     Enemy_Body = 1 << 2,
     Player_Body = 1 << 3,
-    Enemy_Attack = 1 << 4
+    Enemy_Attack = 1 << 4,
+    Ground_Item = 1 << 5
 }
-
-export const ITEM_COLLISION_RADIUS = 15;

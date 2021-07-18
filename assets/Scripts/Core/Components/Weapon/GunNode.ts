@@ -1,5 +1,5 @@
 import { ecs } from "../../../Libs/ECS";
-import { Node, UITransform, Animation, v3 } from "cc";
+import { Node, UITransform, Animation, v3, Collider2D } from "cc";
 import { ECSNode } from "../ECSNode";
 import { GunBase } from "../../Gun/GunBase";
 
@@ -17,6 +17,9 @@ export class GunNode extends ecs.IComponent {
         pos.y = 0;
         body.setPosition(pos);
         node.getComponent(Animation)!.stop();
+
+        let bc2d = body.getComponent(Collider2D)!;
+        bc2d.enabled = false;
         
         this.shadow = node.getChildByName('Shadow');
         this.shadow!.active = false;
