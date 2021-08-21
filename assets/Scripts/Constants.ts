@@ -6,7 +6,8 @@ export enum UI_EVENT {
     PLAYER_STOP_MOVE,
     SHOOT_NEAR,
     SHOOT_LESS_BLOOD,
-    SHOOT_CHANGE_TARGET
+    SHOOT_CHANGE_TARGET,
+    SHOOT_STOP
 }
 
 export enum AI_STATE {
@@ -15,6 +16,8 @@ export enum AI_STATE {
     MOVE_TO,
     FOLLOW,
     ATTACK,
+    ATTACK_ING,
+    ATTACK_OVER,
     WAIT,
     TAKE_HIT,
     TAKE_HITING,

@@ -24,6 +24,7 @@ export class Pistol extends GunBase {
     private bulletGroup!: ecs.Group;
 
     onLoad() {
+        super.onLoad();
         this.bulletGroup = ecs.createGroup(ecs.allOf(...this.compLst));
     }
 

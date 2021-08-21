@@ -1,4 +1,6 @@
 import { _decorator, Component, CCBoolean, CCInteger, CCFloat, Prefab, Node, Vec3, v3, EventMouse, macro, systemEvent, SystemEvent, UITransform, Vec2 } from "cc";
+import { UI_EVENT } from "../../Constants";
+import { Global } from "../../Global";
 import { ecs } from "../../Libs/ECS";
 
 
@@ -83,6 +85,8 @@ export abstract class GunBase extends Component {
     damage: number = 0;
 
     canShoot: boolean = true;
+    isStopShoot: boolean = false;
+
     private shootTime = 0;
 
     public shootHeading: Vec3 = v3(1, 0, 0);
@@ -105,6 +109,8 @@ export abstract class GunBase extends Component {
         else {
             
         }
+
+        Global.uiEvent.on(UI_EVENT.SHOOT_STOP, this.onStopShoot, this);
     }
 
     init(cfg: GunInfo, parentLayer: Node) {
@@ -124,7 +130,7 @@ export abstract class GunBase extends Component {
     abstract reset(): void;
 
     update(dt: number) {
-        if(this.isOnTheGround) {
+        if(this.isOnTheGround || this.isStopShoot) {
             return;
         }
         if(!this.canShoot) {
@@ -141,5 +147,9 @@ export abstract class GunBase extends Component {
 
         Vec3.lerp(tmpPos, this.node.position, Vec3.ZERO, dt * 10);
         this.node.setPosition(tmpPos);
+    }
+
+    onStopShoot(flag: boolean) {
+        this.isStopShoot = flag;
     }
 }

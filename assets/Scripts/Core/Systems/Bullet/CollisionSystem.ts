@@ -121,7 +121,8 @@ export class CollisionSystem extends ecs.ComblockSystem {
             // 子弹打中怪物后怪物击退效果
             Vec3.multiplyScalar(tmp, bulletEnt.get(Movement).heading, 5);
             monsterEnt.Transform.position.add(tmp);
-            monsterEnt.AI.aiState =  AI_STATE.TAKE_HIT;
+            monsterEnt.AI.targetState =  AI_STATE.TAKE_HIT;
+            console.log('---------------')
         }
         bulletEnt.destroy();
     }

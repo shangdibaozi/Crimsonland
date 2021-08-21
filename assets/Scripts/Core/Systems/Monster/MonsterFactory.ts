@@ -1,4 +1,4 @@
-import { v3, Vec3 } from "cc";
+import { director, game, v3, Vec3, view } from "cc";
 import { AI_STATE, UI_EVENT } from "../../../Constants";
 import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
@@ -64,7 +64,9 @@ export class MonsterFactory extends ecs.ComblockSystem implements ecs.IEntityEnt
         let monsterNode = ObjPool.getNode(NODE_TYPE.MONSTER);
         monsterNode.active = true;
         monsterNode.parent = Global.gameWorld!.avatarLayer;
-        monsterNode.setPosition(v3(Util.randomRange(-500, 500), Util.randomRange(-500, 500), 0));
+        let offset = 100
+        let size = view.getCanvasSize();
+        monsterNode.setPosition(v3(Util.randomRange(-size.width / 2 - offset, size.width / 2 + offset), Util.randomRange(-size.height / 2 - offset, size.height / 2 + offset), 0));
 
         let enemyEnt = EntityFactory.createMonster();
         enemyEnt.EnemyNode.root = monsterNode;
@@ -76,10 +78,10 @@ export class MonsterFactory extends ecs.ComblockSystem implements ecs.IEntityEnt
         // enemyEnt.get(Damage).val = 10;
 
         let prop = enemyEnt.get(AvatarProperties);
-        prop.maxHealth = prop.health = 100;
+        prop.maxHealth = prop.health = 10000;
         enemyEnt.EnemyNode.hpBar!.progress = 1;
 
-        enemyEnt.AI.aiState = AI_STATE.NONE;
+        enemyEnt.AI.targetState = AI_STATE.NONE;
     }
 
     onStartGame() {

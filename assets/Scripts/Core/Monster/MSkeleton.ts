@@ -45,12 +45,13 @@ export class MSkeleton extends Component {
      */
     onAttackAreaDisable() {
         this.attackArea.active = false;
-        console.log(this.attackArea.active);
+        let monsterEnt = this.getComponent(EntityLink)!.getEnt() as MonsterEnt;
+        monsterEnt.AI.targetState = AI_STATE.ATTACK_OVER;
     }
 
     onTakeHitOver() {
         let monsterEnt = this.getComponent(EntityLink)!.getEnt() as MonsterEnt;
-        monsterEnt.AI.aiState = AI_STATE.TAKE_HIT_OVER;
+        monsterEnt.AI.targetState = AI_STATE.TAKE_HIT_OVER;
     }
     
     playAnimation(animationName: AnimationType) {

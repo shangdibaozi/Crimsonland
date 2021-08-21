@@ -5,7 +5,8 @@ import { ecs } from "../../Libs/ECS";
 @ecs.register('AI')
 export class AIComponent extends ecs.IComponent {
 
-    aiState: AI_STATE = AI_STATE.IDLE;
+    curState: AI_STATE = AI_STATE.NONE;
+    targetState: AI_STATE = AI_STATE.IDLE;
 
     waitTime: number = 0;
 
@@ -14,7 +15,8 @@ export class AIComponent extends ecs.IComponent {
     offset: Vec3 = v3();
 
     reset() {
-        this.aiState = AI_STATE.IDLE;
+        this.curState = AI_STATE.NONE;
+        this.targetState = AI_STATE.IDLE;
         this.waitTime = 0;
     }
 }

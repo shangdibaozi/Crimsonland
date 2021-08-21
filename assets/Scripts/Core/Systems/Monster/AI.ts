@@ -33,69 +33,83 @@ export class AI extends ecs.ComblockSystem {
             let playerPos = playerEnt.get(Transform).position;
 
             for(let e of entities) {
-                switch(e.AI.aiState) {
-                    case AI_STATE.NONE: {
-                        this.switchTo(e, AI_STATE.IDLE);
-                        break;
-                    }
-                    case AI_STATE.TAKE_HIT: {
-                        this.switchTo(e, AI_STATE.TAKE_HITING);
-                        break;
-                    }
-                    case AI_STATE.TAKE_HIT_OVER: {
-                        this.switchTo(e, AI_STATE.MOVE_TO);
-                        break;
-                    }
-                    case AI_STATE.IDLE: {
-                        if(Math.random() < -0.3) {
-                            // 防止怪物都聚集到一起
-                            e.AI.offset.x = Util.randomRange(-20, 20);
-                            e.AI.offset.y = Util.randomRange(-20, 20);
-                            this.switchTo(e, AI_STATE.FOLLOW);
+                this.attackCheck(e, playerPos);
+                if(e.AI.curState != e.AI.targetState) {
+                    this.switchTo(e, e.AI.targetState);
+                }
+                else {
+                    switch(e.AI.curState) {
+                        case AI_STATE.NONE: {
+                            e.AI.targetState = AI_STATE.IDLE;
+                            break;
                         }
-                        else {
-                            e.AI.offset.x = Util.randomRange(-100, 100);
-                            e.AI.offset.y = Util.randomRange(-100, 100);
-                            e.AI.offset.z = 0;
-                            this.switchTo(e, AI_STATE.MOVE_TO);
+                        case AI_STATE.TAKE_HIT: {
+                            e.AI.targetState = AI_STATE.TAKE_HITING;
+                            break;
                         }
-                        break;
-                    }
-                    case AI_STATE.MOVE_TO: {    // 移动到指定坐标点然后进行下一步
-                        Vec3.add(e.AI.targetPos, playerPos, e.AI.offset);
-                        Vec3.subtract(pos, e.AI.targetPos, e.Transform.position);
-                        Vec3.normalize(e.get(Movement).heading, pos);
-                        e.Transform.position.add(Vec3.multiplyScalar(pos, e.Movement.heading, this.dt * e.Movement.speed));
-
-                        if(Vec3.subtract(pos, e.AI.targetPos, e.Transform.position).lengthSqr() <= 10000) {
-                            if(Math.random() < 0.5) {
-                                this.switchTo(e, AI_STATE.FOLLOW);
+                        case AI_STATE.TAKE_HIT_OVER: {
+                            e.AI.targetState =  AI_STATE.MOVE_TO;
+                            break;
+                        }
+                        case AI_STATE.IDLE: {
+                            if(Math.random() < -0.3) {
+                                // 防止怪物都聚集到一起
+                                e.AI.offset.x = Util.randomRange(-20, 20);
+                                e.AI.offset.y = Util.randomRange(-20, 20);
+                                e.AI.targetState = AI_STATE.FOLLOW;
                             }
                             else {
-                                this.switchTo(e, AI_STATE.WAIT);
-                                e.AI.waitTime = Util.randomRange(0.5, 1);
+                                e.AI.offset.x = Util.randomRange(-100, 100);
+                                e.AI.offset.y = Util.randomRange(-100, 100);
+                                e.AI.offset.z = 0;
+                                e.AI.targetState = AI_STATE.MOVE_TO;
                             }
+                            break;
                         }
-
-                        break;
-                    }
-                    case AI_STATE.FOLLOW: {     // 一直跟踪角色
-                        Vec3.add(pos, e.AI.offset, playerPos);
-                        Vec3.subtract(pos, pos, e.Transform.position);
-                        Vec3.normalize(e.get(Movement).heading, pos);
-                        e.Transform.position.add(Vec3.multiplyScalar(pos, e.Movement.heading, this.dt * e.Movement.speed));
-
-                        if(Vec3.subtract(pos, e.AI.targetPos, e.Transform.position).lengthSqr() <= 100) {
-                            this.switchTo(e, AI_STATE.IDLE);
+                        case AI_STATE.MOVE_TO: {    // 移动到指定坐标点然后进行下一步
+                            Vec3.add(e.AI.targetPos, playerPos, e.AI.offset);
+                            Vec3.subtract(pos, e.AI.targetPos, e.Transform.position);
+                            Vec3.normalize(e.get(Movement).heading, pos);
+                            e.Transform.position.add(Vec3.multiplyScalar(pos, e.Movement.heading, this.dt * e.Movement.speed));
+    
+                            if(Vec3.subtract(pos, e.AI.targetPos, e.Transform.position).lengthSqr() <= 10000) {
+                                if(Math.random() < 0.5) {
+                                   e.AI.targetState = AI_STATE.FOLLOW;
+                                }
+                                else {
+                                   e.AI.targetState = AI_STATE.WAIT;
+                                    e.AI.waitTime = Util.randomRange(0.5, 1);
+                                }
+                            }
+    
+                            break;
                         }
-                        break;
-                    }
-                    case AI_STATE.WAIT: {
-                        e.AI.waitTime -= this.dt;
-                        if(e.AI.waitTime <= 0) {
-                            this.switchTo(e, AI_STATE.IDLE);
+                        case AI_STATE.FOLLOW: {     // 一直跟踪角色
+                            Vec3.add(pos, e.AI.offset, playerPos);
+                            Vec3.subtract(pos, pos, e.Transform.position);
+                            Vec3.normalize(e.get(Movement).heading, pos);
+                            e.Transform.position.add(Vec3.multiplyScalar(pos, e.Movement.heading, this.dt * e.Movement.speed));
+    
+                            if(Vec3.subtract(pos, e.AI.targetPos, e.Transform.position).lengthSqr() <= 100) {
+                               e.AI.targetState = AI_STATE.IDLE;
+                            }
+                            break;
                         }
-                        continue;
+                        case AI_STATE.WAIT: {
+                            e.AI.waitTime -= this.dt;
+                            if(e.AI.waitTime <= 0) {
+                               e.AI.targetState = AI_STATE.IDLE;
+                            }
+                            continue;
+                        }
+                        case AI_STATE.ATTACK: {
+                            e.AI.targetState = AI_STATE.ATTACK_ING;
+                            break;
+                        }
+                        case AI_STATE.ATTACK_OVER: {
+                            e.AI.targetState = AI_STATE.NONE;
+                            break;
+                        }
                     }
                 }
                 
@@ -104,6 +118,16 @@ export class AI extends ecs.ComblockSystem {
                 scale.x = (e.Movement.heading.x > 0 ? 1 : -1) * Math.abs(scale.x);
                 e.EnemyNode.body!.setScale(scale);
             }
+        }
+    }
+
+    attackCheck(ent: MonsterEnt, playerPos: Vec3) {
+        if(ent.AI.curState === AI_STATE.ATTACK || ent.AI.curState === AI_STATE.ATTACK_ING) {
+            return;
+        }
+        let dist = Vec3.distance(ent.Transform.position, playerPos);
+        if(dist <= 30) {
+            ent.AI.targetState = AI_STATE.ATTACK;
         }
     }
 
@@ -117,9 +141,9 @@ export class AI extends ecs.ComblockSystem {
         else if(targetState === AI_STATE.FOLLOW || targetState === AI_STATE.MOVE_TO) {
             ent.EnemyNode.animation!.play('Move');
         }
-        else if(targetState === AI_STATE.TAKE_HITING) {
+        else if(targetState === AI_STATE.TAKE_HIT && ent.AI.curState !== AI_STATE.TAKE_HITING) {
             ent.EnemyNode.animation!.play('Take Hit');
         }
-        ent.AI.aiState = targetState;
+        ent.AI.curState = targetState;
     }
 }
