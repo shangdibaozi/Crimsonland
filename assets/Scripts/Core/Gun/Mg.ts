@@ -3,9 +3,9 @@ import { _decorator, macro, UITransform, Vec3, v3 } from 'cc';
 import { ecs } from '../../Libs/ECS';
 import { Util } from '../../Util';
 import { ECSNode } from '../Components/ECSNode';
+import { ECSTag } from '../Components/ECSTag';
 import { Lifetime } from '../Components/Lifetime';
 import { Movement } from '../Components/Movement';
-import { TagMgBullet } from '../Components/Tag/TagMgBullet';
 import { BulletBase } from '../Components/Weapon/BulletBase';
 import { ObjPool } from '../ObjPool';
 import { GunBase } from './GunBase';
@@ -18,7 +18,7 @@ const { ccclass, property } = _decorator;
 @ccclass('Mg')
 export class Mg extends GunBase {
 
-    private compLst: ecs.ComponentConstructor[] = [ECSNode, BulletBase, Movement, Lifetime, TagMgBullet];
+    private compLst: ecs.ComponentType[] = [ECSNode, BulletBase, Movement, Lifetime, ECSTag.MgBullet];
     
     private bulletGroup!: ecs.Group;
 

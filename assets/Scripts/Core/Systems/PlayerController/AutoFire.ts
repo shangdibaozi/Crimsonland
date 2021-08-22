@@ -3,7 +3,7 @@ import { UI_EVENT } from "../../../Constants";
 import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
 import { AutoFireComponent } from "../../Components/AutoFireComponent";
-import { TagEnemy } from "../../Components/Tag/TagEnemy";
+import { ECSTag } from "../../Components/ECSTag";
 import { GunEnt, MonsterEnt, PlayerEnt } from "../EntityFactory";
 
 let pos = v3();
@@ -27,7 +27,7 @@ export class AutoFire extends ecs.ComblockSystem implements ecs.IEntityEnterSyst
     playerEnt!: PlayerEnt;
 
     init() {
-        this.monsterGroup = ecs.createGroup(ecs.allOf(TagEnemy));
+        this.monsterGroup = ecs.createGroup(ecs.allOf(ECSTag.Enemy));
 
         Global.uiEvent.on(UI_EVENT.SHOOT_NEAR, this.onShootNear, this);
         Global.uiEvent.on(UI_EVENT.SHOOT_LESS_BLOOD, this.onShootLessBlood, this);

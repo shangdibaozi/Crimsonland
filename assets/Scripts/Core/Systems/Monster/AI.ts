@@ -4,10 +4,10 @@ import { ecs } from "../../../Libs/ECS";
 import { Util } from "../../../Util";
 import { AIComponent } from "../../Components/AIComponent";
 import { ECSNode } from "../../Components/ECSNode";
+import { ECSTag } from "../../Components/ECSTag";
 import { EnemyNode } from "../../Components/EnemyNode";
 import { Movement } from "../../Components/Movement";
 import { PlayerNode } from "../../Components/PlayerNode";
-import { TagEnemy } from "../../Components/Tag/TagEnemy";
 import { Transform } from "../../Components/Transform";
 import { MonsterEnt } from "../EntityFactory";
 
@@ -23,7 +23,7 @@ export class AI extends ecs.ComblockSystem {
     }
     
     filter(): ecs.IMatcher {
-        return ecs.allOf(TagEnemy, Transform, AIComponent, ECSNode);
+        return ecs.allOf(ECSTag.Enemy, Transform, AIComponent, ECSNode);
     }
 
     update(entities: MonsterEnt[]): void {

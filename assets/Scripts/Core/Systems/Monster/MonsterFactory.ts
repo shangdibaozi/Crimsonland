@@ -4,8 +4,8 @@ import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
 import { Util } from "../../../Util";
 import { AvatarProperties } from "../../Components/AvatarProperties";
+import { ECSTag } from "../../Components/ECSTag";
 import { Movement } from "../../Components/Movement";
-import { TagEnemy } from "../../Components/Tag/TagEnemy";
 import { Transform } from "../../Components/Transform";
 import { NODE_TYPE, ObjPool } from "../../ObjPool";
 import { EntityFactory } from "../EntityFactory";
@@ -13,7 +13,7 @@ import { EntityFactory } from "../EntityFactory";
 
 @ecs.register('MonsterFactory')
 class MonsterFactoryComponent extends ecs.IComponent {
-    maxCnt: number = 1;
+    maxCnt: number = 10;
     time: number = 0;
 
     reset() {
@@ -47,7 +47,7 @@ export class MonsterFactory extends ecs.ComblockSystem implements ecs.IEntityEnt
     }
 
     update(entities: MonsterFactoryEnt[]): void {
-        if(ecs.query(ecs.allOf(Transform, TagEnemy)).length >= this.mFactory!.MonsterFactory.maxCnt) {
+        if(ecs.query(ecs.allOf(Transform, ECSTag.Enemy)).length >= this.mFactory!.MonsterFactory.maxCnt) {
             return;
         }
         let time = this.mFactory!.MonsterFactory.time -= this.dt;
@@ -78,7 +78,7 @@ export class MonsterFactory extends ecs.ComblockSystem implements ecs.IEntityEnt
         // enemyEnt.get(Damage).val = 10;
 
         let prop = enemyEnt.get(AvatarProperties);
-        prop.maxHealth = prop.health = 10000;
+        prop.maxHealth = prop.health = 10;
         enemyEnt.EnemyNode.hpBar!.progress = 1;
 
         enemyEnt.AI.targetState = AI_STATE.NONE;

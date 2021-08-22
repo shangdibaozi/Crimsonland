@@ -3,13 +3,13 @@ import { _decorator, v3, Vec3, UITransform, macro } from 'cc';
 import { ecs } from '../../Libs/ECS';
 import { Util } from '../../Util';
 import { ECSNode } from '../Components/ECSNode';
+import { ECSTag } from '../Components/ECSTag';
 import { Lifetime } from '../Components/Lifetime';
 import { Movement } from '../Components/Movement';
 import { BulletBase } from '../Components/Weapon/BulletBase';
 import { ObjPool } from '../ObjPool';
 import { BulletEnt } from '../Systems/EntityFactory';
 import { GunBase } from './GunBase';
-import { TagPistolBullet } from '../Components/Tag/TagPistolBullet';
 const { ccclass, property, executeInEditMode, playOnFocus } = _decorator;
 
 let pos = v3();
@@ -20,7 +20,7 @@ let tmpHeading = v3();
 
 @ccclass('Pistol')
 export class Pistol extends GunBase {
-    private compLst: ecs.ComponentConstructor[] = [ECSNode, BulletBase, Movement, Lifetime, TagPistolBullet];
+    private compLst: ecs.ComponentType[] = [ECSNode, BulletBase, Movement, Lifetime, ECSTag.PistolBullet];
     private bulletGroup!: ecs.Group;
 
     onLoad() {
@@ -47,6 +47,7 @@ export class Pistol extends GunBase {
         Vec3.multiplyScalar(movement.velocity, heading, this.speed);
         bulletEnt.get(Lifetime).time = 3;
         bulletEnt.BulletBase.damage = this.damage;
+        console.log('bullet create:', bulletNode.uuid);
     }
 
     shoot() {

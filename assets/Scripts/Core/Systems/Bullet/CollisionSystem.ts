@@ -4,10 +4,9 @@ import { AI_STATE, PhysicsGroup } from "../../../Constants";
 import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
 import { Util } from "../../../Util";
+import { ECSTag } from "../../Components/ECSTag";
 import { MonsterDead } from "../../Components/MonsterDead";
 import { Movement } from "../../Components/Movement";
-import { TagEnemy } from "../../Components/Tag/TagEnemy";
-import { TagPlayer } from "../../Components/Tag/TagPlayer";
 import { Transform } from "../../Components/Transform";
 import { BulletBase } from "../../Components/Weapon/BulletBase";
 import { ObjPool } from "../../ObjPool";
@@ -35,7 +34,7 @@ export class CollisionSystem extends ecs.ComblockSystem {
     }
     
     filter(): ecs.IMatcher {
-        return ecs.allOf(Transform, TagEnemy);
+        return ecs.allOf(Transform, ECSTag.Enemy);
     }
 
     update(entities: MonsterEnt[]): void {
@@ -77,6 +76,10 @@ export class CollisionSystem extends ecs.ComblockSystem {
     }
 
     playerAttackEnemy(colliderNodeA: Node, colliderNodeB: Node) {
+        if(!colliderNodeA.parent!.active || !colliderNodeB.parent!.active) {
+            // active为false也还能产生碰撞。。。
+            return;
+        }
         let entA = colliderNodeA.parent!.getComponent(EntityLink)!.getEnt()!;
         let entB = colliderNodeB.parent!.getComponent(EntityLink)!.getEnt()!;
         if(entA == null || entB == null) {
@@ -122,8 +125,10 @@ export class CollisionSystem extends ecs.ComblockSystem {
             Vec3.multiplyScalar(tmp, bulletEnt.get(Movement).heading, 5);
             monsterEnt.Transform.position.add(tmp);
             monsterEnt.AI.targetState =  AI_STATE.TAKE_HIT;
-            console.log('---------------')
         }
+        
+        console.log('bullet destroy:', bulletEnt.ECSNode.val?.uuid);
+        console.log('--------------------------------------------------------------------------------------------')
         bulletEnt.destroy();
     }
 
@@ -135,7 +140,7 @@ export class CollisionSystem extends ecs.ComblockSystem {
         }
         let playerEnt: PlayerEnt;
         let monsterEnt: MonsterEnt;
-        if(entA.has(TagPlayer)) {
+        if(entA.hasTag(ECSTag.Player)) {
             playerEnt = entA as PlayerEnt;
             monsterEnt = entB as MonsterEnt;
         }
@@ -159,7 +164,7 @@ export class CollisionSystem extends ecs.ComblockSystem {
         }
         let playerEnt: PlayerEnt;
         let itemEnt: ItemEnt;
-        if(entA.has(TagPlayer)) {
+        if(entA.hasTag(ECSTag.Player)) {
             playerEnt = entA as PlayerEnt;
             itemEnt = entB as ItemEnt;
         }

@@ -2,8 +2,8 @@ import { Animation, instantiate } from "cc";
 import { Global } from "../../../Global";
 import { ecs } from "../../../Libs/ECS";
 import { Util } from "../../../Util";
+import { ECSTag } from "../../Components/ECSTag";
 import { MonsterDead } from "../../Components/MonsterDead";
-import { TagGun } from "../../Components/Tag/TagGun.";
 import { ObjPool } from "../../ObjPool";
 import { EntityFactory } from "../EntityFactory";
 
@@ -12,7 +12,7 @@ export class ItemFactory extends ecs.ComblockSystem {
     gunGroup!: ecs.Group;
 
     init() {
-        this.gunGroup = ecs.createGroup(ecs.allOf(TagGun));
+        this.gunGroup = ecs.createGroup(ecs.allOf(ECSTag.Gun));
     }
 
     filter(): ecs.IMatcher {
@@ -39,7 +39,7 @@ export class ItemFactory extends ecs.ComblockSystem {
 
                 itemEnt.Transform.position.set(pos);
 
-                itemEnt.add(TagGun);
+                itemEnt.addTag(ECSTag.Gun);
 
                 // 
                 itemEnt.TagItem.tableId = gunTableId;
