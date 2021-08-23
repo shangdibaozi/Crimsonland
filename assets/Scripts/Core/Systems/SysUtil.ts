@@ -1,6 +1,6 @@
 import { Global } from "../../Global";
 import { EntityFactory, PlayerEnt } from "./EntityFactory";
-import { Node, Vec3 } from "cc";
+import { Animation, Node, Vec3 } from "cc";
 import { ObjPool } from "../ObjPool";
 import { GunBase } from "../Gun/GunBase";
 
@@ -11,6 +11,7 @@ export class SysUtil {
         player.PlayerNode.root = node;
         player.PlayerNode.bodyNode = node.getChildByName('Body');
         player.PlayerNode.gunNode = node.getChildByName('GunPos');
+        player.PlayerNode.bodyAnim = player.PlayerNode.bodyNode!.getComponentInChildren(Animation);
 
         player.Movement.maxSpeed = 50;
         player.Movement.speed = 0;

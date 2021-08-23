@@ -10,4 +10,7 @@ export class ECSTag {
     static PistolBullet: number;
     static Player: number;
     static Rotate: number;
+
+    static PlayerWalk: number;
+    static PlayerIdle: number;
 }

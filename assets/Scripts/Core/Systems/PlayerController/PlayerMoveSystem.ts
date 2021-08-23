@@ -7,6 +7,7 @@ import { PlayerEnt } from '../EntityFactory';
 import { Global } from '../../../Global';
 import { UI_EVENT } from '../../../Constants';
 import { clamp, v3, Vec3 } from 'cc';
+import { ECSTag } from '../../Components/ECSTag';
 
 let tmpV3 = v3();
 let length = 0;
@@ -46,6 +47,10 @@ export class PlayerMoveSystem extends ecs.ComblockSystem implements ecs.IEntityE
             if(this.isDecelerate && length <= 1) {
                 this.movement.velocity.set(Vec3.ZERO);
                 this.movement.acceleration.set(Vec3.ZERO);
+
+                this.player.removeTag(ECSTag.PlayerWalk);
+                this.player.addTag(ECSTag.PlayerIdle);
+                this.player.PlayerNode.bodyAnim!.play('Idle');
             }
             else {
                 this.movement.velocity.set(tmpV3);
@@ -65,6 +70,12 @@ export class PlayerMoveSystem extends ecs.ComblockSystem implements ecs.IEntityE
         Vec3.multiplyScalar(this.player.Movement.acceleration, heading, this.player.Movement.maxSpeed);
         this.isAcccelerate = true;
         this.isDecelerate = false;
+
+        if(this.player.hasTag(ECSTag.PlayerIdle)) {
+            this.player.removeTag(ECSTag.PlayerIdle);
+            this.player.addTag(ECSTag.PlayerWalk);
+            this.player.PlayerNode.bodyAnim!.play('walk');
+        }
     }
 
     onPlayerStopMove() {

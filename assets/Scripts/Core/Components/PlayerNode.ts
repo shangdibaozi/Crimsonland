@@ -1,6 +1,6 @@
 import { ecs } from "../../Libs/ECS";
 
-import { error, Node, ProgressBar } from "cc";
+import { error, Node, ProgressBar, Animation } from "cc";
 import { ECSNode } from "./ECSNode";
 
 @ecs.register('PlayerNode')
@@ -20,6 +20,7 @@ export class PlayerNode extends ecs.IComponent {
     }
 
     bodyNode: Node | null = null;
+    bodyAnim: Animation | null = null;
     gunNode: Node | null = null;
     hpBar: ProgressBar | null = null;
 
@@ -27,5 +28,6 @@ export class PlayerNode extends ecs.IComponent {
         this.bodyNode = null;
         this.gunNode = null;
         this.hpBar = null;
+        this.bodyAnim = null;
     }
 }

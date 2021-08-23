@@ -1259,10 +1259,14 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "playOnLoad": true,
+    "playOnLoad": false,
     "_clips": [
       {
         "__uuid__": "c6f1812a-a6bd-4a33-b9a1-99de63d63d51",
+        "__expectedType__": "cc.AnimationClip"
+      },
+      {
+        "__uuid__": "424c3d70-366b-4272-baa9-13c4913ba11e",
         "__expectedType__": "cc.AnimationClip"
       }
     ],
