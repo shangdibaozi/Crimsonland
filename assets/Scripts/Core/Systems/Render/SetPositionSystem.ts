@@ -18,7 +18,15 @@ export class SetPositionSystem extends ecs.ComblockSystem {
     }
 
     update(entities: Ent[]): void {
-        entities.forEach(e => e.ECSNode.val!.setPosition(e.Transform.position));
+        // entities.forEach(e => e.ECSNode.val!.setPosition(e.Transform.position));
+        entities.forEach(e => {
+            if(e.ECSNode.val) {
+                e.ECSNode.val.setPosition(e.Transform.position);
+            }
+            else {
+                debugger;
+            }
+        })
         if(this.flag) {
             // 更新渲染层级
             // 从大到小排序，意味着y值大的渲染在下层，y值小的覆盖y值大的。

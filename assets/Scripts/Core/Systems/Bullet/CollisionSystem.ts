@@ -182,5 +182,6 @@ export class CollisionSystem extends ecs.ComblockSystem {
         newGunNode.setPosition(Vec3.ZERO);
         newGunNode.parent = playerEnt.PlayerNode.gunNode;
         gunEnt.GunNode.init(newGunNode, Global.gameWorld!.avatarLayer, Global.cfgMgr!.gunCfg[itemEnt.TagItem.tableId]);
+        itemEnt.destroy();
     }
 }
