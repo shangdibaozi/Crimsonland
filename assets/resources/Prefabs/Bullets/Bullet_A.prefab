@@ -166,7 +166,7 @@
     },
     "_type": 0,
     "_fillType": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -207,8 +207,8 @@
     },
     "_size": {
       "__type__": "cc.Size",
-      "width": 6,
-      "height": 6
+      "width": 12,
+      "height": 12
     },
     "_id": ""
   },
@@ -287,8 +287,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 5,
-      "height": 5
+      "width": 6,
+      "height": 6
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -318,20 +318,20 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 65,
+      "g": 55,
+      "b": 85,
       "a": 200
     },
     "_preview": true,
-    "_fadeTime": 0.2,
+    "_fadeTime": 0.3,
     "_minSeg": 0,
     "_stroke": 3,
     "_texture": {
-      "__uuid__": "4f46fd9e-fd53-4b5d-8c56-1d892a66496c@6c48a",
+      "__uuid__": "24a704da-2867-446d-8d1a-5e920c75e09d@6c48a",
       "__expectedType__": "cc.Texture2D"
     },
-    "_fastMode": false,
+    "_fastMode": true,
     "_id": ""
   },
   {
